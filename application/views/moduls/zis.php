@@ -530,20 +530,6 @@
 
 	</div>
 
-    <div class="form-group">
-
-	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Pengurus </label>
-
-		<div class="col-sm-10">
-
-            <select name="pengurus_zis" id="pengurus_zis" class="col-xs-10 col-sm-5">
-                <option value=""></option>
-            </select>
-
-		</div>
-
-	</div>
-
 	<div class="col-md-offset-2 col-md-9">
 
 				<button class="btn btn-info" type="button" id="btn_save" onclick="save()">
