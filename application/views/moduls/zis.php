@@ -89,7 +89,7 @@
     <thead>
 
         <tr>
-        <th></th>
+        	<th></th>
             <th>No.</th>
 
             <th>Nama</th>
@@ -145,6 +145,10 @@
             ckeditor();
 
       }, 2000);
+
+	//   setTimeout(function(){
+	// 	reload_table();
+	//   }, 5000)
 
     });
 
