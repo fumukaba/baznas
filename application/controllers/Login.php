@@ -15,19 +15,20 @@ class Login extends CI_Controller {
 		$user = $this->input->post('username');
 		$pass = $this->input->post('password');
 		$user = $this->auth->log_admin($user,$pass);
+		
 		//print_r($this->db->last_query());
 			if($user==true){
 				// $this->session->set_userdata($user);
 				$this->session->set_userdata('id_user',$user->id_user);
 				$this->session->set_userdata('nama',$user->nama);
 				$this->session->set_userdata('email',$user->email);
-				$this->session->set_userdata('level',$user->level);
-				$this->session->set_userdata('status',$user->status);
+				// $this->session->set_userdata('level',$user->level);
+				// $this->session->set_userdata('status',$user->status);
 				$this->session->set_userdata('foto',$user->foto);
-				$this->session->set_userdata('provinsi',$user->provinsi);
-				$this->session->set_userdata('kota',$user->kota);
-				$this->session->set_userdata('id_ongkir',$user->id_ongkir);
-				$this->session->set_userdata('aktif_user',$user->aktif_user);
+				// $this->session->set_userdata('provinsi',$user->provinsi);
+				// $this->session->set_userdata('kota',$user->kota);
+				// $this->session->set_userdata('id_ongkir',$user->id_ongkir);
+				// $this->session->set_userdata('aktif_user',$user->aktif_user);
 				$this->session->set_userdata('nama_rek_user',$user->nama_rek_user);
 				$this->session->set_userdata('no_rek_user',$user->no_rek_user);
 				$this->session->set_userdata('bank_rek_user',$user->bank_rek_user);				
