@@ -33,6 +33,9 @@ class User extends CI_Controller {
 			$row[] = $no;
 			$row[] = $user->id_user;
 			$row[] = $user->nama;
+			$row[] = $user->email;
+			$row[] = $user->nama_rek_user;
+			$row[] = $user->bank_rek_user;
 			$row[] = $user->user_type_name;
 			$row[] = '
 			<div class="btn-group">
@@ -59,6 +62,10 @@ class User extends CI_Controller {
 				'id_user'         => $this->input->post('admin_username'),
 				'password' 	     => md5($this->input->post('admin_password')),
 				'nama'       		 => $this->input->post('admin_nama'),
+				'email'       		 => $this->input->post('admin_email'),
+				'nama_rek_user'		=> $this->input->post('admin_nm_rek'),
+				'no_rek_user'	=> $this->input->post('admin_no_rek'),
+				'bank_rek_user'		=> $this->input->post('admin_nm_bank'),
 				'admin_level'        	 => $this->input->post('admin_level'),
 				'view_password'        	 => $this->input->post('admin_password'),
 			);
@@ -77,6 +84,10 @@ class User extends CI_Controller {
 				'id_user'         => $this->input->post('admin_username'),
 				'password' 	     => md5($this->input->post('admin_password')),
 				'nama'       		 => $this->input->post('admin_nama'),
+				'email'       		 => $this->input->post('admin_email'),
+				'nama_rek_user'		=> $this->input->post('admin_nm_rek'),
+				'no_rek_user'	=> $this->input->post('admin_no_rek'),
+				'bank_rek_user'		=> $this->input->post('admin_nm_bank'),
 				'admin_level'        	 => $this->input->post('admin_level'),
 			);
 		$this->Mdl_user->update(array('id' => $this->input->post('id_admin')), $data);
@@ -89,3 +100,10 @@ class User extends CI_Controller {
     }
 
 }
+
+// Tambahan //
+// Email
+// nama_rek(atas nama)
+// no_rek
+// bank
+// Foto

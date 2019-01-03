@@ -58,6 +58,9 @@
             <th>No.</th>
             <th>Username</th>
             <th>Nama</th>
+			<th>Email</th>
+			<th>Nama Rekening</th>
+			<th>Nama Bank</th>
 			<th>Level</th>
             <th>Aksi</th>
         </tr>
@@ -206,6 +209,10 @@
 					$('[name="admin_username"]').val(result.id_user);
 					$('[name="admin_password"]').val(result.view_password);
 					$('[name="admin_nama"]').val(result.nama);
+					$('[name="admin_email"]').val(result.email);
+					$('[name="admin_nm_rek"]').val(result.nama_rek_user);
+					$('[name="admin_no_rek"]').val(result.no_rek_user);
+					$('[name="admin_nm_bank"]').val(result.bank_rek_user);
 					$('[name="admin_level"]').val(result.admin_level);
 
 				}, error: function (jqXHR, textStatus, errorThrown) {
@@ -271,13 +278,37 @@
 	<div class="form-group">
 	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Password </label>
 		<div class="col-sm-10">
-			<input type="text" id="admin_password" name="admin_password" placeholder="Password" class="col-xs-10 col-sm-5" />
+			<input type="password" id="admin_password" name="admin_password" placeholder="Password" class="col-xs-10 col-sm-5" />
 		</div>
 	</div>
 	<div class="form-group">
 	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Nama </label>
 		<div class="col-sm-10">
 			<input type="text" id="admin_nama" name="admin_nama" placeholder="Nama" class="col-xs-10 col-sm-5" />
+		</div>
+	</div>
+	<div class="form-group">
+	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Email </label>
+		<div class="col-sm-10">
+			<input type="text" id="admin_email" name="admin_email" placeholder="Email" class="col-xs-10 col-sm-5" />
+		</div>
+	</div>
+	<div class="form-group">
+	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Nama Rekening </label>
+		<div class="col-sm-10">
+			<input type="text" id="admin_nm_rek" name="admin_nm_rek" placeholder="Nama Rekening" class="col-xs-10 col-sm-5" />
+		</div>
+	</div>
+	<div class="form-group">
+	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> No Rekening </label>
+		<div class="col-sm-10">
+			<input type="text" id="admin_no_rek" name="admin_no_rek" placeholder="No Rekening" class="col-xs-10 col-sm-5" />
+		</div>
+	</div>
+	<div class="form-group">
+	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Nama Bank </label>
+		<div class="col-sm-10">
+			<input type="text" id="admin_nm_bank" name="admin_nm_bank" placeholder="Nama Bank" class="col-xs-10 col-sm-5" />
 		</div>
 	</div>
 	<div class="form-group">
@@ -291,6 +322,12 @@
 				<option value="<?php echo $row_kat->user_type_id?>"><?php echo $row_kat->user_type_name?></option>
 			<?php } ?>
 			</select>
+		</div>
+	</div>
+	<div class="form-group">
+	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Foto </label>
+		<div class="col-sm-10">
+			<input type="file" id="admin_foto" name="admin_foto" placeholder="Foto" class="col-xs-10 col-sm-5" />
 		</div>
 	</div>
 	<div class="col-md-offset-2 col-md-9">
