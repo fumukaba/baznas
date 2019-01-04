@@ -43,7 +43,28 @@
 				<span class="help-block"></span>
 			</div>
 		</div>
-		
+		<div class="form-group"> 
+
+		<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Nama Bank </label>
+			<div class="col-sm-6">
+				<input type="text" id="about_namaBank" name="about_namaBank" placeholder="Nama Bank" />
+			</div>	
+		</div>
+		<div class="form-group"> 
+
+		<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Nomor Rekening </label>
+			<div class="col-sm-6">
+				<input type="text" id="about_nomorRekening" name="about_nomorRekening" placeholder="Nomor Rekening" />
+			</div>	
+		</div>
+
+		<div class="form-group"> 
+
+		<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Atas Nama </label>
+			<div class="col-sm-6">
+				<input type="text" id="about_atasNama" name="about_atasNama" placeholder="Atas Nama" />
+			</div>	
+		</div>				
 		<div class="form-group">
 		
 			<div class="col-md-offset-2 col-md-9">
@@ -91,7 +112,9 @@
 	var table;
 	
 	$(document).ready(function(){
-		update();
+		setTimeout(function(){
+			update();
+		},3000)
     });
 	
 	function data(){
@@ -204,7 +227,11 @@
 				success: function(result) {  
 				var img = '<?= base_url(); ?>../assets/images/'+result.about_logo;
 				$('[name="id_about"]').val(result.id_about);
-				$('[name="about_deskripsi"]').val(result.about_deskripsi);
+				// $('[name="about_deskripsi"]').val(result.about_deskripsi);
+				tinymce.activeEditor.setContent(result.about_deskripsi);				
+				$('[name="about_namaBank"]').val(result.nama_bank);
+				$('[name="about_nomorRekening"]').val(result.nomor_rekening);
+				$('[name="about_atasNama"]').val(result.atas_nama);				
 				$('[name="about_title_meta"]').val(result.about_title_meta);
 				$('[name="about_deskripsi_meta"]').val(result.about_deskripsi_meta);
 				$('[name="about_keyword_meta"]').val(result.about_keyword_meta);
