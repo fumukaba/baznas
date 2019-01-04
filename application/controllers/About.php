@@ -1,4 +1,4 @@
-<?php
+<?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class About extends CI_Controller {
@@ -71,15 +71,21 @@ class About extends CI_Controller {
 		if(empty($gambar)){
  			$data = array(
 			'about_deskripsi' => $this->input->post('about_deskripsi'),
-			'id_admin' => $this->session->userdata('id_admin')
-			);
+			'id_admin' => $this->session->userdata('id_admin'),
+			'nama_bank' => $this->input->post('about_namaBank'),			
+			'nomor_rekening' => $this->input->post('about_nomorRekening'),			
+			'atas_nama' => $this->input->post('about_atasNama')			
+		);
  		}else{
  			//unlink('../assets/galeri/'.$this->input->post('terserah'));
  			
 			$data = array(
 			'about_deskripsi' => $this->input->post('about_deskripsi'),
 			'about_logo' => $gambar,
-			'id_admin' => $this->session->userdata('id_admin')
+			'id_admin' => $this->session->userdata('id_admin'),
+			'nama_bank' => $this->input->post('about_namaBank'),			
+			'nomor_rekening' => $this->input->post('about_nomorRekening'),			
+			'atas_nama' => $this->input->post('about_atasNama')			
 			); 			
  		}	
  		
@@ -96,8 +102,11 @@ class About extends CI_Controller {
 	
 	public function update() {
 		$data = array(
-				'about_deskripsi'        => $this->input->post('about_deskripsi'),
-				'id_admin' => $this->session->userdata('id_admin')
+				'about_deskripsi' => $this->input->post('about_deskripsi'),
+				'id_admin' => $this->session->userdata('id_admin'),
+				'nama_bank' => $this->input->post('about_namaBank'),
+				'nomor_rekening' => $this->input->post('about_nomorRekening'),
+				'atas_nama' => $this->input->post('about_atasNama')
 			);
 		$this->Mdl_about->update(array('id_about' => $this->input->post('id_about')), $data);
 		//print_r($this->db->last_query());
