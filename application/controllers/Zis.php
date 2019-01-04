@@ -53,7 +53,7 @@ class Zis extends CI_Controller {
 		include('./application/libraries/phpqrcode/qrlib.php');
 		$tempDir = './uploads/qrcode/';
 
-		$id_zis = md5(time());
+		$id_zis = "t1" . md5(time());
 		$codeContents = $id_zis;
     
     	$fileName = $id_zis . '.png';
