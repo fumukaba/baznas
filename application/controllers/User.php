@@ -58,7 +58,17 @@ class User extends CI_Controller {
 	}
 	
 	public function ajax_add() {
-		$data = array(
+		$gambar = $_FILES['admin_foto']['name'];
+		$config['upload_path'] = './uploads/user/';
+		$config['allowed_types'] = 'gif|jpg|png|jpeg';
+		$config['max_size'] = '2000000';
+		
+		$this->load->library('upload', $config);
+ 		$this->upload->initialize($config);
+		$this->upload->do_upload('admin_foto');
+
+		if(empty($gambar)){
+			$data = array(
 				'id_user'         => $this->input->post('admin_username'),
 				'password' 	     => md5($this->input->post('admin_password')),
 				'nama'       		 => $this->input->post('admin_nama'),
@@ -69,6 +79,21 @@ class User extends CI_Controller {
 				'admin_level'        	 => $this->input->post('admin_level'),
 				'view_password'        	 => $this->input->post('admin_password'),
 			);
+ 		}else{
+			$data = array(
+				'id_user'         => $this->input->post('admin_username'),
+				'password' 	     => md5($this->input->post('admin_password')),
+				'nama'       		 => $this->input->post('admin_nama'),
+				'email'       		 => $this->input->post('admin_email'),
+				'nama_rek_user'		=> $this->input->post('admin_nm_rek'),
+				'no_rek_user'	=> $this->input->post('admin_no_rek'),
+				'bank_rek_user'		=> $this->input->post('admin_nm_bank'),
+				'admin_level'        	 => $this->input->post('admin_level'),
+				'view_password'        	 => $this->input->post('admin_password'),
+				'foto' => $gambar
+			); 			
+		}
+		
 		$insert = $this->Mdl_user->add($data);
 		//print_r($this->db->last_query());
 		echo json_encode(array('status' => TRUE));
@@ -80,7 +105,17 @@ class User extends CI_Controller {
 	}
 	
 	public function ajax_update() {
-		$data = array(
+		$gambar = $_FILES['admin_foto']['name'];
+		$config['upload_path'] = './uploads/user/';
+		$config['allowed_types'] = 'gif|jpg|png|jpeg';
+		$config['max_size'] = '2000000';
+		
+		$this->load->library('upload', $config);
+ 		$this->upload->initialize($config);
+		$this->upload->do_upload('admin_foto');
+
+		if(empty($gambar)){
+			$data = array(
 				'id_user'         => $this->input->post('admin_username'),
 				'password' 	     => md5($this->input->post('admin_password')),
 				'nama'       		 => $this->input->post('admin_nama'),
@@ -89,7 +124,23 @@ class User extends CI_Controller {
 				'no_rek_user'	=> $this->input->post('admin_no_rek'),
 				'bank_rek_user'		=> $this->input->post('admin_nm_bank'),
 				'admin_level'        	 => $this->input->post('admin_level'),
+				'view_password'        	 => $this->input->post('admin_password'),
 			);
+ 		}else{
+			$data = array(
+				'id_user'         => $this->input->post('admin_username'),
+				'password' 	     => md5($this->input->post('admin_password')),
+				'nama'       		 => $this->input->post('admin_nama'),
+				'email'       		 => $this->input->post('admin_email'),
+				'nama_rek_user'		=> $this->input->post('admin_nm_rek'),
+				'no_rek_user'	=> $this->input->post('admin_no_rek'),
+				'bank_rek_user'		=> $this->input->post('admin_nm_bank'),
+				'admin_level'        	 => $this->input->post('admin_level'),
+				'view_password'        	 => $this->input->post('admin_password'),
+				'foto' => $gambar
+			); 			
+		}
+		
 		$this->Mdl_user->update(array('id' => $this->input->post('id_admin')), $data);
 		echo json_encode(array("status" => TRUE));
     }

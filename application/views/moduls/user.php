@@ -166,6 +166,9 @@
 				type: "POST",
 				data: $('#formAksi').serialize(),
 				dataType: "JSON",
+				contentType: false,
+				cache: false,
+				processData: false,
 				success: function(result) {
 					if (result.status) {
 						
@@ -267,7 +270,7 @@
 <div class="widget-main">
 <div class="row">
 <div class="col-xs-12">
-<form class="form-horizontal" role="form" id="formAksi">
+<form class="form-horizontal" role="form" id="formAksi" method="POST" enctype="multipart/form-data">
 	 <input type="hidden" name="id_admin">
 	<div class="form-group">
 	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Username </label>
@@ -331,7 +334,7 @@
 		</div>
 	</div>
 	<div class="col-md-offset-2 col-md-9">
-				<button class="btn btn-info" type="button" id="btn_save" onclick="save()">
+				<button class="btn btn-info" type="submit" id="btn_save">
 					<i class="ace-icon fa fa-check bigger-110"></i>
 					Submit
 				</button>
@@ -350,3 +353,58 @@
 </div>
 </div><!-- /.row -->
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+	$(document).ready(function(e){
+		$("#formAksi").on('submit', function(e){
+			e.preventDefault();
+
+			$('#btn_save').text('Saving...');
+			$('#btn_save').attr('disabled', true);
+
+			var url;
+			if (save_method == 'add') {
+				url = "<?php echo site_url('User')?>/ajax_add";
+			} else {
+				url = "<?php echo site_url('User')?>/ajax_update"; 
+			}
+
+			$.ajax({
+				type: 'POST',
+				url: url,
+				data: new FormData(this),
+				dataType: 'json',
+				contentType: false,
+				cache: false,
+				processData:false,
+				beforeSend: function(){
+				},
+				success: function(result) {
+					if (result.status) {
+						
+							setTimeout(function(){
+								Batal();
+							}, 1000);
+						
+						setTimeout(function(){
+							reload_table();
+						}, 1000);
+					}
+					setTimeout(function(){
+						$('#btn_save').text('Save');
+						$('#btn_save').attr('disabled', false);
+						document.getElementById('formAksi').reset();
+					}, 1000);
+					swal_berhasil(); 
+					setTimeout(function(){
+							reload_table();
+					}, 1000);
+				}, error: function(jqXHR, textStatus, errorThrown) {
+					// alert('Error adding/update data');
+					swal({ title:"ERROR", text:"Error adding / update data", type: "warning", closeOnConfirm: true}); 
+					$('#btnSave').text('save'); $('#btnSave').attr('disabled',false);  
+				}
+			});
+		});
+	});
+</script>
