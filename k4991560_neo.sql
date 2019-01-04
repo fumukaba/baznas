@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 04 Jan 2019 pada 02.05
+-- Waktu pembuatan: 04 Jan 2019 pada 04.28
 -- Versi server: 10.1.36-MariaDB
 -- Versi PHP: 7.2.11
 
@@ -72,6 +72,7 @@ CREATE TABLE `submenu` (
 --
 
 INSERT INTO `submenu` (`id_sub`, `nama_sub`, `mainmenu_idmenu`, `active_sub`, `icon_class`, `link_sub`, `sub_akses`, `entry_date`, `entry_user`) VALUES
+(21, 'Infaq', 11, '', '', 'Infaq', '', '2019-01-04 02:30:51', NULL),
 (20, 'User Type', 11, '', '', 'User_type', '', '2019-01-03 09:11:36', NULL),
 (19, 'User', 11, '', '', 'User', '', '2019-01-03 09:11:40', NULL),
 (18, 'ZIS', 11, '', '', 'Zis', '', '2019-01-03 06:49:11', NULL);
@@ -126,6 +127,7 @@ CREATE TABLE `tab_akses_submenu` (
 --
 
 INSERT INTO `tab_akses_submenu` (`id`, `id_sub_menu`, `id_level`, `c`, `r`, `u`, `d`, `entry_date`, `entry_user`) VALUES
+(39, 21, 5, 0, 1, 0, 0, '2019-01-04 02:32:04', ''),
 (38, 20, 6, 0, 1, 0, 0, '2019-01-03 09:12:40', ''),
 (37, 19, 6, 0, 1, 0, 0, '2019-01-03 09:12:40', ''),
 (36, 18, 5, 0, 1, 0, 0, '2019-01-03 06:56:55', '');
@@ -150,6 +152,33 @@ CREATE TABLE `tb_about` (
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `tb_infaq`
+--
+
+CREATE TABLE `tb_infaq` (
+  `id_infaq` varchar(34) NOT NULL,
+  `nama_pengirim` varchar(50) NOT NULL,
+  `bank_pengirim` varchar(50) NOT NULL,
+  `norek_pengirim` varchar(20) NOT NULL,
+  `jumlah_infaq` double NOT NULL,
+  `tanggal_infaq` datetime NOT NULL,
+  `bukti_infaq` text NOT NULL,
+  `status_infaq` enum('Menunggu Konfirmasi','Valid','Tidak Valid') NOT NULL DEFAULT 'Menunggu Konfirmasi',
+  `status_uang` enum('Belum Dikirim','Sudah Dikirim') NOT NULL DEFAULT 'Belum Dikirim',
+  `id_zis` varchar(34) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `tb_infaq`
+--
+
+INSERT INTO `tb_infaq` (`id_infaq`, `nama_pengirim`, `bank_pengirim`, `norek_pengirim`, `jumlah_infaq`, `tanggal_infaq`, `bukti_infaq`, `status_infaq`, `status_uang`, `id_zis`) VALUES
+('t20b48307e07badba7dbd62bc74a93c0b0', 'Katri S', 'BRI Syariah', '12345', 78000, '2018-12-31 08:00:01', '', 'Tidak Valid', 'Sudah Dikirim', '891b20728831a55f795b43b9032df89e'),
+('t2511e824b277a9fcd0f75c96ef64fb423', 'Muhadi', 'BNI', '0923093092037029', 290000, '2018-12-01 09:00:00', 'retro-3d-robot-wallpaper-49975-51660-hd-wallpapers.jpg', 'Valid', 'Belum Dikirim', 't15e427ce64ac8a5f248787903d39256d1');
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `tb_zis`
 --
 
@@ -170,7 +199,8 @@ CREATE TABLE `tb_zis` (
 --
 
 INSERT INTO `tb_zis` (`id_zis`, `nama_zis`, `alamat_zis`, `kelurahan_zis`, `kecamatan_zis`, `qrcode_zis`, `pengurus_zis`, `dibuat_oleh`, `terakhir_diperbarui`) VALUES
-('891b20728831a55f795b43b9032df89e', 'Al Kodir', '<p>Test</p>', 'Lowokwaru', 'Mojolangu', '891b20728831a55f795b43b9032df89e.png', 26, 22, '2019-01-04 01:03:22');
+('891b20728831a55f795b43b9032df89e', 'Al Kodir', '<p>Test</p>', 'Lowokwaru', 'Mojolangu', '891b20728831a55f795b43b9032df89e.png', 26, 22, '2019-01-04 01:03:22'),
+('t15e427ce64ac8a5f248787903d39256d1', 'Baznas', '<p>Test</p>', 'Test', 'Test', 't15e427ce64ac8a5f248787903d39256d1.png', 26, 22, '2019-01-04 02:30:06');
 
 -- --------------------------------------------------------
 
@@ -258,6 +288,13 @@ ALTER TABLE `tb_about`
   ADD PRIMARY KEY (`id_about`);
 
 --
+-- Indeks untuk tabel `tb_infaq`
+--
+ALTER TABLE `tb_infaq`
+  ADD PRIMARY KEY (`id_infaq`),
+  ADD KEY `id_zis` (`id_zis`);
+
+--
 -- Indeks untuk tabel `tb_zis`
 --
 ALTER TABLE `tb_zis`
@@ -292,7 +329,7 @@ ALTER TABLE `mainmenu`
 -- AUTO_INCREMENT untuk tabel `submenu`
 --
 ALTER TABLE `submenu`
-  MODIFY `id_sub` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id_sub` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT untuk tabel `tab_akses_mainmenu`
@@ -304,7 +341,7 @@ ALTER TABLE `tab_akses_mainmenu`
 -- AUTO_INCREMENT untuk tabel `tab_akses_submenu`
 --
 ALTER TABLE `tab_akses_submenu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_about`
@@ -316,7 +353,7 @@ ALTER TABLE `tb_about`
 -- AUTO_INCREMENT untuk tabel `tm_user`
 --
 ALTER TABLE `tm_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT untuk tabel `user_type`
@@ -327,6 +364,12 @@ ALTER TABLE `user_type`
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
+
+--
+-- Ketidakleluasaan untuk tabel `tb_infaq`
+--
+ALTER TABLE `tb_infaq`
+  ADD CONSTRAINT `tb_infaq_ibfk_1` FOREIGN KEY (`id_zis`) REFERENCES `tb_zis` (`id_zis`) ON DELETE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `tb_zis`
