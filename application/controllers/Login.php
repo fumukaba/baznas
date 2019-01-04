@@ -34,6 +34,7 @@ class Login extends CI_Controller {
 				$this->session->set_userdata('bank_rek_user',$user->bank_rek_user);				
 				$this->session->set_userdata('view_password',$user->view_password);
 				$this->session->set_userdata('admin_level',$user->admin_level);
+				$this->session->set_userdata('id',$user->id);
 
 
 				$data['hasil']=1;

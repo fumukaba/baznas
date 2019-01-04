@@ -9,12 +9,13 @@ class Zis extends CI_Controller {
 		$this->auth->restrict();
 		date_default_timezone_set("Asia/Jakarta");
 		$this->load->library("session");
+		// $this->load->library("phpqrcode/qrlib");
 	}
 	
 	function index(){
        // $this->mdl_home->getsqurity();
         $data['view_file']    = "moduls/zis";
-        $this->load->view('admin_view',$data);
+		$this->load->view('admin_view',$data);
     }
 	
 	public function ajax_list() {
@@ -49,16 +50,34 @@ class Zis extends CI_Controller {
 	}
 
 	public function ajax_add() {
+		include('./application/libraries/phpqrcode/qrlib.php');
+		$tempDir = './uploads/qrcode/';
+
+		$id_zis = md5(time());
+		$codeContents = $id_zis;
+    
+    	$fileName = $id_zis . '.png';
+    	$pngAbsoluteFilePath = $tempDir.$fileName;
+    
+		if (!file_exists($pngAbsoluteFilePath)) {
+			QRcode::png($codeContents, $pngAbsoluteFilePath);
+		}
+		
+		$dibuat_oleh = $this->session->userdata('id');
+
 		$data = array(
-                'id_zis' => md5(time()),
-				'nama_zis' => $this->input->post('nama_zis'),
-				'alamat_zis' => $this->input->post('alamat_zis'),
-                'kelurahan_zis' => $this->input->post('kelurahan_zis'),
-                'kecamatan_zis' => $this->input->post('kecamatan_zis')
-				);	
+			'id_zis' => $id_zis,
+			'nama_zis' => $this->input->post('nama_zis'),
+			'alamat_zis' => $this->input->post('alamat_zis'),
+			'kelurahan_zis' => $this->input->post('kelurahan_zis'),
+			'kecamatan_zis' => $this->input->post('kecamatan_zis'),
+			'qrcode_zis' => $fileName,
+			'pengurus_zis' => $this->input->post('pengurus_zis'),
+			'dibuat_oleh' => $dibuat_oleh
+		);	
 		$insert = $this->Mdl_zis->add($data);
 		//print_r($this->db->last_query());
-		echo json_encode(array('status' => TRUE));
+		echo json_encode(array('status' => $this->input->post('pengurus_zis')));
 	}
 	
 	public function ajax_edit($id) {
@@ -67,12 +86,17 @@ class Zis extends CI_Controller {
 	}
 	
 	public function ajax_update() {
+		$dibuat_oleh = $this->session->userdata('id');
+
 		$data = array(
-					'jenis_bank'         	=> $this->input->post('jenis_bank'),
-				'atas_nama_bank'         	=> $this->input->post('atas_nama_bank'),
-				'no_rekening'         	=> $this->input->post('no_rekening'),
-			);
-		$this->Mdl_zis->update(array('id_data' => $this->input->post('id_data')), $data);
+			'nama_zis' => $this->input->post('nama_zis'),
+			'alamat_zis' => $this->input->post('alamat_zis'),
+			'kelurahan_zis' => $this->input->post('kelurahan_zis'),
+			'kecamatan_zis' => $this->input->post('kecamatan_zis'),
+			'pengurus_zis' => $this->input->post('pengurus_zis'),
+			'dibuat_oleh' => $dibuat_oleh
+		);
+		$this->Mdl_zis->update(array('id_zis' => $this->input->post('id_zis')), $data);
 		echo json_encode(array("status" => TRUE));
     }
 	

@@ -368,15 +368,20 @@
 
 					//document.getElementById('fc_kdbahan').setAttribute('readonly','readonly');
 
-					$('[name="id_data"]').val(result.id_data);
+					$('[name="id_zis"]').val(result.id_zis);
 
-					$('[name="jenis_bank"]').val(result.jenis_bank);
+					$('[name="nama_zis"]').val(result.nama_zis);
 
-					$('[name="atas_nama_bank"]').val(result.atas_nama_bank);
+					tinymce.activeEditor.setContent(result.alamat_zis);
 
-					$('[name="no_rekening"]').val(result.no_rekening);	
+					$('[name="kelurahan_zis"]').val(result.kelurahan_zis);	
 
+					$('[name="kecamatan_zis"]').val(result.kecamatan_zis);	
 
+					var _classess = ".c" + result.pengurus_zis;
+					$('#pengurus_zis ' + _classess).attr('selected', 'selected');
+
+					// console.log(_classess);
 
 				}, error: function (jqXHR, textStatus, errorThrown) {
 
@@ -484,7 +489,7 @@
 
 <form class="form-horizontal" role="form" id="formAksi">
 
-	 <input type="hidden" name="id_data">
+	 <input type="hidden" name="id_zis">
 
 	<div class="form-group">
 
@@ -532,6 +537,21 @@
 
 		</div>
 
+	</div>
+	<div class="form-group">
+	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Pengurus </label>
+		<div class="col-sm-4">
+			<select name="pengurus_zis" id="pengurus_zis" class="form-control">
+			<option>--Pilih Pengurus--</option>
+			<?php 
+			$level = $this->db->query("SELECT * FROM user_type WHERE user_type_name = 'Pengurus ZIS'")->result_array();
+			$user_type_id = $level[0]['user_type_id'];
+			$pengurus = $this->db->query("SELECT * FROM tm_user WHERE admin_level = $user_type_id");
+			foreach($pengurus->result() as $row_kat)	{	?>
+				<option class="c<?php echo $row_kat->id; ?>" value="<?php echo $row_kat->id?>"><?php echo $row_kat->nama; ?></option>
+			<?php } ?>
+			</select>
+		</div>
 	</div>
 
 	<div class="col-md-offset-2 col-md-9">
