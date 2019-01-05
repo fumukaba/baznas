@@ -14,7 +14,7 @@
 	    background: url('https://cdn.rawgit.com/DataTables/DataTables/6c7ada53ebc228ea9bc28b1b216e793b1825d188/examples/resources/details_close.png') no-repeat center center;
 	}
  </style>
-<?php $title = "<i class='fa fa-map-marker'></i>&nbsp;ZIS"; ?>
+<?php $title = "<i class='fa fa-map-marker'></i>&nbsp;Tempat ZIS"; ?>
 
 <div id="idImgLoader" style="margin: 0 auto; text-align: center;">
 
@@ -453,7 +453,7 @@
 
 <div class="widget-header">
 
-		<h4 class="widget-title">Tambah ZIS</h4>
+		<h4 class="widget-title">Kelola Tempat ZIS</h4>
 
 
 

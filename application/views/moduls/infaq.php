@@ -3,7 +3,7 @@
  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
  <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
-
+  
  <style type="text/css">
  	
  	td.details-control {
@@ -249,93 +249,93 @@
 
 	
 
-	// function save() {
+	function save() {
 
-	// 		$('#btn_save').text('Saving...');
+			$('#btn_save').text('Saving...');
 
-	// 		$('#btn_save').attr('disabled', true);
+			$('#btn_save').attr('disabled', true);
 
 
 
-	// 		var url;
+			var url;
 
-	// 		if (save_method == 'add') {
+			if (save_method == 'add') {
 
-	// 			url = "<?php echo site_url('Infaq')?>/ajax_add";
+				url = "<?php echo site_url('Infaq')?>/ajax_add";
 
-	// 		} else {
+			} else {
 
-	// 			url = "<?php echo site_url('Infaq')?>/ajax_update"; 
+				url = "<?php echo site_url('Infaq')?>/ajax_update"; 
 
-	// 		}
+			}
 
 			
 
-	// 		tinyMCE.triggerSave();
+			tinyMCE.triggerSave();
 
-	// 		$.ajax({
+			$.ajax({
 
-	// 			url: url,
+				url: url,
 
-	// 			type: "POST",
+				type: "POST",
 
-	// 			data: $('#formAksi').serialize(),
+				data: $('#formAksi').serialize(),
 
-	// 			dataType: "JSON",
+				dataType: "JSON",
 
-	// 			success: function(result) {
-    //                 console.log(result);
-	// 				// if (result.status) {
-
-						
-
-	// 				// 		setTimeout(function(){
-
-	// 				// 			Batal();
-
-	// 				// 		}, 1000);
+				success: function(result) {
+                    console.log(result);
+					// if (result.status) {
 
 						
 
-	// 				// 	setTimeout(function(){
+					// 		setTimeout(function(){
 
-	// 				// 		reload_table();
+					// 			Batal();
 
-	// 				// 	}, 1000);
+					// 		}, 1000);
 
-	// 				// }
+						
 
-	// 				// setTimeout(function(){
+					// 	setTimeout(function(){
 
-	// 				// 	$('#btn_save').text('Save');
+					// 		reload_table();
 
-	// 				// 	$('#btn_save').attr('disabled', false);
+					// 	}, 1000);
 
-	// 				// 	document.getElementById('formAksi').reset();
+					// }
 
-	// 				// }, 1000);
+					// setTimeout(function(){
 
-	// 				// swal_berhasil(); 
+					// 	$('#btn_save').text('Save');
 
-	// 				// setTimeout(function(){
+					// 	$('#btn_save').attr('disabled', false);
 
-	// 				// 		reload_table();
+					// 	document.getElementById('formAksi').reset();
 
-	// 				// }, 1000);
+					// }, 1000);
 
-	// 			}, error: function(jqXHR, textStatus, errorThrown) {
+					// swal_berhasil(); 
 
-	// 				// alert('Error adding/update data');
+					// setTimeout(function(){
 
-	// 				swal({ title:"ERROR", text:"Error adding / update data", type: "warning", closeOnConfirm: true}); 
+					// 		reload_table();
 
-	// 				$('#btnSave').text('save'); $('#btnSave').attr('disabled',false);  
+					// }, 1000);
 
-	// 			}
+				}, error: function(jqXHR, textStatus, errorThrown) {
 
-	// 		});
+					// alert('Error adding/update data');
 
-	// }
+					swal({ title:"ERROR", text:"Error adding / update data", type: "warning", closeOnConfirm: true}); 
+
+					$('#btnSave').text('save'); $('#btnSave').attr('disabled',false);  
+
+				}
+
+			});
+
+	}
 
 	
 
@@ -372,11 +372,12 @@
 					//document.getElementById('fc_kdbahan').setAttribute('readonly','readonly');
 
 					$('[name="id_infaq"]').val(result.id_infaq);
-					$('[name="ostatus_infaq"]').val(result.status_infaq);
 
 					$('[name="nama_pengirim"]').val(result.nama_pengirim);
 
 					$('[name="bank_pengirim"]').val(result.bank_pengirim);
+
+					$('[name="pemilik_rekening"]').val(result.pemilik_rekening);
 
                     $('[name="norek_pengirim"]').val(result.norek_pengirim);
 
@@ -473,7 +474,7 @@
 
 <div class="widget-header">
 
-		<h4 class="widget-title">Tambah ZIS</h4>
+		<h4 class="widget-title">Kelola Data Infaq</h4>
 
 
 
@@ -510,7 +511,6 @@
 <form class="form-horizontal" role="form" method="POST" id="formAksi" enctype="multipart/form-data">
 
 	 <input type="hidden" name="id_infaq">
-	 <input type="text" name="ostatus_infaq">
 
 	<div class="form-group">
 
@@ -531,6 +531,18 @@
 		<div class="col-sm-10">
 
         <input type="text" id="bank_pengirim" name="bank_pengirim" placeholder="Bank Pengirim" class="col-xs-10 col-sm-5" />
+
+		</div>
+
+	</div>
+
+	<div class="form-group">
+
+	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Pemilik Rekening </label>
+
+		<div class="col-sm-10">
+
+        <input type="text" id="pemilik_rekening" name="pemilik_rekening" placeholder="Nama Pemilik rekening" class="col-xs-10 col-sm-5" />
 
 		</div>
 
@@ -587,8 +599,8 @@
 	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Status Uang </label>
 		<div class="col-sm-4">
 			<select name="status_uang" id="status_uang" class="form-control">
-                <option class="c1" value="Kas Baznas">Kas Baznas</option>
-                <option class="c2" value="Sudah Terdistribusi">Sudah Terdistribusi</option>
+                <option class="c1" value="Belum Dikirim">Belum Dikirim</option>
+                <option class="c2" value="Sudah Dikirim">Sudah Dikirim</option>
             </select>
 		</div>
 	</div>
@@ -601,7 +613,7 @@
 	</div>
 
 	<div class="form-group">
-	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Tempat ZIS </label>
+	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> ZIS </label>
 		<div class="col-sm-4">
 			<select name="id_zis" id="id_zis" class="form-control">
 			<?php 
