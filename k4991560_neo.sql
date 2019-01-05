@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 05 Jan 2019 pada 02.19
+-- Waktu pembuatan: 05 Jan 2019 pada 03.58
 -- Versi server: 10.1.36-MariaDB
 -- Versi PHP: 7.2.11
 
@@ -47,7 +47,8 @@ CREATE TABLE `mainmenu` (
 INSERT INTO `mainmenu` (`seq`, `idmenu`, `nama_menu`, `active_menu`, `icon_class`, `link_menu`, `menu_akses`, `entry_date`, `entry_user`) VALUES
 (1, 1, 'Dashboard', '', 'menu-icon fa fa-dashboard', 'Dashboard', '', '2019-01-04 08:22:30', NULL),
 (2, 2, 'Master', '', 'menu-icon fa fa-file', '#', '', '2019-01-04 08:22:30', NULL),
-(3, 3, 'About', '', 'menu-icon fa fa-question', 'About', '', '2019-01-04 08:31:13', NULL);
+(3, 3, 'About', '', 'menu-icon fa fa-question', 'About', '', '2019-01-04 08:31:13', NULL),
+(4, 4, 'Setting', '', 'menu-icon fa fa-gear', 'Setting', '', '2019-01-05 02:49:07', NULL);
 
 -- --------------------------------------------------------
 
@@ -74,7 +75,7 @@ CREATE TABLE `submenu` (
 INSERT INTO `submenu` (`id_sub`, `nama_sub`, `mainmenu_idmenu`, `active_sub`, `icon_class`, `link_sub`, `sub_akses`, `entry_date`, `entry_user`) VALUES
 (1, 'User Type', 2, '', '', 'User_type', '', '2019-01-04 08:23:35', NULL),
 (2, 'User', 2, '', '', 'User', '', '2019-01-04 08:23:35', NULL),
-(3, 'ZIS', 2, '', '', 'Zis', '', '2019-01-04 08:24:13', NULL),
+(3, 'Tempat ZIS', 2, '', '', 'Zis', '', '2019-01-05 02:32:33', NULL),
 (4, 'Infaq', 2, '', '', 'Infaq', '', '2019-01-04 08:24:13', NULL);
 
 -- --------------------------------------------------------
@@ -102,7 +103,8 @@ CREATE TABLE `tab_akses_mainmenu` (
 INSERT INTO `tab_akses_mainmenu` (`id`, `id_menu`, `id_level`, `c`, `r`, `u`, `d`, `entry_date`, `entry_user`) VALUES
 (1, 2, 1, 0, 1, 0, 0, '2019-01-04 08:25:54', ''),
 (2, 3, 1, 0, 1, 0, 0, '2019-01-04 08:25:54', ''),
-(3, 2, 2, 0, 1, 0, 0, '2019-01-04 08:29:52', '');
+(3, 2, 2, 0, 1, 0, 0, '2019-01-04 08:29:52', ''),
+(4, 4, 1, 0, 1, 0, 0, '2019-01-05 02:46:39', '');
 
 -- --------------------------------------------------------
 
@@ -161,12 +163,13 @@ CREATE TABLE `tb_infaq` (
   `id_infaq` varchar(34) NOT NULL,
   `nama_pengirim` varchar(50) NOT NULL,
   `bank_pengirim` varchar(50) NOT NULL,
+  `pemilik_rekening` varchar(50) NOT NULL,
   `norek_pengirim` varchar(20) NOT NULL,
   `jumlah_infaq` double NOT NULL,
   `tanggal_infaq` datetime NOT NULL,
   `bukti_infaq` text NOT NULL,
   `status_infaq` enum('Menunggu Konfirmasi','Valid','Tidak Valid') NOT NULL DEFAULT 'Menunggu Konfirmasi',
-  `status_uang` enum('Belum Dikirim','Sudah Dikirim') NOT NULL DEFAULT 'Belum Dikirim',
+  `status_uang` enum('Kas Baznas','Sudah Terdistribusi') NOT NULL DEFAULT 'Kas Baznas',
   `diperbarui_oleh` int(11) DEFAULT NULL,
   `terakhir_diperbarui` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `id_zis` varchar(34) NOT NULL
@@ -176,21 +179,8 @@ CREATE TABLE `tb_infaq` (
 -- Dumping data untuk tabel `tb_infaq`
 --
 
-INSERT INTO `tb_infaq` (`id_infaq`, `nama_pengirim`, `bank_pengirim`, `norek_pengirim`, `jumlah_infaq`, `tanggal_infaq`, `bukti_infaq`, `status_infaq`, `status_uang`, `diperbarui_oleh`, `terakhir_diperbarui`, `id_zis`) VALUES
-('t26a53f7e1179e70b78a3951a1159e2030', 'Fuad', 'BRI', '0099019429100', 1000000, '2018-01-04 08:00:00', 'profile.jpg', 'Valid', 'Belum Dikirim', 2, '2019-01-04 09:41:54', '0');
-
---
--- Trigger `tb_infaq`
---
-DELIMITER $$
-CREATE TRIGGER `kasmas_infaq` AFTER UPDATE ON `tb_infaq` FOR EACH ROW BEGIN
-IF(new.id_zis=0 AND new.status_infaq='Valid')
-THEN
-INSERT INTO tb_kasmas VALUES ('',CURRENT_TIMESTAMP,'Infaq',new.id_infaq,new.jumlah_infaq);
-END IF;
-END
-$$
-DELIMITER ;
+INSERT INTO `tb_infaq` (`id_infaq`, `nama_pengirim`, `bank_pengirim`, `pemilik_rekening`, `norek_pengirim`, `jumlah_infaq`, `tanggal_infaq`, `bukti_infaq`, `status_infaq`, `status_uang`, `diperbarui_oleh`, `terakhir_diperbarui`, `id_zis`) VALUES
+('t26a53f7e1179e70b78a3951a1159e2030', 'Fuad', 'BRI', 'Nugroho', '0099019429100', 1000000, '2018-01-04 08:00:00', 'profile.jpg', 'Valid', 'Kas Baznas', 1, '2019-01-05 02:39:10', '0');
 
 -- --------------------------------------------------------
 
@@ -209,7 +199,7 @@ CREATE TABLE `tb_kasbas` (
 --
 
 INSERT INTO `tb_kasbas` (`id_kasbas`, `tanggal_kasbas`, `total_kasbas`) VALUES
-(1, '2019-01-04 09:41:54', 0);
+(1, '2019-01-05 02:18:43', 1000000);
 
 -- --------------------------------------------------------
 
@@ -244,8 +234,28 @@ CREATE TABLE `tb_kasmas` (
 --
 
 INSERT INTO `tb_kasmas` (`id_kasmas`, `tanggal_kasmas`, `asal_kasmas`, `id_asal`, `jumlah_kasmas`) VALUES
-(1, '2019-01-04 09:41:54', 'Infaq', 't26a53f7e1179e70b78a3951a1159e2030', 1000000),
-(2, '2019-01-04 09:41:54', 'Infaq', 't26a53f7e1179e70b78a3951a1159e2030', 1000000);
+(1, '2019-01-05 02:18:43', 'Infaq', 't26a53f7e1179e70b78a3951a1159e2030', 1000000);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tb_setting`
+--
+
+CREATE TABLE `tb_setting` (
+  `id_setting` bigint(20) NOT NULL,
+  `tahun` int(11) NOT NULL,
+  `meta_key` varchar(50) NOT NULL,
+  `meta_value` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `tb_setting`
+--
+
+INSERT INTO `tb_setting` (`id_setting`, `tahun`, `meta_key`, `meta_value`) VALUES
+(1, 2019, 'nominal_zakat_fitrah', '30000'),
+(2, 2019, 'nomimal_barang_temuan', '35000');
 
 -- --------------------------------------------------------
 
@@ -388,6 +398,12 @@ ALTER TABLE `tb_kasmas`
   ADD PRIMARY KEY (`id_kasmas`);
 
 --
+-- Indeks untuk tabel `tb_setting`
+--
+ALTER TABLE `tb_setting`
+  ADD PRIMARY KEY (`id_setting`);
+
+--
 -- Indeks untuk tabel `tb_zis`
 --
 ALTER TABLE `tb_zis`
@@ -417,19 +433,19 @@ ALTER TABLE `user_type`
 -- AUTO_INCREMENT untuk tabel `mainmenu`
 --
 ALTER TABLE `mainmenu`
-  MODIFY `seq` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `seq` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `submenu`
 --
 ALTER TABLE `submenu`
-  MODIFY `id_sub` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_sub` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `tab_akses_mainmenu`
 --
 ALTER TABLE `tab_akses_mainmenu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `tab_akses_submenu`
@@ -459,7 +475,13 @@ ALTER TABLE `tb_kaskel`
 -- AUTO_INCREMENT untuk tabel `tb_kasmas`
 --
 ALTER TABLE `tb_kasmas`
-  MODIFY `id_kasmas` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_kasmas` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT untuk tabel `tb_setting`
+--
+ALTER TABLE `tb_setting`
+  MODIFY `id_setting` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `tm_user`
