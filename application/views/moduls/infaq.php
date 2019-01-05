@@ -587,8 +587,8 @@
 	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Status Uang </label>
 		<div class="col-sm-4">
 			<select name="status_uang" id="status_uang" class="form-control">
-                <option class="c1" value="Belum Dikirim">Belum Dikirim</option>
-                <option class="c2" value="Sudah Dikirim">Sudah Dikirim</option>
+                <option class="c1" value="Kas Baznas">Kas Baznas</option>
+                <option class="c2" value="Sudah Terdistribusi">Sudah Terdistribusi</option>
             </select>
 		</div>
 	</div>
@@ -601,7 +601,7 @@
 	</div>
 
 	<div class="form-group">
-	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> ZIS </label>
+	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Tempat ZIS </label>
 		<div class="col-sm-4">
 			<select name="id_zis" id="id_zis" class="form-control">
 			<?php 
