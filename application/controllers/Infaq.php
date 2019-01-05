@@ -114,6 +114,8 @@ class Infaq extends CI_Controller {
 		$this->load->library('upload', $config);
  		$this->upload->initialize($config);
         $this->upload->do_upload('bukti_infaq');
+
+        $id = $this->session->userdata('id');
         
         if(empty($gambar)){
 			$data = array(
@@ -124,6 +126,7 @@ class Infaq extends CI_Controller {
                 'tanggal_infaq' => $this->input->post('tanggal_infaq'),
                 'status_infaq' => $this->input->post('status_infaq'),
                 'status_uang' => $this->input->post('status_uang'),
+                'diperbarui_oleh' => $id,
                 'id_zis' => $this->input->post('id_zis')
             );
  		}else{
@@ -136,11 +139,13 @@ class Infaq extends CI_Controller {
                 'bukti_infaq' => $gambar,
                 'status_infaq' => $this->input->post('status_infaq'),
                 'status_uang' => $this->input->post('status_uang'),
+                'diperbarui_oleh' => $id,
                 'id_zis' => $this->input->post('id_zis')
             ); 			
         }
 
-		$this->Mdl_infaq->update(array('id_infaq' => $this->input->post('id_infaq')), $data);
+        $this->Mdl_infaq->update(array('id_infaq' => $this->input->post('id_infaq')), $data);
+
 		echo json_encode(array("status" => TRUE));
     }
 	
