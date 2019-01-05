@@ -63,6 +63,7 @@ class Infaq extends CI_Controller {
         $this->upload->do_upload('bukti_infaq');
         
         $id_infaq = "t2" . md5(time());
+        $id = $this->session->userdata('id');
 
 		if(empty($gambar)){
 			$data = array(
@@ -75,6 +76,7 @@ class Infaq extends CI_Controller {
                 'tanggal_infaq' => $this->input->post('tanggal_infaq'),
                 'status_infaq' => $this->input->post('status_infaq'),
                 'status_uang' => $this->input->post('status_uang'),
+                'diperbarui_oleh' => $id,
                 'id_zis' => $this->input->post('id_zis')
             );
  		}else{
@@ -89,6 +91,7 @@ class Infaq extends CI_Controller {
                 'bukti_infaq' => $gambar,
                 'status_infaq' => $this->input->post('status_infaq'),
                 'status_uang' => $this->input->post('status_uang'),
+                'diperbarui_oleh' => $id,
                 'id_zis' => $this->input->post('id_zis')
             ); 			
         }

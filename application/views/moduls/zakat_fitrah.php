@@ -14,7 +14,7 @@
 	    background: url('https://cdn.rawgit.com/DataTables/DataTables/6c7ada53ebc228ea9bc28b1b216e793b1825d188/examples/resources/details_close.png') no-repeat center center;
 	}
  </style>
-<?php $title = "<i class='fa fa-money'></i>&nbsp;Infaq"; ?>
+<?php $title = "<i class='fa fa-money'></i>&nbsp;Zakat Fitrah"; ?>
 
 <div id="idImgLoader" style="margin: 0 auto; text-align: center;">
 
@@ -127,7 +127,7 @@
 
 	var save_method;
 
-	var link = "<?php echo site_url('Infaq')?>";
+	var link = "<?php echo site_url('Zakat_fitrah')?>";
 
 	var table;
 
@@ -195,7 +195,7 @@
 
         "ajax": {
 
-            "url": "<?php echo site_url('Infaq/ajax_list')?>",
+            "url": "<?php echo site_url('Zakat_fitrah/ajax_list')?>",
 
             "type": "POST"
 
@@ -261,11 +261,11 @@
 
 	// 		if (save_method == 'add') {
 
-	// 			url = "<?php echo site_url('Infaq')?>/ajax_add";
+	// 			url = "<?php echo site_url('Zakat_fitrah')?>/ajax_add";
 
 	// 		} else {
 
-	// 			url = "<?php echo site_url('Infaq')?>/ajax_update"; 
+	// 			url = "<?php echo site_url('Zakat_fitrah')?>/ajax_update"; 
 
 	// 		}
 
@@ -361,7 +361,7 @@
 
 			$.ajax({
 
-				url : "<?php echo site_url('Infaq')?>/ajax_edit/"+id,
+				url : "<?php echo site_url('Zakat_fitrah')?>/ajax_edit/"+id,
 
 				type: "GET",
 
@@ -371,8 +371,8 @@
 
 					//document.getElementById('fc_kdbahan').setAttribute('readonly','readonly');
 
-					$('[name="id_infaq"]').val(result.id_infaq);
-					$('[name="ostatus_infaq"]').val(result.status_infaq);
+					$('[name="id_zakat_fitrah"]').val(result.id_zakat_fitrah);
+					$('[name="ostatus_zakat"]').val(result.status_zakat);
 
 					$('[name="nama_pengirim"]').val(result.nama_pengirim);
 
@@ -382,22 +382,24 @@
 
                     $('[name="norek_pengirim"]').val(result.norek_pengirim);
 
-                    $('[name="jumlah_infaq"]').val(result.jumlah_infaq);
+                    $('[name="jumlah_orang"]').val(result.jumlah_orang);
 
-                    $('[name="tanggal_infaq"]').val(result.tanggal_infaq);
+                    $('[name="total_zakat"]').val(result.total_zakat);
 
-                    if(result.status_infaq == 'Menunggu Konfirmasi') {
-                        $('#status_infaq .c1').attr('selected', 'selected');
-                    } else if(result.status_infaq == 'Valid') {
-                        $('#status_infaq .c2').attr('selected', 'selected');
-                    } else if(result.status_infaq == 'Tidak Valid') {
-                        $('#status_infaq .c3').attr('selected', 'selected');
+                    $('[name="tanggal_zakat"]').val(result.tanggal_zakat);
+
+                    if(result.status_zakat == 'Menunggu Konfirmasi') {
+                        $('#status_zakat .c1').attr('selected', 'selected');
+                    } else if(result.status_zakat == 'Valid') {
+                        $('#status_zakat .c2').attr('selected', 'selected');
+                    } else if(result.status_zakat == 'Tidak Valid') {
+                        $('#status_zakat .c3').attr('selected', 'selected');
                     }
 
-                    if(result.status_uang == 'Belum Dikirim') {
-                        $('#status_uang .c1').attr('selected', 'selected');
-                    } else if(result.status_uang == 'Sudah Dikirim') {
-                        $('#status_uang .c2').attr('selected', 'selected');
+                    if(result.status_uang_zakat == 'Belum Dikirim') {
+                        $('#status_uang_zakat .c1').attr('selected', 'selected');
+                    } else if(result.status_uang_zakat == 'Sudah Dikirim') {
+                        $('#status_uang_zakat .c2').attr('selected', 'selected');
                     }
 
                     var _classess = ".c" + result.id_zis;
@@ -423,7 +425,7 @@
 
 			$.ajax ({
 
-				url : "<?php echo site_url('Infaq/ajax_delete')?>/"+id,
+				url : "<?php echo site_url('Zakat_fitrah/ajax_delete')?>/"+id,
 
 				type: "POST",
 
@@ -475,7 +477,7 @@
 
 <div class="widget-header">
 
-		<h4 class="widget-title">Tambah Infaq</h4>
+		<h4 class="widget-title">Tambah Zakat Fitrah</h4>
 
 
 
@@ -511,8 +513,8 @@
 
 <form class="form-horizontal" role="form" method="POST" id="formAksi" enctype="multipart/form-data">
 
-	 <input type="hidden" name="id_infaq">
-	 <input type="hidden" name="ostatus_infaq">
+	 <input type="hidden" name="id_zakat_fitrah">
+	 <input type="hidden" name="ostatus_zakat">
 
 	<div class="form-group">
 
@@ -562,13 +564,28 @@
 
 	</div>
 
+    <?php
+        $cek_harga = $this->db->query("SELECT * FROM tb_setting WHERE meta_key = 'nominal_zakat_fitrah' ORDER BY tahun DESC LIMIT 0, 1")->result_array();
+    ?>
     <div class="form-group">
 
-	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Jumlah </label>
+	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Jumlah Orang </label>
 
 		<div class="col-sm-10">
 
-			<input type="text" id="jumlah_infaq" name="jumlah_infaq" placeholder="Jumlah" class="col-xs-10 col-sm-5" />
+			<input type="number" id="jumlah_orang" name="jumlah_orang" data-harga="<?php echo $cek_harga[0]['meta_value']; ?>" placeholder="Jumlah Orang" class="col-xs-10 col-sm-5" min="1" value="1" step="1" />
+
+		</div>
+
+	</div>
+    
+    <div class="form-group">
+
+	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Total Zakat </label>
+
+		<div class="col-sm-10">
+
+			<input type="text" readonly="readonly" id="total_zakat" name="total_zakat" placeholder="Total Zakat" class="col-xs-10 col-sm-5" value="<?php echo $cek_harga[0]['meta_value']; ?>" />
 
 		</div>
 
@@ -580,16 +597,16 @@
 
 		<div class="col-sm-10">
 
-			<input type="text" id="tanggal_infaq" name="tanggal_infaq" placeholder="Contoh: 2018-12-31 20:15:00" class="col-xs-10 col-sm-5" />
+			<input type="text" id="tanggal_zakat" name="tanggal_zakat" placeholder="Contoh: 2018-12-31 20:15:00" class="col-xs-10 col-sm-5" />
 
 		</div>
 
 	</div>
 
     <div class="form-group">
-	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Status Infaq </label>
+	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Status Zakat </label>
 		<div class="col-sm-4">
-			<select name="status_infaq" id="status_infaq" class="form-control">
+			<select name="status_zakat" id="status_zakat" class="form-control">
                 <option class="c1" value="Menunggu Konfirmasi">Menunggu Konfirmasi</option>
                 <option class="c2" value="Valid">Valid</option>
                 <option class="c3" value="Tidak Valid">Tidak Valid</option>
@@ -600,7 +617,7 @@
     <div class="form-group">
 	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Status Uang </label>
 		<div class="col-sm-4">
-			<select name="status_uang" id="status_uang" class="form-control">
+			<select name="status_uang_zakat" id="status_uang_zakat" class="form-control">
                 <option class="c1" value="Kas Baznas">Kas Baznas</option>
                 <option class="c2" value="Sudah Terdistribusi">Sudah Terdistribusi</option>
             </select>
@@ -610,7 +627,7 @@
     <div class="form-group">
 	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Bukti Transfer </label>
 		<div class="col-sm-10">
-			<input type="file" id="bukti_infaq" name="bukti_infaq" placeholder="Foto" class="col-xs-10 col-sm-5" />
+			<input type="file" id="bukti_zakat" name="bukti_zakat" placeholder="Foto" class="col-xs-10 col-sm-5" />
 		</div>
 	</div>
 
@@ -669,6 +686,15 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
 	$(document).ready(function(e){
+        $('#jumlah_orang').on('change', (function() {
+            var jumlah = $(this).val(),
+                harga = $(this).data('harga');
+
+            var total = jumlah * harga;
+
+            $('#total_zakat').val(total);
+        }))
+        
 		$("#formAksi").on('submit', function(e){
 			e.preventDefault();
 
@@ -677,9 +703,9 @@
 
 			var url;
 			if (save_method == 'add') {
-				url = "<?php echo site_url('Infaq')?>/ajax_add";
+				url = "<?php echo site_url('Zakat_fitrah')?>/ajax_add";
 			} else {
-				url = "<?php echo site_url('Infaq')?>/ajax_update"; 
+				url = "<?php echo site_url('Zakat_fitrah')?>/ajax_update"; 
 			}
 
 			$.ajax({
