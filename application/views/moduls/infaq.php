@@ -249,93 +249,93 @@
 
 	
 
-	function save() {
+	// function save() {
 
-			$('#btn_save').text('Saving...');
+	// 		$('#btn_save').text('Saving...');
 
-			$('#btn_save').attr('disabled', true);
+	// 		$('#btn_save').attr('disabled', true);
 
 
 
-			var url;
+	// 		var url;
 
-			if (save_method == 'add') {
+	// 		if (save_method == 'add') {
 
-				url = "<?php echo site_url('Infaq')?>/ajax_add";
+	// 			url = "<?php echo site_url('Infaq')?>/ajax_add";
 
-			} else {
+	// 		} else {
 
-				url = "<?php echo site_url('Infaq')?>/ajax_update"; 
+	// 			url = "<?php echo site_url('Infaq')?>/ajax_update"; 
 
-			}
+	// 		}
 
 			
 
-			tinyMCE.triggerSave();
+	// 		tinyMCE.triggerSave();
 
-			$.ajax({
+	// 		$.ajax({
 
-				url: url,
+	// 			url: url,
 
-				type: "POST",
+	// 			type: "POST",
 
-				data: $('#formAksi').serialize(),
+	// 			data: $('#formAksi').serialize(),
 
-				dataType: "JSON",
+	// 			dataType: "JSON",
 
-				success: function(result) {
-                    console.log(result);
-					// if (result.status) {
-
-						
-
-					// 		setTimeout(function(){
-
-					// 			Batal();
-
-					// 		}, 1000);
+	// 			success: function(result) {
+    //                 console.log(result);
+	// 				// if (result.status) {
 
 						
 
-					// 	setTimeout(function(){
+	// 				// 		setTimeout(function(){
 
-					// 		reload_table();
+	// 				// 			Batal();
 
-					// 	}, 1000);
+	// 				// 		}, 1000);
 
-					// }
+						
 
-					// setTimeout(function(){
+	// 				// 	setTimeout(function(){
 
-					// 	$('#btn_save').text('Save');
+	// 				// 		reload_table();
 
-					// 	$('#btn_save').attr('disabled', false);
+	// 				// 	}, 1000);
 
-					// 	document.getElementById('formAksi').reset();
+	// 				// }
 
-					// }, 1000);
+	// 				// setTimeout(function(){
 
-					// swal_berhasil(); 
+	// 				// 	$('#btn_save').text('Save');
 
-					// setTimeout(function(){
+	// 				// 	$('#btn_save').attr('disabled', false);
 
-					// 		reload_table();
+	// 				// 	document.getElementById('formAksi').reset();
 
-					// }, 1000);
+	// 				// }, 1000);
 
-				}, error: function(jqXHR, textStatus, errorThrown) {
+	// 				// swal_berhasil(); 
 
-					// alert('Error adding/update data');
+	// 				// setTimeout(function(){
 
-					swal({ title:"ERROR", text:"Error adding / update data", type: "warning", closeOnConfirm: true}); 
+	// 				// 		reload_table();
 
-					$('#btnSave').text('save'); $('#btnSave').attr('disabled',false);  
+	// 				// }, 1000);
 
-				}
+	// 			}, error: function(jqXHR, textStatus, errorThrown) {
 
-			});
+	// 				// alert('Error adding/update data');
 
-	}
+	// 				swal({ title:"ERROR", text:"Error adding / update data", type: "warning", closeOnConfirm: true}); 
+
+	// 				$('#btnSave').text('save'); $('#btnSave').attr('disabled',false);  
+
+	// 			}
+
+	// 		});
+
+	// }
 
 	
 
@@ -372,6 +372,7 @@
 					//document.getElementById('fc_kdbahan').setAttribute('readonly','readonly');
 
 					$('[name="id_infaq"]').val(result.id_infaq);
+					$('[name="ostatus_infaq"]').val(result.status_infaq);
 
 					$('[name="nama_pengirim"]').val(result.nama_pengirim);
 
@@ -509,6 +510,7 @@
 <form class="form-horizontal" role="form" method="POST" id="formAksi" enctype="multipart/form-data">
 
 	 <input type="hidden" name="id_infaq">
+	 <input type="text" name="ostatus_infaq">
 
 	<div class="form-group">
 

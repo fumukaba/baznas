@@ -51,10 +51,6 @@ class Infaq extends CI_Controller {
 				);
 		echo json_encode($output);
     }
-    
-    public function ds() {
-        echo json_encode(array('status' => TRUE));
-    }
 
 	public function ajax_add() {
         $gambar = $_FILES['bukti_infaq']['name'];
@@ -95,7 +91,35 @@ class Infaq extends CI_Controller {
             ); 			
         }
         
-		$insert = $this->Mdl_infaq->add($data);
+        $insert = $this->Mdl_infaq->add($data);
+        
+        $status_infaq = $this->input->post('status_infaq');
+
+        if($status_infaq == 'Valid') {
+            // Kasmas
+            $kasmas = array(
+                'id_kasmas' => '',
+                'asal_kasmas' => 'Infaq',
+                'id_asal' => $id_infaq,
+                'jumlah_kasmas' => $this->input->post('jumlah_infaq')
+            );
+
+            $this->db->insert('tb_kasmas', $kasmas);
+
+            // Kasbas
+            $jumlah_infaq = $this->input->post('jumlah_infaq');
+            $r_kasbas = $this->db->query("SELECT * FROM tb_kasbas ORDER BY id_kasbas DESC LIMIT 0, 1")->result_array();
+            $old_total = (count($r_kasbas) > 0 ? $r_kasbas[0]['total_kasbas'] : 0);
+            $new_total = $old_total + $jumlah_infaq;
+
+            $kasbas = array(
+                'id_kasbas' => '',
+                'total_kasbas' => $new_total
+            );
+
+            $this->db->insert('tb_kasbas', $kasbas);
+        }
+
 		//print_r($this->db->last_query());
 		echo json_encode(array('status' => TRUE));
 	}
@@ -145,6 +169,35 @@ class Infaq extends CI_Controller {
         }
 
         $this->Mdl_infaq->update(array('id_infaq' => $this->input->post('id_infaq')), $data);
+
+        $id_infaq = $this->input->post('id_infaq');
+        $status_infaq = $this->input->post('status_infaq');
+        $ostatus_infaq = $this->input->post('ostatus_infaq');
+
+        if($ostatus_infaq != 'Valid' && $status_infaq == 'Valid') {
+            // Kasmas
+            $kasmas = array(
+                'id_kasmas' => '',
+                'asal_kasmas' => 'Infaq',
+                'id_asal' => $id_infaq,
+                'jumlah_kasmas' => $this->input->post('jumlah_infaq')
+            );
+
+            $this->db->insert('tb_kasmas', $kasmas);
+
+            // Kasbas
+            $jumlah_infaq = $this->input->post('jumlah_infaq');
+            $r_kasbas = $this->db->query("SELECT * FROM tb_kasbas ORDER BY id_kasbas DESC LIMIT 0, 1")->result_array();
+            $old_total = (count($r_kasbas) > 0 ? $r_kasbas[0]['total_kasbas'] : 0);
+            $new_total = $old_total + $jumlah_infaq;
+
+            $kasbas = array(
+                'id_kasbas' => '',
+                'total_kasbas' => $new_total
+            );
+
+            $this->db->insert('tb_kasbas', $kasbas);
+        }
 
 		echo json_encode(array("status" => TRUE));
     }
