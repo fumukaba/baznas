@@ -69,6 +69,7 @@ class Infaq extends CI_Controller {
                 'id_infaq' => $id_infaq,
                 'nama_pengirim' => $this->input->post('nama_pengirim'),
                 'bank_pengirim' => $this->input->post('bank_pengirim'),
+                'pemilik_rekening' => $this->input->post('pemilik_rekening'),
                 'norek_pengirim' => $this->input->post('norek_pengirim'),
                 'jumlah_infaq' => $this->input->post('jumlah_infaq'),
                 'tanggal_infaq' => $this->input->post('tanggal_infaq'),
@@ -81,6 +82,7 @@ class Infaq extends CI_Controller {
                 'id_infaq' => $id_infaq,
                 'nama_pengirim' => $this->input->post('nama_pengirim'),
                 'bank_pengirim' => $this->input->post('bank_pengirim'),
+                'pemilik_rekening' => $this->input->post('pemilik_rekening'),
                 'norek_pengirim' => $this->input->post('norek_pengirim'),
                 'jumlah_infaq' => $this->input->post('jumlah_infaq'),
                 'tanggal_infaq' => $this->input->post('tanggal_infaq'),
@@ -145,6 +147,7 @@ class Infaq extends CI_Controller {
 			$data = array(
                 'nama_pengirim' => $this->input->post('nama_pengirim'),
                 'bank_pengirim' => $this->input->post('bank_pengirim'),
+                'pemilik_rekening' => $this->input->post('pemilik_rekening'),
                 'norek_pengirim' => $this->input->post('norek_pengirim'),
                 'jumlah_infaq' => $this->input->post('jumlah_infaq'),
                 'tanggal_infaq' => $this->input->post('tanggal_infaq'),
@@ -157,6 +160,7 @@ class Infaq extends CI_Controller {
 			$data = array(
                 'nama_pengirim' => $this->input->post('nama_pengirim'),
                 'bank_pengirim' => $this->input->post('bank_pengirim'),
+                'pemilik_rekening' => $this->input->post('pemilik_rekening'),
                 'norek_pengirim' => $this->input->post('norek_pengirim'),
                 'jumlah_infaq' => $this->input->post('jumlah_infaq'),
                 'tanggal_infaq' => $this->input->post('tanggal_infaq'),

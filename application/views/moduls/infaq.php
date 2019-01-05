@@ -378,6 +378,8 @@
 
 					$('[name="bank_pengirim"]').val(result.bank_pengirim);
 
+					$('[name="pemilik_rekening"]').val(result.pemilik_rekening);
+
                     $('[name="norek_pengirim"]').val(result.norek_pengirim);
 
                     $('[name="jumlah_infaq"]').val(result.jumlah_infaq);
@@ -510,7 +512,7 @@
 <form class="form-horizontal" role="form" method="POST" id="formAksi" enctype="multipart/form-data">
 
 	 <input type="hidden" name="id_infaq">
-	 <input type="text" name="ostatus_infaq">
+	 <input type="hidden" name="ostatus_infaq">
 
 	<div class="form-group">
 
@@ -531,6 +533,18 @@
 		<div class="col-sm-10">
 
         <input type="text" id="bank_pengirim" name="bank_pengirim" placeholder="Bank Pengirim" class="col-xs-10 col-sm-5" />
+
+		</div>
+
+	</div>
+
+	<div class="form-group">
+
+	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Pemilik Pengirim </label>
+
+		<div class="col-sm-10">
+
+        <input type="text" id="pemilik_rekening" name="pemilik_rekening" placeholder="Pemilik Pengirim" class="col-xs-10 col-sm-5" />
 
 		</div>
 

@@ -14,7 +14,7 @@
 	    background: url('https://cdn.rawgit.com/DataTables/DataTables/6c7ada53ebc228ea9bc28b1b216e793b1825d188/examples/resources/details_close.png') no-repeat center center;
 	}
  </style>
-<?php $title = "<i class='fa fa-map-marker'></i>&nbsp;ZIS"; ?>
+<?php $title = "<i class='fa fa-map-marker'></i>&nbsp;Tempat ZIS"; ?>
 
 <div id="idImgLoader" style="margin: 0 auto; text-align: center;">
 
@@ -453,7 +453,7 @@
 
 <div class="widget-header">
 
-		<h4 class="widget-title">Tambah ZIS</h4>
+		<h4 class="widget-title">Tambah Tempat ZIS</h4>
 
 
 
@@ -493,11 +493,11 @@
 
 	<div class="form-group">
 
-	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Nama ZIS </label>
+	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Nama Tempat ZIS </label>
 
 		<div class="col-sm-10">
 
-			<input type="text" id="nama_zis" name="nama_zis" placeholder="Nama ZIS" class="col-xs-10 col-sm-5" />
+			<input type="text" id="nama_zis" name="nama_zis" placeholder="Nama Tempat ZIS" class="col-xs-10 col-sm-5" />
 
 		</div>
 
@@ -505,11 +505,11 @@
 
 	<div class="form-group">
 
-	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Alamat ZIS </label>
+	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Alamat Tempat ZIS </label>
 
 		<div class="col-sm-10">
 
-            <textarea name="alamat_zis" id="alamat_zis" cols="30" rows="10" placeholder="Alamat ZIS" class="col-xs-10 col-sm-5"></textarea>
+            <textarea name="alamat_zis" id="alamat_zis" cols="30" rows="10" placeholder="Alamat Tempat ZIS" class="col-xs-10 col-sm-5"></textarea>
 
 		</div>
 
