@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 05 Jan 2019 pada 03.58
+-- Waktu pembuatan: 05 Jan 2019 pada 06.38
 -- Versi server: 10.1.36-MariaDB
 -- Versi PHP: 7.2.11
 
@@ -76,7 +76,8 @@ INSERT INTO `submenu` (`id_sub`, `nama_sub`, `mainmenu_idmenu`, `active_sub`, `i
 (1, 'User Type', 2, '', '', 'User_type', '', '2019-01-04 08:23:35', NULL),
 (2, 'User', 2, '', '', 'User', '', '2019-01-04 08:23:35', NULL),
 (3, 'Tempat ZIS', 2, '', '', 'Zis', '', '2019-01-05 02:32:33', NULL),
-(4, 'Infaq', 2, '', '', 'Infaq', '', '2019-01-04 08:24:13', NULL);
+(4, 'Infaq', 2, '', '', 'Infaq', '', '2019-01-04 08:24:13', NULL),
+(6, 'Zakat Fitrah', 2, '', '', 'Zakat_fitrah', '', '2019-01-05 04:17:05', NULL);
 
 -- --------------------------------------------------------
 
@@ -134,7 +135,9 @@ INSERT INTO `tab_akses_submenu` (`id`, `id_sub_menu`, `id_level`, `c`, `r`, `u`,
 (3, 3, 1, 0, 1, 0, 0, '2019-01-04 08:27:14', ''),
 (4, 4, 1, 0, 1, 0, 0, '2019-01-04 08:27:14', ''),
 (5, 3, 2, 0, 1, 0, 0, '2019-01-04 08:30:15', ''),
-(6, 4, 2, 0, 1, 0, 0, '2019-01-04 08:30:15', '');
+(6, 4, 2, 0, 1, 0, 0, '2019-01-04 08:30:15', ''),
+(7, 6, 1, 0, 1, 0, 0, '2019-01-05 04:18:39', ''),
+(8, 6, 2, 0, 1, 0, 0, '2019-01-05 04:18:42', '');
 
 -- --------------------------------------------------------
 
@@ -171,7 +174,7 @@ CREATE TABLE `tb_infaq` (
   `status_infaq` enum('Menunggu Konfirmasi','Valid','Tidak Valid') NOT NULL DEFAULT 'Menunggu Konfirmasi',
   `status_uang` enum('Kas Baznas','Sudah Terdistribusi') NOT NULL DEFAULT 'Kas Baznas',
   `diperbarui_oleh` int(11) DEFAULT NULL,
-  `terakhir_diperbarui` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `terakhir_diperbarui` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `id_zis` varchar(34) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -199,7 +202,9 @@ CREATE TABLE `tb_kasbas` (
 --
 
 INSERT INTO `tb_kasbas` (`id_kasbas`, `tanggal_kasbas`, `total_kasbas`) VALUES
-(1, '2019-01-05 02:18:43', 1000000);
+(1, '2019-01-05 02:18:43', 1000000),
+(2, '2019-01-05 05:04:45', 1125000),
+(3, '2019-01-05 05:14:01', 1225000);
 
 -- --------------------------------------------------------
 
@@ -212,7 +217,9 @@ CREATE TABLE `tb_kaskel` (
   `tanggal_kaskel` datetime NOT NULL,
   `keperluan_kaskel` text NOT NULL,
   `id_zis` varchar(34) NOT NULL,
-  `jumlah_kaskel` double NOT NULL
+  `jumlah_kaskel` double NOT NULL,
+  `dibuat_oleh` int(11) NOT NULL,
+  `terakhir_diperbarui` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -224,7 +231,7 @@ CREATE TABLE `tb_kaskel` (
 CREATE TABLE `tb_kasmas` (
   `id_kasmas` bigint(20) NOT NULL,
   `tanggal_kasmas` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `asal_kasmas` enum('Infaq','Zakat Mal') NOT NULL,
+  `asal_kasmas` enum('Infaq','Zakat Fitrah') NOT NULL,
   `id_asal` varchar(34) NOT NULL,
   `jumlah_kasmas` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -234,7 +241,9 @@ CREATE TABLE `tb_kasmas` (
 --
 
 INSERT INTO `tb_kasmas` (`id_kasmas`, `tanggal_kasmas`, `asal_kasmas`, `id_asal`, `jumlah_kasmas`) VALUES
-(1, '2019-01-05 02:18:43', 'Infaq', 't26a53f7e1179e70b78a3951a1159e2030', 1000000);
+(1, '2019-01-05 02:18:43', 'Infaq', 't26a53f7e1179e70b78a3951a1159e2030', 1000000),
+(2, '2019-01-05 05:06:08', 'Zakat Fitrah', 't3dac69f4982004526b7fc5d7dc9ab3f35', 125000),
+(3, '2019-01-05 05:14:01', 'Zakat Fitrah', '2328d29whd29wd2', 100000);
 
 -- --------------------------------------------------------
 
@@ -254,8 +263,40 @@ CREATE TABLE `tb_setting` (
 --
 
 INSERT INTO `tb_setting` (`id_setting`, `tahun`, `meta_key`, `meta_value`) VALUES
-(1, 2019, 'nominal_zakat_fitrah', '30000'),
+(1, 2019, 'nominal_zakat_fitrah', '25000'),
 (2, 2019, 'nomimal_barang_temuan', '35000');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tb_zakat_fitrah`
+--
+
+CREATE TABLE `tb_zakat_fitrah` (
+  `id_zakat_fitrah` varchar(34) NOT NULL,
+  `nama_pengirim` varchar(50) NOT NULL,
+  `bank_pengirim` varchar(50) NOT NULL,
+  `pemilik_rekening` varchar(50) NOT NULL,
+  `norek_pengirim` varchar(20) NOT NULL,
+  `jumlah_orang` int(11) NOT NULL,
+  `harga_zakat` double NOT NULL,
+  `total_zakat` double NOT NULL,
+  `tanggal_zakat` datetime NOT NULL,
+  `bukti_zakat` text NOT NULL,
+  `status_zakat` enum('Menunggu Konfirmasi','Valid','Tidak Valid') NOT NULL DEFAULT 'Menunggu Konfirmasi',
+  `status_uang_zakat` enum('Kas Baznas','Sudah Terdistribusi') NOT NULL DEFAULT 'Kas Baznas',
+  `diperbarui_oleh` int(11) DEFAULT NULL,
+  `terakhir_diperbarui` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `id_zis` varchar(34) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `tb_zakat_fitrah`
+--
+
+INSERT INTO `tb_zakat_fitrah` (`id_zakat_fitrah`, `nama_pengirim`, `bank_pengirim`, `pemilik_rekening`, `norek_pengirim`, `jumlah_orang`, `harga_zakat`, `total_zakat`, `tanggal_zakat`, `bukti_zakat`, `status_zakat`, `status_uang_zakat`, `diperbarui_oleh`, `terakhir_diperbarui`, `id_zis`) VALUES
+('2328d29whd29wd2', 'Sugiono', 'BRI', 'Suwarno', '009230810002', 4, 25000, 100000, '2019-01-05 00:00:00', '', 'Valid', 'Sudah Terdistribusi', 1, '2019-01-05 05:14:01', 't1d94f343a14ea9ab9ef7a7b8eaf999e04'),
+('t3dac69f4982004526b7fc5d7dc9ab3f35', 'Bambang', 'BRI', 'Bambang', '298220000291', 5, 25000, 125000, '2018-12-10 08:00:00', '', 'Valid', 'Kas Baznas', 1, '2019-01-05 05:04:45', 't14fef34479d29c15a4e5bbe00c3120787');
 
 -- --------------------------------------------------------
 
@@ -389,7 +430,8 @@ ALTER TABLE `tb_kasbas`
 --
 ALTER TABLE `tb_kaskel`
   ADD PRIMARY KEY (`id_kaskel`),
-  ADD KEY `id_zis` (`id_zis`);
+  ADD KEY `id_zis` (`id_zis`),
+  ADD KEY `dibuat_oleh` (`dibuat_oleh`);
 
 --
 -- Indeks untuk tabel `tb_kasmas`
@@ -402,6 +444,14 @@ ALTER TABLE `tb_kasmas`
 --
 ALTER TABLE `tb_setting`
   ADD PRIMARY KEY (`id_setting`);
+
+--
+-- Indeks untuk tabel `tb_zakat_fitrah`
+--
+ALTER TABLE `tb_zakat_fitrah`
+  ADD PRIMARY KEY (`id_zakat_fitrah`),
+  ADD KEY `diperbarui_oleh` (`diperbarui_oleh`),
+  ADD KEY `id_zis` (`id_zis`);
 
 --
 -- Indeks untuk tabel `tb_zis`
@@ -439,7 +489,7 @@ ALTER TABLE `mainmenu`
 -- AUTO_INCREMENT untuk tabel `submenu`
 --
 ALTER TABLE `submenu`
-  MODIFY `id_sub` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_sub` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `tab_akses_mainmenu`
@@ -451,7 +501,7 @@ ALTER TABLE `tab_akses_mainmenu`
 -- AUTO_INCREMENT untuk tabel `tab_akses_submenu`
 --
 ALTER TABLE `tab_akses_submenu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_about`
@@ -463,7 +513,7 @@ ALTER TABLE `tb_about`
 -- AUTO_INCREMENT untuk tabel `tb_kasbas`
 --
 ALTER TABLE `tb_kasbas`
-  MODIFY `id_kasbas` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_kasbas` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_kaskel`
@@ -475,7 +525,7 @@ ALTER TABLE `tb_kaskel`
 -- AUTO_INCREMENT untuk tabel `tb_kasmas`
 --
 ALTER TABLE `tb_kasmas`
-  MODIFY `id_kasmas` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_kasmas` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_setting`
@@ -510,7 +560,15 @@ ALTER TABLE `tb_infaq`
 -- Ketidakleluasaan untuk tabel `tb_kaskel`
 --
 ALTER TABLE `tb_kaskel`
-  ADD CONSTRAINT `tb_kaskel_ibfk_1` FOREIGN KEY (`id_zis`) REFERENCES `tb_zis` (`id_zis`) ON DELETE CASCADE;
+  ADD CONSTRAINT `tb_kaskel_ibfk_1` FOREIGN KEY (`id_zis`) REFERENCES `tb_zis` (`id_zis`) ON DELETE CASCADE,
+  ADD CONSTRAINT `tb_kaskel_ibfk_2` FOREIGN KEY (`dibuat_oleh`) REFERENCES `tm_user` (`id`) ON DELETE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `tb_zakat_fitrah`
+--
+ALTER TABLE `tb_zakat_fitrah`
+  ADD CONSTRAINT `tb_zakat_fitrah_ibfk_1` FOREIGN KEY (`diperbarui_oleh`) REFERENCES `tm_user` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `tb_zakat_fitrah_ibfk_2` FOREIGN KEY (`id_zis`) REFERENCES `tb_zis` (`id_zis`) ON DELETE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `tb_zis`
