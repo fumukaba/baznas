@@ -630,7 +630,7 @@
     <div class="form-group">
 	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Bukti Transfer </label>
 		<div class="col-sm-10">
-			<input type="file" id="bukti_zakat" name="bukti_zakat" placeholder="Foto" class="col-xs-10 col-sm-5" required="required"/>
+			<input type="file" id="bukti_zakat" name="bukti_zakat" placeholder="Foto" class="col-xs-10 col-sm-5" />
 		</div>
 	</div>
 

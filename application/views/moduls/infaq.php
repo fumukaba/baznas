@@ -3,6 +3,8 @@
  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
  <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+ <script src="<?php echo base_url('assets/datetimepicker/js/bootstrap-datetimepicker.min.js') ?>"></script>
+ <link rel="stylesheet" href="<?php echo base_url('assets/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>">
 
  <style type="text/css">
  	
@@ -98,6 +100,7 @@
              <th>Tanggal</th>
              <th>Status</th>
              <th>Uang</th>
+			 <th>Bukti Transfer</th>
 
             <th>Aksi</th>
 
@@ -520,7 +523,7 @@
 
 		<div class="col-sm-10">
 
-			<input type="text" id="nama_pengirim" name="nama_pengirim" placeholder="Nama Pengirim" class="col-xs-10 col-sm-5" />
+			<input type="text" id="nama_pengirim" name="nama_pengirim" autocomplete="off" required="required" placeholder="Nama Pengirim" class="col-xs-10 col-sm-5" />
 
 		</div>
 
@@ -532,7 +535,7 @@
 
 		<div class="col-sm-10">
 
-        <input type="text" id="bank_pengirim" name="bank_pengirim" placeholder="Bank Pengirim" class="col-xs-10 col-sm-5" />
+        <input type="text" id="bank_pengirim" name="bank_pengirim" autocomplete="off" required="required" placeholder="Bank Pengirim" class="col-xs-10 col-sm-5" />
 
 		</div>
 
@@ -544,7 +547,7 @@
 
 		<div class="col-sm-10">
 
-        <input type="text" id="pemilik_rekening" name="pemilik_rekening" placeholder="Pemilik Rekening" class="col-xs-10 col-sm-5" />
+        <input type="text" id="pemilik_rekening" name="pemilik_rekening" autocomplete="off" required="required" placeholder="Pemilik Rekening" class="col-xs-10 col-sm-5" />
 
 		</div>
 
@@ -556,7 +559,7 @@
 
 		<div class="col-sm-10">
 
-			<input type="text" id="norek_pengirim" name="norek_pengirim" placeholder="Nomor Rekening" class="col-xs-10 col-sm-5" />
+			<input type="text" id="norek_pengirim" name="norek_pengirim" autocomplete="off" required="required" placeholder="Nomor Rekening" class="col-xs-10 col-sm-5" />
 
 		</div>
 
@@ -568,7 +571,7 @@
 
 		<div class="col-sm-10">
 
-			<input type="text" id="jumlah_infaq" name="jumlah_infaq" placeholder="Jumlah" class="col-xs-10 col-sm-5" />
+			<input type="number" id="jumlah_infaq" name="jumlah_infaq" autocomplete="off" required="required" placeholder="Jumlah" class="col-xs-10 col-sm-5" />
 
 		</div>
 
@@ -580,7 +583,7 @@
 
 		<div class="col-sm-10">
 
-			<input type="text" id="tanggal_infaq" name="tanggal_infaq" placeholder="Contoh: 2018-12-31 20:15:00" class="col-xs-10 col-sm-5" />
+			<input type="text" id="tanggal_infaq" name="tanggal_infaq" autocomplete="off" required="required" placeholder="Contoh: 2018-12-31 20:15:00" class="col-xs-10 col-sm-5 form_datetime" />
 
 		</div>
 
@@ -589,7 +592,7 @@
     <div class="form-group">
 	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Status Infaq </label>
 		<div class="col-sm-4">
-			<select name="status_infaq" id="status_infaq" class="form-control">
+			<select name="status_infaq" id="status_infaq" class="form-control" required="required">
                 <option class="c1" value="Menunggu Konfirmasi">Menunggu Konfirmasi</option>
                 <option class="c2" value="Valid">Valid</option>
                 <option class="c3" value="Tidak Valid">Tidak Valid</option>
@@ -600,7 +603,7 @@
     <div class="form-group">
 	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Status Uang </label>
 		<div class="col-sm-4">
-			<select name="status_uang" id="status_uang" class="form-control">
+			<select name="status_uang" id="status_uang" class="form-control" required="required">
                 <option class="c1" value="Kas Baznas">Kas Baznas</option>
                 <option class="c2" value="Sudah Terdistribusi">Sudah Terdistribusi</option>
             </select>
@@ -617,7 +620,7 @@
 	<div class="form-group">
 	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Tempat ZIS </label>
 		<div class="col-sm-4">
-			<select name="id_zis" id="id_zis" class="form-control">
+			<select name="id_zis" id="id_zis" class="form-control" autocomplete="off" >
 			<?php 
             $zis = $this->db->query("SELECT * FROM tb_zis");
 			foreach($zis->result() as $row_kat)	{	?>
@@ -698,6 +701,9 @@
     </div>
   </div>
 </div>	
+<script type="text/javascript">
+    $(".form_datetime").datetimepicker({format: 'yyyy-mm-dd hh:ii'});
+</script> 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
 	$(document).ready(function(e){

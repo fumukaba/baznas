@@ -80,6 +80,7 @@ class Infaq extends CI_Controller {
             $row[] = $infaq->tanggal_infaq;
             $row[] = $print_status;
             $row[] = $infaq->status_uang;
+            $row[] = '<img src="'.base_url('uploads/infaq/'.$infaq->bukti_infaq).'" alt="" width="100" height="100">';
 			$row[] = '
 			<div class="btn-group">
                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Aksi <span class="caret"></span></button>
@@ -106,6 +107,7 @@ class Infaq extends CI_Controller {
 		$config['allowed_types'] = 'gif|jpg|png|jpeg';
         $config['max_size'] = '2000000';
         $config['file_name'] = "i2" . md5(time());
+        
 		
 		$this->load->library('upload', $config);
  		$this->upload->initialize($config);
