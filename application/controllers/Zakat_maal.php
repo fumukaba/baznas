@@ -53,7 +53,6 @@ class Zakat_maal extends CI_Controller {
 
             $this->db->insert('tb_kasbas', $kasbas);
         }
-
         echo json_encode(array('status' => TRUE));
     }
 	
