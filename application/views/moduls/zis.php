@@ -551,7 +551,7 @@
 			<?php 
 			$level = $this->db->query("SELECT * FROM user_type WHERE user_type_name = 'Pengurus ZIS'")->result_array();
 			$user_type_id = $level[0]['user_type_id'];
-			$pengurus = $this->db->query("SELECT * FROM tm_user WHERE admin_level = $user_type_id");
+			$pengurus = $this->db->query("SELECT tm_user.* FROM tm_user WHERE NOT EXISTS(SELECT pengurus_zis FROM tb_zis WHERE tb_zis.pengurus_zis=tm_user.id) AND tm_user.admin_level = $user_type_id");
 			foreach($pengurus->result() as $row_kat)	{	?>
 				<option class="c<?php echo $row_kat->id; ?>" value="<?php echo $row_kat->id?>"><?php echo $row_kat->nama; ?></option>
 			<?php } ?>
