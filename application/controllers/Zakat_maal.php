@@ -63,12 +63,12 @@ class Zakat_maal extends CI_Controller {
  		$this->upload->initialize($config);
         $this->upload->do_upload('bukti_maal');
         
-        // $id_maal = "z3" . md5(time());
+        $id_maal = "t4" . md5(time());
         $id = $this->session->userdata('id');
 
 		if(empty($gambar)){
 			$data = array(
-                'id_maal' => '',
+                'id_maal' => $id_maal,
                 'nama_pengirim' => $this->input->post('nama_pengirim'),
                 'bank_pengirim' => $this->input->post('bank_pengirim'),
                 'pemilik_rekening' => $this->input->post('pemilik_rekening'),
@@ -83,7 +83,7 @@ class Zakat_maal extends CI_Controller {
             );
  		}else{
 			$data = array(
-                'id_maal' => '',
+                'id_maal' => $id_maal,
                 'nama_pengirim' => $this->input->post('nama_pengirim'),
                 'bank_pengirim' => $this->input->post('bank_pengirim'),
                 'pemilik_rekening' => $this->input->post('pemilik_rekening'),
@@ -107,7 +107,7 @@ class Zakat_maal extends CI_Controller {
             // Kasmas
             $kasmas = array(
                 'id_kasmas' => '',
-                'asal_kasmas' => 'maal',
+                'asal_kasmas' => 'Zakat Maal',
                 'id_asal' => $id_maal,
                 'jumlah_kasmas' => $this->input->post('jumlah_maal')
             );
@@ -190,7 +190,7 @@ class Zakat_maal extends CI_Controller {
             // Kasmas
             $kasmas = array(
                 'id_kasmas' => '',
-                'asal_kasmas' => 'maal',
+                'asal_kasmas' => 'Zakat Maal',
                 'id_asal' => $id_maal,
                 'jumlah_kasmas' => $this->input->post('jumlah_maal')
             );
