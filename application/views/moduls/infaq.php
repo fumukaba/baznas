@@ -665,10 +665,101 @@
 
 </div><!-- /.row -->
 
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalKonfirmasi" tabindex="-1" role="dialog" aria-labelledby="modalKonfirmasiLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalKonfirmasiLabel">Konfirmasi Status</h5>
+        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button> -->
+      </div>
+	  <form class="form" id="KonfirmasiStatus" data-url="<?php echo base_url('Infaq/konfirmasi'); ?>">
+      <div class="modal-body">
+		<input type="hidden" id="konfirmasiIdInfaq" name="id_infaq" value="">
+		<input type="hidden" name="status_infaq" value="Valid">
+		<div class="form-group">
+			<strong>Pengirim</strong>
+			<p id="konfirmasiPengirim"></p>
+		</div>
+		<div class="form-group">
+			<strong>Jumlah Infaq</strong>
+			<input type="number" id="konfirmasiJumlahInfaq" name="jumlah_infaq" step="1" min="0" required="required" autocomplete="off" class="form-control">
+		</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Konfirmasi</button>
+      </div>
+	  </form>
+    </div>
+  </div>
 </div>	
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
 	$(document).ready(function(e){
+		konfirmasiStatus = function(_this) {
+			var id_infaq = _this.data('id'),
+				jumlah = _this.data('jumlah'),
+				pengirim = _this.data('pengirim'),
+				url = _this.data('url'),
+				konfirmasi = _this.data('konfirmasi');
+
+			if(konfirmasi == 'tidak') {
+				$.ajax({
+					type: 'POST',
+					url: url,
+					data: 'id_infaq=' + id_infaq + '&status_infaq=Tidak Valid&jumlah_infaq=' + jumlah,
+					dataType: 'json',
+					processData:false,
+					success: function(result) {
+						if (result.status) {
+							swal({ title:"SUCCESS", text:"Berhasil dikonfirmasi.", type: "success", closeOnConfirm: true});
+
+							document.location.href = '';
+						}
+					}, error: function(jqXHR, textStatus, errorThrown) {
+						// alert('Error adding/update data');
+						swal({ title:"ERROR", text:"Gagal dikonfirmasi.", type: "warning", closeOnConfirm: true});  
+					}
+				});
+			} else {
+				$('#konfirmasiIdInfaq').val(id_infaq);
+				$('#konfirmasiPengirim').html(pengirim);
+				$('#konfirmasiJumlahInfaq').val(jumlah);
+				$('#modalKonfirmasi').modal('show');
+			}
+		}
+
+		$('#KonfirmasiStatus').on('submit', (function(e) {
+			e.preventDefault();
+
+			var url = $(this).data('url');
+
+			$.ajax({
+				type: 'POST',
+				url: url,
+				data: new FormData(this),
+				dataType: 'json',
+				contentType: false,
+				cache: false,
+				processData:false,
+				success: function(result) {
+                    if (result.status) {
+						swal({ title:"SUCCESS", text:"Berhasil dikonfirmasi.", type: "success", closeOnConfirm: true});
+
+						document.location.href = '';
+					}
+				}, error: function(jqXHR, textStatus, errorThrown) {
+					// alert('Error adding/update data');
+					swal({ title:"ERROR", text:"Gagal dikonfirmasi.", type: "warning", closeOnConfirm: true});  
+				}
+			});
+		}))
+
 		$("#formAksi").on('submit', function(e){
 			e.preventDefault();
 

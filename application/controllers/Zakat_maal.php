@@ -17,20 +17,68 @@ class Zakat_maal extends CI_Controller {
         $data['view_file']    = "moduls/zakat_maal";
 		$this->load->view('admin_view',$data);
     }
+
+    function konfirmasi() {
+        $data = array(
+            'jumlah_maal' => $this->input->post('jumlah_maal'),
+            'status_maal' => $this->input->post('status_maal')
+        );
+
+        $this->db->update('tb_zakat_maal', $data, array('id_maal' => $this->input->post('id_maal')));
+
+        $id_maal = $this->input->post('id_maal');
+        $status_maal = $this->input->post('status_maal');
+        
+        if($status_maal == 'Valid') {
+            // Kasmas
+            $kasmas = array(
+                'id_kasmas' => '',
+                'asal_kasmas' => 'Zakat Maal',
+                'id_asal' => $id_maal,
+                'jumlah_kasmas' => $this->input->post('jumlah_maal')
+            );
+
+            $this->db->insert('tb_kasmas', $kasmas);
+
+            // Kasbas
+            $jumlah_maal = $this->input->post('jumlah_maal');
+            $r_kasbas = $this->db->query("SELECT * FROM tb_kasbas ORDER BY id_kasbas DESC LIMIT 0, 1")->result_array();
+            $old_total = (count($r_kasbas) > 0 ? $r_kasbas[0]['total_kasbas'] : 0);
+            $new_total = $old_total + $jumlah_maal;
+
+            $kasbas = array(
+                'id_kasbas' => '',
+                'total_kasbas' => $new_total
+            );
+
+            $this->db->insert('tb_kasbas', $kasbas);
+        }
+
+        echo json_encode(array('status' => TRUE));
+    }
 	
 	public function ajax_list() {
 		$list = $this->Mdl_zakatmaal->get_datatables();
 		$data = array();
 		$no = $_REQUEST['start'];
 		foreach ($list as $zakat_maal) {
-			$no++;
+            $no++;
+            
+            $print_status = "";
+
+            if($zakat_maal->status_maal == 'Menunggu Konfirmasi') {
+                $print_status = '<span>' . $zakat_maal->status_maal . '</span><br /><a onclick="konfirmasiStatus($(this))" data-url="'. base_url('Zakat_maal/konfirmasi') . '" data-id="' . $zakat_maal->id_maal . '" data-konfirmasi="ya" data-jumlah="' . $zakat_maal->jumlah_maal . '" data-pengirim="' . $zakat_maal->nama_pengirim . '<br>A.n ' . $zakat_maal->pemilik_rekening. '<br>' . $zakat_maal->norek_pengirim . '<br>' . $zakat_maal->bank_pengirim .'" href="#">Valid</a>&nbsp;&mdash;&nbsp;<a onclick="konfirmasiStatus($(this))" data-url="'. base_url('Zakat_maal/konfirmasi') . '" data-id="' . $zakat_maal->id_maal . '" data-konfirmasi="tidak" data-jumlah="' . $zakat_maal->jumlah_maal . '" data-pengirim="' . $zakat_maal->nama_pengirim . '<br>A.n ' . $zakat_maal->pemilik_rekening. '<br>' . $zakat_maal->norek_pengirim . '<br>' . $zakat_maal->bank_pengirim .'" href="#">Tidak Valid</a>';
+            } else {
+                $print_status = $zakat_maal->status_maal;
+            }
+
 			$row = array();
 			$row[] = '';
 			$row[] = $no;
 			$row[] = $zakat_maal->nama_pengirim . "<br>" . $zakat_maal->norek_pengirim . "<br>" . $zakat_maal->bank_pengirim;
             $row[] = $zakat_maal->jumlah_maal;
             $row[] = $zakat_maal->tanggal_maal;
-            $row[] = $zakat_maal->status_maal;
+            $row[] = $print_status;
             $row[] = $zakat_maal->status_uang;
             $row[] = $zakat_maal->jenis_maal;
             $row[] = '<img src="'.base_url('uploads/ZakatMaal/'.$zakat_maal->bukti_maal).'" alt="" width="100" height="100">';

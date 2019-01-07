@@ -686,12 +686,103 @@
 </div><!-- /.row -->
 
 </div>	
+
+<!-- Modal -->
+<div class="modal fade" id="modalKonfirmasi" tabindex="-1" role="dialog" aria-labelledby="modalKonfirmasiLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalKonfirmasiLabel">Konfirmasi Status</h5>
+        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button> -->
+      </div>
+	  <form class="form" id="KonfirmasiStatus" data-url="<?php echo base_url('Zakat_fitrah/konfirmasi'); ?>">
+      <div class="modal-body">
+		<input type="hidden" id="konfirmasiIdZakatFitrah" name="id_zakat_fitrah" value="">
+		<input type="hidden" name="status_zakat" value="Valid">
+		<div class="form-group">
+			<strong>Pengirim</strong>
+			<p id="konfirmasiPengirim"></p>
+		</div>
+		<div class="form-group">
+			<strong>Total Zakat</strong>
+			<input type="number" id="konfirmasiTotalZakat" name="total_zakat" step="1" min="0" required="required" autocomplete="off" class="form-control">
+		</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Konfirmasi</button>
+      </div>
+	  </form>
+    </div>
+  </div>
+</div>
 <script type="text/javascript">
     $(".form_datetime").datetimepicker({format: 'yyyy-mm-dd hh:ii'});
 </script> 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
 	$(document).ready(function(e){
+		konfirmasiStatus = function(_this) {
+			var id_zakat_fitrah = _this.data('id'),
+				total_zakat = _this.data('total'),
+				pengirim = _this.data('pengirim'),
+				url = _this.data('url'),
+				konfirmasi = _this.data('konfirmasi');
+
+			if(konfirmasi == 'tidak') {
+				$.ajax({
+					type: 'POST',
+					url: url,
+					data: 'id_zakat_fitrah=' + id_zakat_fitrah + '&status_zakat=Tidak Valid&total_zakat=' + total_zakat,
+					dataType: 'json',
+					processData:false,
+					success: function(result) {
+						if (result.status) {
+							swal({ title:"SUCCESS", text:"Berhasil dikonfirmasi.", type: "success", closeOnConfirm: true});
+
+							document.location.href = '';
+						}
+					}, error: function(jqXHR, textStatus, errorThrown) {
+						// alert('Error adding/update data');
+						swal({ title:"ERROR", text:"Gagal dikonfirmasi.", type: "warning", closeOnConfirm: true});  
+					}
+				});
+			} else {
+				$('#konfirmasiIdZakatFitrah').val(id_zakat_fitrah);
+				$('#konfirmasiPengirim').html(pengirim);
+				$('#konfirmasiTotalZakat').val(total_zakat);
+				$('#modalKonfirmasi').modal('show');
+			}
+		}
+
+		$('#KonfirmasiStatus').on('submit', (function(e) {
+			e.preventDefault();
+
+			var url = $(this).data('url');
+
+			$.ajax({
+				type: 'POST',
+				url: url,
+				data: new FormData(this),
+				dataType: 'json',
+				contentType: false,
+				cache: false,
+				processData:false,
+				success: function(result) {
+                    if (result.status) {
+						swal({ title:"SUCCESS", text:"Berhasil dikonfirmasi.", type: "success", closeOnConfirm: true});
+
+						document.location.href = '';
+					}
+				}, error: function(jqXHR, textStatus, errorThrown) {
+					// alert('Error adding/update data');
+					swal({ title:"ERROR", text:"Gagal dikonfirmasi.", type: "warning", closeOnConfirm: true});  
+				}
+			});
+		}))
+
         $('#jumlah_orang').on('change', (function() {
             var jumlah = $(this).val(),
                 harga = $(this).data('harga');

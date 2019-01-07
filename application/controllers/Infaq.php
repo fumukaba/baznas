@@ -17,20 +17,68 @@ class Infaq extends CI_Controller {
         $data['view_file']    = "moduls/infaq";
 		$this->load->view('admin_view',$data);
     }
+
+    function konfirmasi() {
+        $data = array(
+            'jumlah_infaq' => $this->input->post('jumlah_infaq'),
+            'status_infaq' => $this->input->post('status_infaq')
+        );
+
+        $this->db->update('tb_infaq', $data, array('id_infaq' => $this->input->post('id_infaq')));
+
+        $id_infaq = $this->input->post('id_infaq');
+        $status_infaq = $this->input->post('status_infaq');
+        
+        if($status_infaq == 'Valid') {
+            // Kasmas
+            $kasmas = array(
+                'id_kasmas' => '',
+                'asal_kasmas' => 'Infaq',
+                'id_asal' => $id_infaq,
+                'jumlah_kasmas' => $this->input->post('jumlah_infaq')
+            );
+
+            $this->db->insert('tb_kasmas', $kasmas);
+
+            // Kasbas
+            $jumlah_infaq = $this->input->post('jumlah_infaq');
+            $r_kasbas = $this->db->query("SELECT * FROM tb_kasbas ORDER BY id_kasbas DESC LIMIT 0, 1")->result_array();
+            $old_total = (count($r_kasbas) > 0 ? $r_kasbas[0]['total_kasbas'] : 0);
+            $new_total = $old_total + $jumlah_infaq;
+
+            $kasbas = array(
+                'id_kasbas' => '',
+                'total_kasbas' => $new_total
+            );
+
+            $this->db->insert('tb_kasbas', $kasbas);
+        }
+
+        echo json_encode(array('status' => TRUE));
+    }
 	
 	public function ajax_list() {
 		$list = $this->Mdl_infaq->get_datatables();
 		$data = array();
 		$no = $_REQUEST['start'];
 		foreach ($list as $infaq) {
-			$no++;
+            $no++;
+            
+            $print_status = "";
+
+            if($infaq->status_infaq == 'Menunggu Konfirmasi') {
+                $print_status = '<span>' . $infaq->status_infaq . '</span><br /><a onclick="konfirmasiStatus($(this))" data-url="'. base_url('Infaq/konfirmasi') . '" data-id="' . $infaq->id_infaq . '" data-konfirmasi="ya" data-jumlah="' . $infaq->jumlah_infaq . '" data-pengirim="' . $infaq->nama_pengirim . '<br>A.n ' . $infaq->pemilik_rekening. '<br>' . $infaq->norek_pengirim . '<br>' . $infaq->bank_pengirim .'" href="#">Valid</a>&nbsp;&mdash;&nbsp;<a onclick="konfirmasiStatus($(this))" data-url="'. base_url('Infaq/konfirmasi') . '" data-id="' . $infaq->id_infaq . '" data-konfirmasi="tidak" data-jumlah="' . $infaq->jumlah_infaq . '" data-pengirim="' . $infaq->nama_pengirim . '<br>A.n ' . $infaq->pemilik_rekening. '<br>' . $infaq->norek_pengirim . '<br>' . $infaq->bank_pengirim .'" href="#">Tidak Valid</a>';
+            } else {
+                $print_status = $infaq->status_infaq;
+            }
+
 			$row = array();
 			$row[] = '';
 			$row[] = $no;
 			$row[] = $infaq->nama_pengirim . "<br>" . $infaq->norek_pengirim . "<br>" . $infaq->bank_pengirim;
             $row[] = $infaq->jumlah_infaq;
             $row[] = $infaq->tanggal_infaq;
-            $row[] = $infaq->status_infaq;
+            $row[] = $print_status;
             $row[] = $infaq->status_uang;
 			$row[] = '
 			<div class="btn-group">
@@ -56,7 +104,8 @@ class Infaq extends CI_Controller {
         $gambar = $_FILES['bukti_infaq']['name'];
 		$config['upload_path'] = './uploads/infaq/';
 		$config['allowed_types'] = 'gif|jpg|png|jpeg';
-		$config['max_size'] = '2000000';
+        $config['max_size'] = '2000000';
+        $config['file_name'] = "i2" . md5(time());
 		
 		$this->load->library('upload', $config);
  		$this->upload->initialize($config);
@@ -80,6 +129,8 @@ class Infaq extends CI_Controller {
                 'id_zis' => $this->input->post('id_zis')
             );
  		}else{
+            $data_gambar = $this->upload->data(); // Iki
+
 			$data = array(
                 'id_infaq' => $id_infaq,
                 'nama_pengirim' => $this->input->post('nama_pengirim'),
@@ -88,7 +139,7 @@ class Infaq extends CI_Controller {
                 'norek_pengirim' => $this->input->post('norek_pengirim'),
                 'jumlah_infaq' => $this->input->post('jumlah_infaq'),
                 'tanggal_infaq' => $this->input->post('tanggal_infaq'),
-                'bukti_infaq' => $gambar,
+                'bukti_infaq' => $data_gambar['file_name'], // Iki
                 'status_infaq' => $this->input->post('status_infaq'),
                 'status_uang' => $this->input->post('status_uang'),
                 'diperbarui_oleh' => $id,
@@ -138,7 +189,8 @@ class Infaq extends CI_Controller {
 		$gambar = $_FILES['bukti_infaq']['name'];
 		$config['upload_path'] = './uploads/infaq/';
 		$config['allowed_types'] = 'gif|jpg|png|jpeg';
-		$config['max_size'] = '2000000';
+        $config['max_size'] = '2000000';
+        $config['file_name'] = "i2" . md5(time());
 		
 		$this->load->library('upload', $config);
  		$this->upload->initialize($config);
@@ -160,6 +212,8 @@ class Infaq extends CI_Controller {
                 'id_zis' => $this->input->post('id_zis')
             );
  		}else{
+            $data_gambar = $this->upload->data(); // Iki
+
 			$data = array(
                 'nama_pengirim' => $this->input->post('nama_pengirim'),
                 'bank_pengirim' => $this->input->post('bank_pengirim'),
@@ -167,7 +221,7 @@ class Infaq extends CI_Controller {
                 'norek_pengirim' => $this->input->post('norek_pengirim'),
                 'jumlah_infaq' => $this->input->post('jumlah_infaq'),
                 'tanggal_infaq' => $this->input->post('tanggal_infaq'),
-                'bukti_infaq' => $gambar,
+                'bukti_infaq' => $data_gambar['file_name'],
                 'status_infaq' => $this->input->post('status_infaq'),
                 'status_uang' => $this->input->post('status_uang'),
                 'diperbarui_oleh' => $id,
