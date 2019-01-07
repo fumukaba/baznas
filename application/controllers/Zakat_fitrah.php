@@ -58,11 +58,13 @@ class Zakat_fitrah extends CI_Controller {
         $gambar = $_FILES['bukti_zakat']['name'];
 		$config['upload_path'] = './uploads/zakat_fitrah/';
 		$config['allowed_types'] = 'gif|jpg|png|jpeg';
-		$config['max_size'] = '2000000';
+        $config['max_size'] = '2000000';
+        $config['file_name'] = "i3" . md5(time());
 		
 		$this->load->library('upload', $config);
  		$this->upload->initialize($config);
         $this->upload->do_upload('bukti_zakat');
+        
         
         $id_zakat_fitrah = "t3" . md5(time());
 
@@ -87,6 +89,7 @@ class Zakat_fitrah extends CI_Controller {
                 'id_zis' => $this->input->post('id_zis')
             );
  		}else{
+            $data_gambar =$this->upload->data();
 			$data = array(
                 'id_zakat_fitrah' => $id_zakat_fitrah,
                 'nama_pengirim' => $this->input->post('nama_pengirim'),
@@ -97,7 +100,7 @@ class Zakat_fitrah extends CI_Controller {
                 'harga_zakat' => $cek_harga[0]['meta_value'],
                 'total_zakat' => $this->input->post('total_zakat'),
                 'tanggal_zakat' => $this->input->post('tanggal_zakat'),
-                'bukti_zakat' => $gambar,
+                'bukti_zakat' => $data_gambar['file_name'],
                 'status_zakat' => $this->input->post('status_zakat'),
                 'status_uang_zakat' => $this->input->post('status_uang_zakat'),
                 'diperbarui_oleh' => $diperbarui_oleh,
@@ -147,7 +150,8 @@ class Zakat_fitrah extends CI_Controller {
 		$gambar = $_FILES['bukti_zakat']['name'];
 		$config['upload_path'] = './uploads/zakat_fitrah/';
 		$config['allowed_types'] = 'gif|jpg|png|jpeg';
-		$config['max_size'] = '2000000';
+        $config['max_size'] = '2000000';
+        $config['file_name'] = "i3" . md5(time());
 		
 		$this->load->library('upload', $config);
  		$this->upload->initialize($config);
@@ -173,6 +177,7 @@ class Zakat_fitrah extends CI_Controller {
                 'id_zis' => $this->input->post('id_zis')
             );
  		}else{
+            $data_gambar =$this->upload->data();
 			$data = array(
                 'nama_pengirim' => $this->input->post('nama_pengirim'),
                 'bank_pengirim' => $this->input->post('bank_pengirim'),
@@ -182,7 +187,7 @@ class Zakat_fitrah extends CI_Controller {
                 'harga_zakat' => $cek_harga[0]['meta_value'],
                 'total_zakat' => $this->input->post('total_zakat'),
                 'tanggal_zakat' => $this->input->post('tanggal_zakat'),
-                'bukti_zakat' => $gambar,
+                'bukti_zakat' => $data_gambar['file_name'],
                 'status_zakat' => $this->input->post('status_zakat'),
                 'status_uang_zakat' => $this->input->post('status_uang_zakat'),
                 'diperbarui_oleh' => $diperbarui_oleh,

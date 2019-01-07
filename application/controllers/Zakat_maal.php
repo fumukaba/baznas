@@ -58,7 +58,8 @@ class Zakat_maal extends CI_Controller {
         $gambar = $_FILES['bukti_maal']['name'];
 		$config['upload_path'] = './uploads/ZakatMaal/';
 		$config['allowed_types'] = 'gif|jpg|png|jpeg';
-		$config['max_size'] = '2000000';
+        $config['max_size'] = '2000000';
+        $config['file_name'] = "i4" . md5(time());
 		
 		$this->load->library('upload', $config);
  		$this->upload->initialize($config);
@@ -83,6 +84,7 @@ class Zakat_maal extends CI_Controller {
                 'id_zis' => $this->input->post('id_zis')
             );
  		}else{
+            $data_gambar =$this->upload->data();
 			$data = array(
                 'id_maal' => $id_maal,
                 'nama_pengirim' => $this->input->post('nama_pengirim'),
@@ -91,7 +93,7 @@ class Zakat_maal extends CI_Controller {
                 'norek_pengirim' => $this->input->post('norek_pengirim'),
                 'jumlah_maal' => $this->input->post('jumlah_maal'),
                 'tanggal_maal' => $this->input->post('tanggal_maal'),
-                'bukti_maal' => $gambar,
+                'bukti_maal' => $data_gambar['file_name'],
                 'status_maal' => $this->input->post('status_maal'),
                 'status_uang' => $this->input->post('status_uang'),
                 'diperbarui_oleh' => $id,
@@ -140,9 +142,10 @@ class Zakat_maal extends CI_Controller {
 	
 	public function ajax_update() {
 		$gambar = $_FILES['bukti_maal']['name'];
-		$config['upload_path'] = './uploads/Zakat_Maal/';
+		$config['upload_path'] = './uploads/ZakatMaal/';
 		$config['allowed_types'] = 'gif|jpg|png|jpeg';
-		$config['max_size'] = '2000000';
+        $config['max_size'] = '2000000';
+        $config['file_name'] = "i4" . md5(time());
 		
 		$this->load->library('upload', $config);
  		$this->upload->initialize($config);
@@ -165,6 +168,7 @@ class Zakat_maal extends CI_Controller {
                 'id_zis' => $this->input->post('id_zis')
             );
  		}else{
+            $data_gambar =$this->upload->data();
 			$data = array(
                 'nama_pengirim' => $this->input->post('nama_pengirim'),
                 'bank_pengirim' => $this->input->post('bank_pengirim'),
@@ -172,7 +176,7 @@ class Zakat_maal extends CI_Controller {
                 'norek_pengirim' => $this->input->post('norek_pengirim'),
                 'jumlah_maal' => $this->input->post('jumlah_maal'),
                 'tanggal_maal' => $this->input->post('tanggal_maal'),
-                'bukti_maal' => $gambar,
+                'bukti_maal' => $data_gambar['file_name'],
                 'status_maal' => $this->input->post('status_maal'),
                 'status_uang' => $this->input->post('status_uang'),
                 'diperbarui_oleh' => $id,
