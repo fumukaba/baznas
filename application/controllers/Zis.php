@@ -39,8 +39,7 @@ class Zis extends CI_Controller {
 				$btn_download = "";
 
 				if($zis->qrcode_zis != '') {
-					$file = base_url('uploads/qrcode/' . $zis->qrcode_zis);
-					$btn_download = '<br><a href="'. base_url('Zis/download/' . $file . '/' . $zis->nama_zis) .'" target="_blank">Download QRCode</a>';
+					$btn_download = '<br><a href="'. base_url('Zis/download/' . $zis->qrcode_zis . '/' . $zis->nama_zis) .'" target="_blank">Download QRCode</a>';
 				}
 
 
@@ -72,15 +71,15 @@ class Zis extends CI_Controller {
 		echo json_encode($output);
 	}
 
-	public function download($file, $rename) {
-		$filename = $file; // of course find the exact filename....        
+	public function download($qrcode, $nama) {
+		$filename = base_url('uploads/qrcode/' . $qrcode); // of course find the exact filename....        
 		header('Pragma: public');
 		header('Expires: 0');
 		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 		header('Cache-Control: private', false); // required for certain browsers 
 		header('Content-Type: image/png');
 
-		header('Content-Disposition: attachment;');
+		header('Content-Disposition: attachment; filename="'. $nama . '.png";');
 		header('Content-Transfer-Encoding: binary');
 		header('Content-Length: ' . filesize($filename));
 
