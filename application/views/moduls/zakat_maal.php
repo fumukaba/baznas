@@ -3,6 +3,8 @@
  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
  <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+ <script src="<?php echo base_url('assets/datetimepicker/js/bootstrap-datetimepicker.min.js') ?>"></script>
+ <link rel="stylesheet" href="<?php echo base_url('assets/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>">
 
  <style type="text/css">
  	
@@ -99,6 +101,7 @@
              <th>Status</th>
              <th>Uang</th>
 			 <th>Jenis Zakat Maal</th>
+			 <th>Bukti Transfer</th>
 
             <th>Aksi</th>
 
@@ -581,7 +584,7 @@
 
 		<div class="col-sm-10">
 
-			<input type="text" id="jumlah_maal" name="jumlah_maal" placeholder="Jumlah" class="col-xs-10 col-sm-5" />
+			<input type="number" id="jumlah_maal" name="jumlah_maal" placeholder="Jumlah" class="col-xs-10 col-sm-5" />
 
 		</div>
 
@@ -589,11 +592,11 @@
 
     <div class="form-group">
 
-	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Tanggal </label>
+	<label class="col-sm-2 control-label no-padding-right" for="form-field-1" > Tanggal </label>
 
 		<div class="col-sm-10">
 
-			<input type="text" id="tanggal_maal" name="tanggal_maal" placeholder="Contoh: 2018-12-31 20:15:00" class="col-xs-10 col-sm-5" />
+			<input type="text" id="tanggal_maal" name="tanggal_maal" autocomplete="off" placeholder="Contoh: 2018-12-31 20:15:00" class="col-xs-10 col-sm-5 form_datetime" />
 
 		</div>
 
@@ -692,6 +695,9 @@
 </div><!-- /.row -->
 
 </div>	
+<script type="text/javascript">
+    $(".form_datetime").datetimepicker({format: 'yyyy-mm-dd hh:ii'});
+</script> 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
 	$(document).ready(function(e){

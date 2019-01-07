@@ -33,6 +33,7 @@ class Zakat_maal extends CI_Controller {
             $row[] = $zakat_maal->status_maal;
             $row[] = $zakat_maal->status_uang;
             $row[] = $zakat_maal->jenis_maal;
+            $row[] = '<img src="'.base_url('uploads/ZakatMaal/'.$zakat_maal->bukti_maal).'" alt="" width="100" height="100">';
 			$row[] = '
 			<div class="btn-group">
                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Aksi <span class="caret"></span></button>

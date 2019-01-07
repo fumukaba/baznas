@@ -94,7 +94,8 @@
 
             <th>Nama</th>
 
-             <th>Alamat</th>
+            <th>Alamat</th>
+			<th>QR Code</th>
 
             <th>Aksi</th>
 

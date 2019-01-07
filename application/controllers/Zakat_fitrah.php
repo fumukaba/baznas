@@ -32,6 +32,8 @@ class Zakat_fitrah extends CI_Controller {
             $row[] = $zakat->tanggal_zakat;
             $row[] = $zakat->status_zakat;
             $row[] = $zakat->status_uang_zakat;
+            $row[] = '<img src="'.base_url('uploads/zakat_fitrah/'.$zakat->bukti_zakat).'" alt="" width="100" height="100">';
+            
 			$row[] = '
 			<div class="btn-group">
                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Aksi <span class="caret"></span></button>
