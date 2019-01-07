@@ -525,7 +525,7 @@
 
 		<div class="col-sm-10">
 
-			<input type="text" id="nama_pengirim" name="nama_pengirim" placeholder="Nama Muzakki" class="col-xs-10 col-sm-5" />
+			<input type="text" id="nama_pengirim" name="nama_pengirim" required="required" autocomplete="off" placeholder="Nama Muzakki" class="col-xs-10 col-sm-5" />
 
 		</div>
 
@@ -537,7 +537,7 @@
 
 		<div class="col-sm-10">
 
-        <input type="text" id="bank_pengirim" name="bank_pengirim" placeholder="Bank Pengirim" class="col-xs-10 col-sm-5" />
+        <input type="text" id="bank_pengirim" name="bank_pengirim" required="required" autocomplete="off" placeholder="Bank Pengirim" class="col-xs-10 col-sm-5" />
 
 		</div>
 
@@ -549,7 +549,7 @@
 
 		<div class="col-sm-10">
 
-        <input type="text" id="pemilik_rekening" name="pemilik_rekening" placeholder="Pemilik Rekening" class="col-xs-10 col-sm-5" />
+        <input type="text" id="pemilik_rekening" name="pemilik_rekening" required="required" autocomplete="off" placeholder="Pemilik Rekening" class="col-xs-10 col-sm-5" />
 
 		</div>
 
@@ -561,7 +561,7 @@
 
 		<div class="col-sm-10">
 
-			<input type="text" id="norek_pengirim" name="norek_pengirim" placeholder="Nomor Rekening" class="col-xs-10 col-sm-5" />
+			<input type="text" id="norek_pengirim" name="norek_pengirim" required="required" autocomplete="off" placeholder="Nomor Rekening" class="col-xs-10 col-sm-5" />
 
 		</div>
 
@@ -576,7 +576,7 @@
 
 		<div class="col-sm-10">
 
-			<input type="number" id="jumlah_orang" name="jumlah_orang" data-harga="<?php echo $cek_harga[0]['meta_value']; ?>" placeholder="Jumlah Orang" class="col-xs-10 col-sm-5" min="1" value="1" step="1" />
+			<input type="number" id="jumlah_orang" name="jumlah_orang" required="required" data-harga="<?php echo $cek_harga[0]['meta_value']; ?>" placeholder="Jumlah Orang" class="col-xs-10 col-sm-5" min="1" value="1" step="1" />
 
 		</div>
 
@@ -600,7 +600,7 @@
 
 		<div class="col-sm-10">
 
-			<input type="text" id="tanggal_zakat" name="tanggal_zakat" placeholder="Contoh: 2018-12-31 20:15:00" class="col-xs-10 col-sm-5 form_datetime" autocomplete="off" />
+			<input type="text" id="tanggal_zakat" name="tanggal_zakat" required="required" autocomplete="off" placeholder="Contoh: 2018-12-31 20:15:00" class="col-xs-10 col-sm-5 form_datetime" />
 
 		</div>
 
@@ -609,7 +609,7 @@
     <div class="form-group">
 	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Status Zakat </label>
 		<div class="col-sm-4">
-			<select name="status_zakat" id="status_zakat" class="form-control">
+			<select name="status_zakat" id="status_zakat" class="form-control" required="required" autocomplete="off">
                 <option class="c1" value="Menunggu Konfirmasi">Menunggu Konfirmasi</option>
                 <option class="c2" value="Valid">Valid</option>
                 <option class="c3" value="Tidak Valid">Tidak Valid</option>
@@ -620,7 +620,7 @@
     <div class="form-group">
 	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Status Uang </label>
 		<div class="col-sm-4">
-			<select name="status_uang_zakat" id="status_uang_zakat" class="form-control">
+			<select name="status_uang_zakat" id="status_uang_zakat" class="form-control" required="required" autocomplete="off">
                 <option class="c1" value="Kas Baznas">Kas Baznas</option>
                 <option class="c2" value="Sudah Terdistribusi">Sudah Terdistribusi</option>
             </select>
@@ -630,14 +630,14 @@
     <div class="form-group">
 	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Bukti Transfer </label>
 		<div class="col-sm-10">
-			<input type="file" id="bukti_zakat" name="bukti_zakat" placeholder="Foto" class="col-xs-10 col-sm-5" />
+			<input type="file" id="bukti_zakat" name="bukti_zakat" placeholder="Foto" class="col-xs-10 col-sm-5" required="required"/>
 		</div>
 	</div>
 
 	<div class="form-group">
 	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Tempat ZIS </label>
 		<div class="col-sm-4">
-			<select name="id_zis" id="id_zis" class="form-control">
+			<select name="id_zis" id="id_zis" class="form-control" required="required" autocomplete="off">
 			<?php 
             $zis = $this->db->query("SELECT * FROM tb_zis");
 			foreach($zis->result() as $row_kat)	{	?>
