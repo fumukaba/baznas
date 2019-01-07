@@ -35,6 +35,15 @@ class Zis extends CI_Controller {
 						$data_rekening3=$row_pengurus->bank_rek_user;
 					}
 				}
+
+				$btn_download = "";
+
+				if($zis->qrcode_zis != '') {
+					$file = base_url('uploads/qrcode/' . $zis->qrcode_zis);
+					$btn_download = '<br><a href="'. base_url('Zis/download/' . $file . '/' . $zis->nama_zis) .'" target="_blank">Download QRCode</a>';
+				}
+
+
 			$no++;
 			$row = array();
 			$row[] = '';
@@ -42,7 +51,7 @@ class Zis extends CI_Controller {
 			$row[] = $zis->nama_zis . "<br>" . $zis->alamat_zis;
 			$row[] = $convert_pengurus;
 			$row[] = $data_rekening1 . "<br>" . $data_rekening2 . "<br>" . $data_rekening3;
-			$row[] = '<img src="'.base_url('uploads/qrcode/'.$zis->qrcode_zis).'" alt="">';
+			$row[] = '<img src="'.base_url('uploads/qrcode/'.$zis->qrcode_zis).'" alt="">' . $btn_download;
 			$row[] = '
 			<div class="btn-group">
                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Aksi <span class="caret"></span></button>
@@ -61,6 +70,22 @@ class Zis extends CI_Controller {
 						"data" => $data,
 				);
 		echo json_encode($output);
+	}
+
+	public function download($file, $rename) {
+		$filename = $file; // of course find the exact filename....        
+		header('Pragma: public');
+		header('Expires: 0');
+		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+		header('Cache-Control: private', false); // required for certain browsers 
+		header('Content-Type: image/png');
+
+		header('Content-Disposition: attachment;');
+		header('Content-Transfer-Encoding: binary');
+		header('Content-Length: ' . filesize($filename));
+
+		readfile($filename);
+		exit;
 	}
 
 	public function ajax_add() {
