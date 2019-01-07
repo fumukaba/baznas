@@ -1,0 +1,222 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class Zakat_maal extends CI_Controller {
+	
+	public function __construct() {
+		parent::__construct();
+		$this->load->model('Mdl_zakatmaal');
+		$this->auth->restrict();
+		date_default_timezone_set("Asia/Jakarta");
+		$this->load->library("session");
+		// $this->load->library("phpqrcode/qrlib");
+	}
+	
+	function index(){
+       // $this->mdl_home->getsqurity();
+        $data['view_file']    = "moduls/zakat_maal";
+		$this->load->view('admin_view',$data);
+    }
+	
+	public function ajax_list() {
+		$list = $this->Mdl_zakatmaal->get_datatables();
+		$data = array();
+		$no = $_REQUEST['start'];
+		foreach ($list as $zakat_maal) {
+			$no++;
+			$row = array();
+			$row[] = '';
+			$row[] = $no;
+			$row[] = $zakat_maal->nama_pengirim . "<br>" . $zakat_maal->norek_pengirim . "<br>" . $zakat_maal->bank_pengirim;
+            $row[] = $zakat_maal->jumlah_maal;
+            $row[] = $zakat_maal->tanggal_maal;
+            $row[] = $zakat_maal->status_maal;
+            $row[] = $zakat_maal->status_uang;
+            $row[] = $zakat_maal->jenis_maal;
+			$row[] = '
+			<div class="btn-group">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Aksi <span class="caret"></span></button>
+                        <ul class="dropdown-menu" role="menu">
+                           <li><a href="javascript:void(0)" onclick="edit('."'".$zakat_maal->id_maal."'".')">Edit</a></li>
+                            <li><a href="javascript:void(0)" onclick="hapus('."'".$zakat_maal->id_maal."'".')">Delete</a></li>
+                        </ul>
+            </div>';
+			$data[] = $row;
+		}
+
+		$output = array(
+						"draw" => $_REQUEST['draw'],
+						"recordsTotal" => $this->Mdl_zakatmaal->count_all(),
+						"recordsFiltered" => $this->Mdl_zakatmaal->count_filtered(),
+						"data" => $data,
+				);
+		echo json_encode($output);
+    }
+
+	public function ajax_add() {
+        $gambar = $_FILES['bukti_maal']['name'];
+		$config['upload_path'] = './uploads/ZakatMaal/';
+		$config['allowed_types'] = 'gif|jpg|png|jpeg';
+		$config['max_size'] = '2000000';
+		
+		$this->load->library('upload', $config);
+ 		$this->upload->initialize($config);
+        $this->upload->do_upload('bukti_maal');
+        
+        // $id_maal = "z3" . md5(time());
+        $id = $this->session->userdata('id');
+
+		if(empty($gambar)){
+			$data = array(
+                'id_maal' => '',
+                'nama_pengirim' => $this->input->post('nama_pengirim'),
+                'bank_pengirim' => $this->input->post('bank_pengirim'),
+                'pemilik_rekening' => $this->input->post('pemilik_rekening'),
+                'norek_pengirim' => $this->input->post('norek_pengirim'),
+                'jumlah_maal' => $this->input->post('jumlah_maal'),
+                'tanggal_maal' => $this->input->post('tanggal_maal'),
+                'status_maal' => $this->input->post('status_maal'),
+                'status_uang' => $this->input->post('status_uang'),
+                'diperbarui_oleh' => $id,
+                'jenis_maal' => $this->input->post('jenis_maal'),
+                'id_zis' => $this->input->post('id_zis')
+            );
+ 		}else{
+			$data = array(
+                'id_maal' => '',
+                'nama_pengirim' => $this->input->post('nama_pengirim'),
+                'bank_pengirim' => $this->input->post('bank_pengirim'),
+                'pemilik_rekening' => $this->input->post('pemilik_rekening'),
+                'norek_pengirim' => $this->input->post('norek_pengirim'),
+                'jumlah_maal' => $this->input->post('jumlah_maal'),
+                'tanggal_maal' => $this->input->post('tanggal_maal'),
+                'bukti_maal' => $gambar,
+                'status_maal' => $this->input->post('status_maal'),
+                'status_uang' => $this->input->post('status_uang'),
+                'diperbarui_oleh' => $id,
+                'jenis_maal' => $this->input->post('jenis_maal'),
+                'id_zis' => $this->input->post('id_zis')
+            ); 			
+        }
+        
+        $insert = $this->Mdl_zakatmaal->add($data);
+        
+        $status_maal = $this->input->post('status_maal');
+
+        if($status_maal == 'Valid') {
+            // Kasmas
+            $kasmas = array(
+                'id_kasmas' => '',
+                'asal_kasmas' => 'maal',
+                'id_asal' => $id_maal,
+                'jumlah_kasmas' => $this->input->post('jumlah_maal')
+            );
+
+            $this->db->insert('tb_kasmas', $kasmas);
+
+            // Kasbas
+            $jumlah_maal = $this->input->post('jumlah_maal');
+            $r_kasbas = $this->db->query("SELECT * FROM tb_kasbas ORDER BY id_kasbas DESC LIMIT 0, 1")->result_array();
+            $old_total = (count($r_kasbas) > 0 ? $r_kasbas[0]['total_kasbas'] : 0);
+            $new_total = $old_total + $jumlah_maal;
+
+            $kasbas = array(
+                'id_kasbas' => '',
+                'total_kasbas' => $new_total
+            );
+
+            $this->db->insert('tb_kasbas', $kasbas);
+        }
+
+		//print_r($this->db->last_query());
+		echo json_encode(array('status' => TRUE));
+	}
+	
+	public function ajax_edit($id) {
+		$data = $this->Mdl_zakatmaal->get_by_id($id);
+		echo json_encode($data);
+	}
+	
+	public function ajax_update() {
+		$gambar = $_FILES['bukti_maal']['name'];
+		$config['upload_path'] = './uploads/Zakat_Maal/';
+		$config['allowed_types'] = 'gif|jpg|png|jpeg';
+		$config['max_size'] = '2000000';
+		
+		$this->load->library('upload', $config);
+ 		$this->upload->initialize($config);
+        $this->upload->do_upload('bukti_maal');
+
+        $id = $this->session->userdata('id');
+        
+        if(empty($gambar)){
+			$data = array(
+                'nama_pengirim' => $this->input->post('nama_pengirim'),
+                'bank_pengirim' => $this->input->post('bank_pengirim'),
+                'pemilik_rekening' => $this->input->post('pemilik_rekening'),
+                'norek_pengirim' => $this->input->post('norek_pengirim'),
+                'jumlah_maal' => $this->input->post('jumlah_maal'),
+                'tanggal_maal' => $this->input->post('tanggal_maal'),
+                'status_maal' => $this->input->post('status_maal'),
+                'status_uang' => $this->input->post('status_uang'),
+                'diperbarui_oleh' => $id,
+                'jenis_maal' => $this->input->post('jenis_maal'),
+                'id_zis' => $this->input->post('id_zis')
+            );
+ 		}else{
+			$data = array(
+                'nama_pengirim' => $this->input->post('nama_pengirim'),
+                'bank_pengirim' => $this->input->post('bank_pengirim'),
+                'pemilik_rekening' => $this->input->post('pemilik_rekening'),
+                'norek_pengirim' => $this->input->post('norek_pengirim'),
+                'jumlah_maal' => $this->input->post('jumlah_maal'),
+                'tanggal_maal' => $this->input->post('tanggal_maal'),
+                'bukti_maal' => $gambar,
+                'status_maal' => $this->input->post('status_maal'),
+                'status_uang' => $this->input->post('status_uang'),
+                'diperbarui_oleh' => $id,
+                'jenis_maal' => $this->input->post('jenis_maal'),
+                'id_zis' => $this->input->post('id_zis')
+            ); 			
+        }
+
+        $this->Mdl_zakatmaal->update(array('id_maal' => $this->input->post('id_maal')), $data);
+
+        $id_maal = $this->input->post('id_maal');
+        $status_maal = $this->input->post('status_maal');
+        $ostatus_maal = $this->input->post('ostatus_maal');
+
+        if($ostatus_maal != 'Valid' && $status_maal == 'Valid') {
+            // Kasmas
+            $kasmas = array(
+                'id_kasmas' => '',
+                'asal_kasmas' => 'maal',
+                'id_asal' => $id_maal,
+                'jumlah_kasmas' => $this->input->post('jumlah_maal')
+            );
+
+            $this->db->insert('tb_kasmas', $kasmas);
+
+            // Kasbas
+            $jumlah_maal = $this->input->post('jumlah_maal');
+            $r_kasbas = $this->db->query("SELECT * FROM tb_kasbas ORDER BY id_kasbas DESC LIMIT 0, 1")->result_array();
+            $old_total = (count($r_kasbas) > 0 ? $r_kasbas[0]['total_kasbas'] : 0);
+            $new_total = $old_total + $jumlah_maal;
+
+            $kasbas = array(
+                'id_kasbas' => '',
+                'total_kasbas' => $new_total
+            );
+
+            $this->db->insert('tb_kasbas', $kasbas);
+        }
+
+		echo json_encode(array("status" => TRUE));
+    }
+	
+	public function ajax_delete($id) {
+      $this->Mdl_zakatmaal->delete_by_id($id);
+      echo json_encode(array("status" => TRUE));
+    }
+
+}	
