@@ -518,7 +518,7 @@
 
 	<div class="form-group">
 
-	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Nama Pengirim </label>
+	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Nama Muzakki </label>
 
 		<div class="col-sm-10">
 
@@ -542,7 +542,7 @@
 
 	<div class="form-group">
 
-	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Pemilik Pengirim </label>
+	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Pemilik Rekening </label>
 
 		<div class="col-sm-10">
 
