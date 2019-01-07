@@ -1,4 +1,4 @@
-<?php
+<?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Zis extends CI_Controller {
@@ -29,6 +29,7 @@ class Zis extends CI_Controller {
 			$row[] = $no;
 			$row[] = $zis->nama_zis;
 			$row[] = $zis->alamat_zis;
+			$row[] = '<img src="'.base_url('uploads/qrcode/'.$zis->qrcode_zis).'" alt="">';
 			$row[] = '
 			<div class="btn-group">
                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Aksi <span class="caret"></span></button>
