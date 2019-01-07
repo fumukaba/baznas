@@ -3,7 +3,7 @@
  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
  <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
-
+ 
  <style type="text/css">
  	
  	td.details-control {
@@ -94,8 +94,12 @@
 
             <th>Nama</th>
 
-            <th>Alamat</th>
-			<th>QR Code</th>
+            <th>Nama Pengurus</th>
+
+            <th>Rekening Pengurus</th>
+
+
+             <th>QR Code</th>
 
             <th>Aksi</th>
 

@@ -23,12 +23,25 @@ class Zis extends CI_Controller {
 		$data = array();
 		$no = $_REQUEST['start'];
 		foreach ($list as $zis) {
+
+			$id1 = $zis->pengurus_zis;			
+            $pengurus = $this->db->query("SELECT * FROM tm_user");
+			foreach($pengurus->result() as $row_pengurus)	{	
+				$id2 = $row_pengurus->id; 		
+				if($id1==$id2){						
+						$convert_pengurus=$row_pengurus->nama;
+						$data_rekening1=$row_pengurus->nama_rek_user;
+						$data_rekening2=$row_pengurus->no_rek_user;
+						$data_rekening3=$row_pengurus->bank_rek_user;
+					}
+				}
 			$no++;
 			$row = array();
 			$row[] = '';
 			$row[] = $no;
-			$row[] = $zis->nama_zis;
-			$row[] = $zis->alamat_zis;
+			$row[] = $zis->nama_zis . "<br>" . $zis->alamat_zis;
+			$row[] = $convert_pengurus;
+			$row[] = $data_rekening1 . "<br>" . $data_rekening2 . "<br>" . $data_rekening3;
 			$row[] = '<img src="'.base_url('uploads/qrcode/'.$zis->qrcode_zis).'" alt="">';
 			$row[] = '
 			<div class="btn-group">
