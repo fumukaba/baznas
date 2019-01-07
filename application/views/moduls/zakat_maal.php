@@ -556,11 +556,11 @@
 
 	<div class="form-group">
 
-	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Pemilik Pengirim </label>
+	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Pemilik Rekening </label>
 
 		<div class="col-sm-10">
 
-        <input type="text" id="pemilik_rekening" name="pemilik_rekening" required="required" autocomplete="off" placeholder="Pemilik Pengirim" class="col-xs-10 col-sm-5" />
+        <input type="text" id="pemilik_rekening" name="pemilik_rekening" required="required" autocomplete="off" placeholder="Pemilik Rekening" class="col-xs-10 col-sm-5" />
 
 		</div>
 
