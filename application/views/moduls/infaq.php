@@ -516,7 +516,7 @@
 
 	<div class="form-group">
 
-	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Nama Muzakki </label>
+	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Nama Pengirim </label>
 
 		<div class="col-sm-10">
 
@@ -544,7 +544,7 @@
 
 		<div class="col-sm-10">
 
-        <input type="text" id="pemilik_rekening" name="pemilik_rekening" placeholder="Pemilik Pengirim" class="col-xs-10 col-sm-5" />
+        <input type="text" id="pemilik_rekening" name="pemilik_rekening" placeholder="Pemilik Rekening" class="col-xs-10 col-sm-5" />
 
 		</div>
 

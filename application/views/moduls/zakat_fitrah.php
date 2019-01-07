@@ -522,7 +522,7 @@
 
 		<div class="col-sm-10">
 
-			<input type="text" id="nama_pengirim" name="nama_pengirim" placeholder="Nama Pengirim" class="col-xs-10 col-sm-5" />
+			<input type="text" id="nama_pengirim" name="nama_pengirim" placeholder="Nama Muzakki" class="col-xs-10 col-sm-5" />
 
 		</div>
 
@@ -546,7 +546,7 @@
 
 		<div class="col-sm-10">
 
-        <input type="text" id="pemilik_rekening" name="pemilik_rekening" placeholder="Pemilik Pengirim" class="col-xs-10 col-sm-5" />
+        <input type="text" id="pemilik_rekening" name="pemilik_rekening" placeholder="Pemilik Rekening" class="col-xs-10 col-sm-5" />
 
 		</div>
 
