@@ -3,7 +3,9 @@
  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
  <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
- 
+ <script src="<?php echo base_url('assets/datetimepicker/js/bootstrap-datetimepicker.min.js') ?>"></script>
+ <link rel="stylesheet" href="<?php echo base_url('assets/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>">
+
  <style type="text/css">
  	
  	td.details-control {
@@ -298,7 +300,7 @@
 	<div class="form-group">
 	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Tanggal </label>
 		<div class="col-sm-10">
-			<input type="text" id="tanggal_kaskel" name="tanggal_kaskel" placeholder="Contoh: 2018-12-31 20:15:00" class="col-xs-10 col-sm-5" />
+			<input type="text" id="tanggal_kaskel" name="tanggal_kaskel" placeholder="Contoh: 2018-12-31 20:15:00" class="col-xs-10 col-sm-5 form_datetime" />
 		</div>
 	</div>
 
@@ -350,3 +352,6 @@
 </div>
 </div><!-- /.row -->
 </div>
+<script type="text/javascript">
+    $(".form_datetime").datetimepicker({format: 'yyyy-mm-dd hh:ii'});
+</script> 
