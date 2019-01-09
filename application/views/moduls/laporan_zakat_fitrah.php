@@ -113,7 +113,7 @@
     <tbody></tbody>
 
 </table>
-
+<br>
 <form action="<?php echo base_url('Laporan_zakat_fitrah/filter'); ?>" method="POST">
 	<div class="row">
 		<div class="col-lg-6 col-sm-12">
