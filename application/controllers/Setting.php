@@ -27,7 +27,7 @@ class Setting extends CI_Controller {
                   'meta_key'=>'nominal_zakat_fitrah',
                   'meta_value'=>$nominal
         ), array('meta_key'=>'nominal_zakat_fitrah','tahun'=>$tahun));
-
+ 
         }
         else {
             $this->db->insert('tb_setting', 
@@ -53,6 +53,42 @@ class Setting extends CI_Controller {
         }
 		echo json_encode($data);
 	}
-	
+    
+    public function update2() {
+        $tahun = $this->input->post('tahun');
+        $nominal2 = $this->input->post('nominal2');
+        $query = $this->db->query("SELECT * FROM tb_setting WHERE tahun=$tahun AND meta_key='nominal_presentase'")->result_array();
+        if(count($query)>0){
+            $this->db->update('tb_setting', 
+            array('tahun'=>$tahun,
+                  'meta_key'=>'nominal_presentase',
+                  'meta_value'=>$nominal2
+        ), array('meta_key'=>'nominal_presentase','tahun'=>$tahun));
+
+        }
+        else {
+            $this->db->insert('tb_setting', 
+            array('id_setting'=>'',
+                  'tahun'=>$tahun,
+                  'meta_key'=>'nominal_presentase',
+                  'meta_value'=>$nominal2
+        ));
+        }
+		echo json_encode(array("status" => TRUE));
+    }
+
+    public function ajax_edit2() {
+        $tahun = date('Y');
+        $query = $this->db->query("SELECT * FROM tb_setting WHERE tahun = $tahun AND meta_key='nominal_presentase'")->result_array();
+        
+        if(count($query) == 0) {
+            $data['tahun'] = $tahun;
+            $data['meta_value'] = '';
+        } else {
+            $data['tahun'] = $query[0]['tahun'];
+            $data['meta_value'] = $query[0]['meta_value'];
+        }
+		echo json_encode($data);
+	}
 
 }	

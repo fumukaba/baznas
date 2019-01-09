@@ -21,9 +21,9 @@
 		</li>
 
 		<li>
-			<a data-toggle="tab" href="#zakatmaal">
+			<a data-toggle="tab" href="#presentase">
 			<i class="green ace-icon fa fa-money bigger-120"></i>
-				Zakat Maal
+				Presentase
 			</a>
 		</li>
 
@@ -61,7 +61,34 @@
 	</form>
 	</div>
 
-	<div id="zakatmaal" class="tab-pane fade">
+	<div id="presentase" class="tab-pane fade">
+	<form action="#" id="form2" name="form2" class="form-horizontal" enctype="multipart/form-data">
+
+		<input type="hidden" name="id_setting"/> 
+		<div class="form-group">
+		
+		<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Tahun </label>
+			<div class="col-sm-6">
+            <input type="text" id="tahun" name="tahun" placeholder="Tahun" readonly="readonly" value="<?php echo date('Y'); ?>" />
+				<span class="help-block"></span>
+			</div>
+		</div>
+		<div class="form-group">  
+
+		<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Nominal Presentase </label>
+			<div class="col-sm-6">
+				<input type="text" id="nominal2" name="nominal2" placeholder="Nominal" />
+			</div>	
+		</div>
+		<div class="form-group">
+		
+			<div class="col-md-offset-2 col-md-9">
+				<button type="button" value="Add2" id="btnSave2" onclick="save2()" class="btn btn-primary">Save</button>
+				
+			</div>
+		</div>
+		
+	</form>
 	<!-- <form action="#" id="form" name="form" class="form-horizontal" enctype="multipart/form-data">
 
 		<input type="hidden" name="id_setting"/> 
@@ -100,10 +127,15 @@
 	var save_method;
 	var link = "<?php echo site_url('Setting')?>";
 	var table;
-	
 	$(document).ready(function(){
 		setTimeout(function(){
 			update();
+		},3000)
+    });
+	
+	$(document).ready(function(){
+		setTimeout(function(){
+			update2();
 		},3000)
     });
 	
@@ -216,6 +248,48 @@
 				dataType: "JSON",
 				success: function(result) {  
 				    $('[name="nominal"]').val(result.meta_value);
+				    $('[name="tahun"]').val(result.tahun);
+				}, error: function (jqXHR, textStatus, errorThrown) {
+					alert('Error get data from ajax');
+				}
+			});
+	}
+
+	function save2() {
+		var url;
+		url = "<?= site_url()?>Setting/update2/";
+		$('#btnSave2').text('saving...'); $('#btnSave2').attr('disabled',true);
+		tinyMCE.triggerSave();
+		$.ajax({
+			url : url, type: "POST", dataType: "JSON", data: $('#form2').serialize(),
+			success: function(data) {
+				if(data.status) { swal_berhasil(); update2();
+				} else {
+					for (var i = 0; i < data.inputerror.length; i++) {
+						$('[name="'+data.inputerror[i]+'"]').parent().parent().addClass('has-error'); 
+						$('[name="'+data.inputerror[i]+'"]').next().text(data.error_string[i]); 
+					}
+				}
+				$('#btnSave2').text('save'); $('#btnSave2').attr('disabled',false); 
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+				swal({ title:"ERROR", text:"Error adding / update data", type: "warning", closeOnConfirm: true}); 
+				$('#btnSave2').text('save'); $('#btnSave2').attr('disabled',false);  
+			}
+		});
+	}
+
+	function update2() {
+			save_method = 'update2';
+			$('#panel-data').fadeOut('slow');
+			$('#form-update').fadeIn('slow');
+			//document.getElementById('formAksi').reset();
+			$.ajax({
+				url : "<?php echo site_url('Setting')?>/ajax_edit2/",
+				type: "GET",
+				dataType: "JSON",
+				success: function(result) {  
+				    $('[name="nominal2"]').val(result.meta_value);
 				    $('[name="tahun"]').val(result.tahun);
 				}, error: function (jqXHR, textStatus, errorThrown) {
 					alert('Error get data from ajax');
