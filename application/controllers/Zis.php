@@ -71,22 +71,6 @@ class Zis extends CI_Controller {
 		echo json_encode($output);
 	}
 
-	public function download($qrcode, $nama) {
-		$filename = base_url('uploads/qrcode/' . $qrcode); // of course find the exact filename....        
-		header('Pragma: public');
-		header('Expires: 0');
-		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-		header('Cache-Control: private', false); // required for certain browsers 
-		// header('Content-Type: image/png');
-
-		header('Content-Disposition: attachment; filename="'. $nama . '.png";');
-		header('Content-Transfer-Encoding: binary');
-		header('Content-Length: ' . filesize($filename));
-
-		readfile($filename);
-		exit;
-	}
-
 	public function ajax_add() {
 		include('./application/libraries/phpqrcode/qrlib.php');
 		$tempDir = './uploads/qrcode/';
