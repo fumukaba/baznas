@@ -5,7 +5,11 @@
  <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
  <script src="<?php echo base_url('assets/datetimepicker/js/bootstrap-datetimepicker.min.js') ?>"></script>
  <link rel="stylesheet" href="<?php echo base_url('assets/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>">
-  
+ <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+
  <style type="text/css">
  	
  	td.details-control {
@@ -16,7 +20,7 @@
 	    background: url('https://cdn.rawgit.com/DataTables/DataTables/6c7ada53ebc228ea9bc28b1b216e793b1825d188/examples/resources/details_close.png') no-repeat center center;
 	}
  </style>
-<?php $title = "<i class='fa fa-money'></i>&nbsp;Zakat Fitrah"; ?>
+<?php $title = "<i class='fa fa-money'></i>&nbsp;Laporan Zakat Fitrah"; ?>
 
 <div id="idImgLoader" style="margin: 0 auto; text-align: center;">
 
@@ -85,7 +89,7 @@
 	<!-- <button class="btn btn-danger" onclick="Tambah()"><i class="fa fa-plus"></i> Tambah Daa</button> -->
 
 </div><br />
-
+<br>
 <table id="example" class="display responsive nowrap" cellspacing="0" width="100%">
 
     <thead>
@@ -110,6 +114,56 @@
 
 </table>
 
+<form action="<?php echo base_url('Laporan_zakat_fitrah/filter'); ?>" method="POST">
+	<div class="row">
+		<div class="col-lg-6 col-sm-12">
+			<div class="input-group date">
+				<span class="input-group-addon" ><i class="glyphicon glyphicon-calendar"></i></span>
+				<input class="form-control" type="date" id="startDate" name="startDate" placeholder="Tanggal Mulai"> 
+			</div>
+		</div>
+		<div class="col-lg-6 col-sm-12">
+			<div class="input-group date">
+				<span class="input-group-addon" ><i class="glyphicon glyphicon-calendar"></i></span>
+				<input class="form-control" type="date" id="endDate" name="endDate" placeholder="Tanggal Akhir"> 
+			</div>
+		</div>
+	</div>
+	<br>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="input-group date"> 
+				<label for="">Status Infaq</label>
+				<select name="status_zakat_fitrah" id="status_zakat_fitrah" autocomplete="off">
+					<option value="" selected="selected">Pilih status Zakat Fitrah</option>
+					<option value="Menunggu Konfirmasi">Menunggu Konfirmasi</option>
+					<option value="Valid">Valid</option>
+					<option value="Tidak Valid">Tidak Valid</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	<br>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="input-group date">
+				<label for="">Status Uang</label> 
+				<select name="status_uang" id="status_uang" autocomplete="off">
+					<option value="" selected="selected">Pilih status uang</option>
+					<option value="Kas Baznas">Kas Baznas</option>
+					<option value="Sudah Terdistribusi">Sudah Terdistribusi</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	<br>
+	<div class="row">
+		<div class="col-lg-12">
+			<button type="submit" name="filter" class="btn btn-danger" ><i class="fa fa-search"></i> Filter</button>
+		</div>
+	</div>
+</form>
+
 </div><!-- /.span -->
 
 </div>					
@@ -128,7 +182,7 @@
 
 	var save_method;
 
-	var link = "<?php echo site_url('Zakat_fitrah')?>";
+	var link = "<?php echo site_url('Laporan_zakat_fitrah')?>";
 
 	var table;
 
@@ -196,7 +250,7 @@
 
         "ajax": {
 
-            "url": "<?php echo site_url('Zakat_fitrah/ajax_list')?>",
+            "url": "<?php echo site_url('Laporan_zakat_fitrah/ajax_list')?>",
 
             "type": "POST"
 
@@ -262,11 +316,11 @@
 
 	// 		if (save_method == 'add') {
 
-	// 			url = "<?php echo site_url('Zakat_fitrah')?>/ajax_add";
+	// 			url = "<?php echo site_url('Laporan_zakat_fitrah')?>/ajax_add";
 
 	// 		} else {
 
-	// 			url = "<?php echo site_url('Zakat_fitrah')?>/ajax_update"; 
+	// 			url = "<?php echo site_url('Laporan_zakat_fitrah')?>/ajax_update"; 
 
 	// 		}
 
@@ -362,7 +416,7 @@
 
 			$.ajax({
 
-				url : "<?php echo site_url('Zakat_fitrah')?>/ajax_edit/"+id,
+				url : "<?php echo site_url('Laporan_zakat_fitrah')?>/ajax_edit/"+id,
 
 				type: "GET",
 
@@ -426,7 +480,7 @@
 
 			$.ajax ({
 
-				url : "<?php echo site_url('Zakat_fitrah/ajax_delete')?>/"+id,
+				url : "<?php echo site_url('Laporan_zakat_fitrah/ajax_delete')?>/"+id,
 
 				type: "POST",
 
@@ -695,7 +749,7 @@
           <span aria-hidden="true">&times;</span>
         </button> -->
       </div>
-	  <form class="form" id="KonfirmasiStatus" data-url="<?php echo base_url('Zakat_fitrah/konfirmasi'); ?>">
+	  <form class="form" id="KonfirmasiStatus" data-url="<?php echo base_url('Laporan_zakat_fitrah/konfirmasi'); ?>">
       <div class="modal-body">
 		<input type="hidden" id="konfirmasiIdZakatFitrah" name="id_zakat_fitrah" value="">
 		<input type="hidden" name="status_zakat" value="Valid">
@@ -798,9 +852,9 @@
 
 			var url;
 			if (save_method == 'add') {
-				url = "<?php echo site_url('Zakat_fitrah')?>/ajax_add";
+				url = "<?php echo site_url('Laporan_zakat_fitrah')?>/ajax_add";
 			} else {
-				url = "<?php echo site_url('Zakat_fitrah')?>/ajax_update"; 
+				url = "<?php echo site_url('Laporan_zakat_fitrah')?>/ajax_update"; 
 			}
 
 			$.ajax({

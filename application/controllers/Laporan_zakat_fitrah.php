@@ -18,6 +18,43 @@ class Laporan_zakat_fitrah extends CI_Controller {
 		$this->load->view('admin_view',$data);
     }
 
+    function filter() {
+        $start = $this->input->post('startDate');
+        $end = $this->input->post('endDate');
+        $status_zakat_fitrah = $this->input->post('status_zakat_fitrah');
+        $status_uang = $this->input->post('status_uang');
+
+        $filter = array(
+            'start' => $start,
+            'end' => $end,
+            'status_zakat_fitrah' => $status_zakat_fitrah,
+            'status_uang' => $status_uang
+        );
+
+        if($start != '') {
+            $this->db->where('tanggal_zakat >=', $start);
+        }
+
+        if($end != '') {
+            $this->db->where('tanggal_zakat <=', $end);
+        }
+
+        if($status_zakat_fitrah != '') {
+            $this->db->where('status_zakat', $status_zakat_fitrah);
+        }
+
+        if($status_uang != '') {
+            $this->db->where('status_uang_zakat', $status_uang);
+        }
+
+        $semua_data = $this->db->get('tb_zakat_fitrah')->result_array();
+
+        $data['view_file']    = "moduls/filter_zakat_fitrah";
+        $data['semua_data'] = $semua_data;
+        $data['filter'] = $filter;
+        $this->load->view('admin_view',$data);
+    }
+
     function konfirmasi() {
         $data = array(
             'total_zakat' => $this->input->post('total_zakat'),
@@ -75,7 +112,7 @@ class Laporan_zakat_fitrah extends CI_Controller {
 			$row = array();
 			$row[] = '';
 			$row[] = $no;
-			$row[] = $zakat->nama_pengirim . "<br>" . $zakat->norek_pengirim . "<br>" . $zakat->bank_pengirim;
+			$row[] = $zakat->pemilik_rekening . "<br>" . $zakat->norek_pengirim . "<br>" . $zakat->bank_pengirim;
             $row[] = $zakat->total_zakat;
             $row[] = $zakat->tanggal_zakat;
             $row[] = $print_status;
