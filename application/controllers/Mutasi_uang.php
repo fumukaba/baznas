@@ -67,17 +67,18 @@ class Mutasi_uang extends CI_Controller {
 		$data = array();
 		$no = $_REQUEST['start'];
 		foreach ($list as $mutasi_uang) {
-
-			$no++;
-			$row = array();
-			// $row[] = '';
-			$row[] = $no;
-			$row[] = $mutasi_uang->nama_zis;
-			$row[] = $mutasi_uang->kas_masuk;
-			$row[] = $mutasi_uang->kas_keluar;
-			$row[] = $mutasi_uang->sisa_kas;
-			$row[] = '<a href="' . base_url('Mutasi_uang/mutasi/' . $mutasi_uang->id_zis) . '" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp;Mutasi</a>';
-			$data[] = $row;
+			if($mutasi_uang->id_zis != '0') {
+				$no++;
+				$row = array();
+				// $row[] = '';
+				$row[] = $no;
+				$row[] = $mutasi_uang->nama_zis;
+				$row[] = $mutasi_uang->kas_masuk;
+				$row[] = $mutasi_uang->kas_keluar;
+				$row[] = $mutasi_uang->sisa_kas;
+				$row[] = '<a href="' . base_url('Mutasi_uang/mutasi/' . $mutasi_uang->id_zis) . '" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp;Mutasi</a>';
+				$data[] = $row;
+			}
 		}
 
 		$output = array(
@@ -89,34 +90,7 @@ class Mutasi_uang extends CI_Controller {
 		echo json_encode($output);
     }
     
-    public function ajax_list_detail() {
-		$list = $this->Mdl_mutasi->get_datatables();
-		$data = array();
-		$no = $_REQUEST['start'];
-		foreach ($list as $mutasi_uang) {
-
-			$no++;
-			$row = array();
-			// $row[] = '';
-			$row[] = $no;
-			$row[] = $mutasi_uang->nama_zis;
-			$row[] = $mutasi_uang->kas_masuk;
-			$row[] = $mutasi_uang->kas_keluar;
-			$row[] = $mutasi_uang->sisa_kas;
-			$row[] = '<a href="' . base_url('Mutasi_uang/mutasi/' . $mutasi_uang->id_zis) . '" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp;Mutasi</a>';
-			$data[] = $row;
-		}
-
-		$output = array(
-						"draw" => $_REQUEST['draw'],
-						"recordsTotal" => $this->Mdl_mutasi->count_all(),
-						"recordsFiltered" => $this->Mdl_mutasi->count_filtered(),
-						"data" => $data,
-				);
-		echo json_encode($output);
-	}
-	
-	public function ajax_add() {
+    public function ajax_add() {
 		$id = $this->session->userdata('id');
 		
 		$tanggal_kaskel = date('Y-m-d H:i:s', time());
@@ -177,34 +151,8 @@ class Mutasi_uang extends CI_Controller {
 				}
 			}
 		}
-		
+
 		//print_r($this->db->last_query());
 		echo json_encode(array('status' => TRUE));
 	}
-	
-	public function ajax_edit($id) {
-		$data = $this->Mdl_mutasi->get_by_id($id);
-		echo json_encode($data);
-	}
-	
-	public function ajax_update() {
-
-		$id = $this->session->userdata('id');
-
-		$data = array(
-			'tanggal_kaskel'			=> $this->input->post('tanggal_kaskel'),
-			'keperluan_kaskel'         	=> $this->input->post('keperluan_kaskel'),
-			'id_zis'      			   	=> $this->input->post('id_zis'),
-			'jumlah_kaskel'         	=> $this->input->post('jumlah_kaskel'),
-			'dibuat_oleh' 				=> $id,					
-			);
-		$this->Mdl_mutasi->update(array('id_kaskel' => $this->input->post('id_kaskel')), $data);
-		echo json_encode(array("status" => TRUE));
-    }
-	
-	public function ajax_delete($id) {
-      $this->Mdl_mutasi->delete_by_id($id);
-      echo json_encode(array("status" => TRUE));
-    }
-
 }

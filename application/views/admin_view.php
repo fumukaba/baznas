@@ -261,13 +261,17 @@ function undelete_data(table,id) {
 
 				</div>
 
-
+				
 
 				<!-- #section:basics/navbar.dropdown -->
 
 				<div class="navbar-buttons navbar-header pull-right  collapse navbar-collapse" role="navigation">
-
+					<?php
+						$r_kasbas = $this->db->query("SELECT * FROM tb_kasbas ORDER BY id_kasbas DESC LIMIT 0, 1")->result_array();
+						$kas = (count($r_kasbas) > 0 ? $r_kasbas[0]['total_kasbas'] : 0);
+					?>
 					<ul class="nav ace-nav">
+						<li style="background-color: #222222; color: #ffffff; opacity: 0.5; font-weight: bold; padding-left: 10px; padding-right: 10px;">Kas Baznas: <?php echo "Rp. " . number_format($kas, 0, ',', '.'); ?></li>
 						<li class="light-blue user-min">
 
 							<a data-toggle="dropdown" href="#" class="dropdown-toggle">

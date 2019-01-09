@@ -18,7 +18,7 @@
 <div class='alert alert-success' id='berhasil' style='display: none;'>Proses Berhasil</div>
 <div class='alert alert-danger' id='gagal' style='display: none;'>Proses Gagal</div>
 <div id="idImgLoader" style="margin: 0 auto; text-align: center;">
-	<img src='assets/img/loader-dark.gif' />
+	<img src='<?php echo base_url('assets/img/loader-dark.gif'); ?>' />
 </div>
 <div id="data" style="display:none;">
 <section class="content">
@@ -169,103 +169,6 @@
 		$('#form-data').slideUp(500,'swing');
 		$('#panel-data').fadeIn(1000); 
 	}
-	
-	function Tambah() {
-		save_method = 'add'; 
-		$('#panel-data').fadeOut('slow');
-		$('#form-data').fadeIn('slow'); 
-		document.getElementById('formAksi').reset();
-	}
-	
-	function save() {
-			$('#btn_save').text('Saving...');
-			$('#btn_save').attr('disabled', true);
-
-			var url;
-			if (save_method == 'add') {
-				url = "<?php echo site_url('Mutasi_uang')?>/ajax_add";
-			} else {
-				url = "<?php echo site_url('Mutasi_uang')?>/ajax_update"; 
-			}
-
-			$.ajax({
-				url: url,
-				type: "POST",
-				data: $('#formAksi').serialize(),
-				dataType: "JSON",
-				success: function(result) {
-					if (result.status) {
-						
-							setTimeout(function(){
-								Batal();
-							}, 1000);
-						
-						setTimeout(function(){
-							reload_table();
-						}, 1000);
-					}
-					setTimeout(function(){
-						$('#btn_save').text('Save');
-						$('#btn_save').attr('disabled', false);
-						document.getElementById('formAksi').reset();
-					}, 1000);
-					swal_berhasil(); 
-					setTimeout(function(){
-							reload_table();
-					}, 1000);
-				}, error: function(jqXHR, textStatus, errorThrown) {
-					// alert('Error adding/update data');
-					swal({ title:"ERROR", text:"Error adding / update data", type: "warning", closeOnConfirm: true}); 
-					$('#btnSave').text('save'); $('#btnSave').attr('disabled',false);  
-				}
-			});
-    }
-	
-	function edit(id) {
-			save_method = 'update';
-			$('#panel-data').fadeOut('slow');
-			$('#form-data').fadeIn('slow');
-			document.getElementById('formAksi').reset();
-			$.ajax({
-				url : "<?php echo site_url('Mutasi_uang')?>/ajax_edit/"+id,
-				type: "GET",
-				dataType: "JSON",
-				success: function(result) {  
-					//document.getElementById('fc_kdbahan').setAttribute('readonly','readonly');
-					$('[name="id_kaskel"]').val(result.id_kaskel);
-					$('[name="tanggal_kaskel"]').val(result.tanggal_kaskel);
-					$('[name="keperluan_kaskel"]').val(result.keperluan_kaskel);
-					$('[name="id_zis"]').val(result.id_zis);
-					$('[name="jumlah_kaskel"]').val(result.jumlah_kaskel);
-
-				}, error: function (jqXHR, textStatus, errorThrown) {
-					alert('Error get data from ajax');
-				}
-			});
-	}
-	
-	function hapus(id) {
-		if (confirm('Are you sure delete this data?')) {
-			$.ajax ({
-				url : "<?php echo site_url('Mutasi_uang/ajax_delete')?>/"+id,
-				type: "POST",
-				dataType: "JSON",
-				success: function(data) {
-					setTimeout(function(){
-                        Batal();
-                    }, 1000);
-					
-					setTimeout(function(){
-                        reload_table();
-					}, 1000);
-					swal_berhasil(); 
-				}, error: function (jqXHR, textStatus, errorThrown) {
-					swal({ title:"ERROR", text:"Error delete data", type: "warning", closeOnConfirm: true}); 
-					$('#btnSave').text('save'); $('#btnSave').attr('disabled',false); 
-				}
-			});
-		}
-	}
 </script>
 
 <div class="row">
@@ -285,59 +188,7 @@
 		</a>
 	</div>
 	</div>
-
-<div class="widget-body">
-<div class="widget-main">
-<div class="row">
-<div class="col-xs-12">
-<form class="form-horizontal" role="form" id="formAksi">
-	 <input type="hidden" name="id_zis">
-     <div class="form-group">
-	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Tempat ZIS </label>
-		<div class="col-sm-10">
-			<input type="text" id="nama_zis" name="nama_zis" placeholder="Tempat ZIS" class="col-xs-10 col-sm-5" readonly="readonly" />
-		</div>
-	</div>
-
-    <div class="form-group">
-	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Tanggal </label>
-		<div class="col-sm-10">
-			<input type="text" id="tanggal_kaskel" name="tanggal_kaskel" placeholder="Contoh: 2018-12-31 20:15:00" class="col-xs-10 col-sm-5" />
-		</div>
-	</div>
-
-	<div class="form-group">
-	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Keperluan </label>
-		<div class="col-sm-10">
-			<input type="text" id="keperluan_kaskel" name="keperluan_kaskel" placeholder="Keperluan" class="col-xs-10 col-sm-5" />
-		</div>
-	</div>
-
-	<div class="form-group">
-	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Jumlah </label>
-		<div class="col-sm-10">
-			<input type="number" id="jumlah_kaskel" name="jumlah_kaskel" placeholder="Jumlah Kas Keluar" class="col-xs-10 col-sm-5" step="1" min="0" max="0" />
-		</div>
-	</div>
-
-	</div>
-	<div class="col-md-offset-2 col-md-9">
-				<button class="btn btn-info" type="button" id="btn_save" onclick="save()">
-					<i class="ace-icon fa fa-check bigger-110"></i>
-					Submit
-				</button>
-
-				&nbsp; &nbsp; &nbsp;
-				<button class="btn" type="reset">
-				<i class="ace-icon fa fa-undo bigger-110"></i>
-					Reset
-				</button>
-	</div>
-</form>
-</div>
-</div>
-</div>					
-</div><!-- /.row -->
+	<!-- /.row -->
 </div>
 </div><!-- /.row -->
 </div>
