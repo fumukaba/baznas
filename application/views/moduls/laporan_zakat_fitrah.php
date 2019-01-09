@@ -5,7 +5,7 @@
  <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
  <script src="<?php echo base_url('assets/datetimepicker/js/bootstrap-datetimepicker.min.js') ?>"></script>
  <link rel="stylesheet" href="<?php echo base_url('assets/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>">
- 
+  
  <style type="text/css">
  	
  	td.details-control {
@@ -82,7 +82,7 @@
 
 	<button class="btn btn-default" onclick="reload_table()"><i class="fa fa-refresh"></i> Reload</button>
 
-	<button class="btn btn-danger" onclick="Tambah()"><i class="fa fa-plus"></i> Tambah Data</button>
+	<!-- <button class="btn btn-danger" onclick="Tambah()"><i class="fa fa-plus"></i> Tambah Daa</button> -->
 
 </div><br />
 
@@ -101,8 +101,6 @@
              <th>Status</th>
              <th>Uang</th>
 			 <th>Bukti Transfer</th>
-
-            <th>Aksi</th>
 
         </tr>
 
