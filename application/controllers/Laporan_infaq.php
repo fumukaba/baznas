@@ -18,6 +18,43 @@ class Laporan_infaq extends CI_Controller {
 		$this->load->view('admin_view',$data);
     }
 
+    function filter() {
+        $start = $this->input->post('startDate');
+        $end = $this->input->post('endDate');
+        $status_infaq = $this->input->post('status_infaq');
+        $status_uang = $this->input->post('status_uang');
+
+        $filter = array(
+            'start' => $start,
+            'end' => $end,
+            'status_infaq' => $status_infaq,
+            'status_uang' => $status_uang
+        );
+
+        if($start != '') {
+            $this->db->where('tanggal_infaq >=', $start);
+        }
+
+        if($end != '') {
+            $this->db->where('tanggal_infaq <=', $end);
+        }
+
+        if($status_infaq != '') {
+            $this->db->where('status_infaq', $status_infaq);
+        }
+
+        if($status_uang != '') {
+            $this->db->where('status_uang', $status_uang);
+        }
+
+        $semua_data = $this->db->get('tb_infaq')->result_array();
+
+        $data['view_file']    = "moduls/filter_infaq";
+        $data['semua_data'] = $semua_data;
+        $data['filter'] = $filter;
+        $this->load->view('admin_view',$data);
+    }
+
     // function konfirmasi() {
     //     $data = array(
     //         'jumlah_infaq' => $this->input->post('jumlah_infaq'),
@@ -73,7 +110,6 @@ class Laporan_infaq extends CI_Controller {
             $row[] = $infaq->tanggal_infaq;
             $row[] = $infaq->status_infaq;
             $row[] = $infaq->status_uang;
-            $row[] = '<img src="'.base_url('uploads/infaq/'.$infaq->bukti_infaq).'" alt="" width="100" height="100">';
 			$data[] = $row;
 		}
 

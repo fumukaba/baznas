@@ -1,34 +1,45 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
  <link href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css" rel="stylesheet" type="text/css" />
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ <script>
+    $(document).ready(function() {
+        $('#example').DataTable( {
+            dom: 'Bfrtip',
+            buttons: [
+                'excel', 'pdf', 'print'
+            ]
+        } );
+    })
+ </script>
+
+
  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
  <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+
  <script src="<?php echo base_url('assets/datetimepicker/js/bootstrap-datetimepicker.min.js') ?>"></script>
  <link rel="stylesheet" href="<?php echo base_url('assets/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>">
- <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
-<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
-<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+ 
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
 
- <style type="text/css">
- 	
- 	td.details-control {
-	    background: url('https://cdn.rawgit.com/DataTables/DataTables/6c7ada53ebc228ea9bc28b1b216e793b1825d188/examples/resources/details_open.png') no-repeat center center;
-	    cursor: pointer;
-	}
-	tr.shown td.details-control {
-	    background: url('https://cdn.rawgit.com/DataTables/DataTables/6c7ada53ebc228ea9bc28b1b216e793b1825d188/examples/resources/details_close.png') no-repeat center center;
-	}
- </style>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+
 <?php $title = "<i class='fa fa-money'></i>&nbsp;Laporan Infaq"; ?>
 
-<div id="idImgLoader" style="margin: 0 auto; text-align: center;">
+<!-- <div id="idImgLoader" style="margin: 0 auto; text-align: center;">
 
 	<img src='<?php echo base_url();?>assets/img/loader-dark.gif' />
 
-</div>
+</div> -->
 
-<div id="data" style="display:none;">
+<div id="data">
 
 <section class="content">
 
@@ -84,7 +95,7 @@
 
 <div class="box-header">
 
-	<button class="btn btn-default" onclick="reload_table()"><i class="fa fa-refresh"></i> Reload</button>
+	<!-- <button class="btn btn-default" onclick="reload_table()"><i class="fa fa-refresh"></i> Reload</button> -->
 
 
 </div><br />
@@ -94,7 +105,6 @@
     <thead>
 
         <tr>
-        	<th></th>
             <th>No.</th>
 
             <th>Pengirim</th>
@@ -108,21 +118,34 @@
 
     </thead>
 
-    <tbody></tbody>
+    <tbody>
+    <?php $i = 0; ?>
+    <?php foreach($semua_data as $data) { ?>
+        <tr>
+            <td><?php echo ++$i; ?></td>
+            <td><?php echo $data['pemilik_rekening'] . "<br>" . $data['norek_pengirim'] . "<br>" . $data['bank_pengirim']; ?></td>
+            <td><?php echo $data['jumlah_infaq']; ?></td>
+            <td><?php echo $data['tanggal_infaq']; ?></td>
+            <td><?php echo $data['status_infaq']; ?></td>
+            <td><?php echo $data['status_uang']; ?></td>
+        </tr>
+    <?php } ?>
+    </tbody>
 
 </table> <br>
+
 <form action="<?php echo base_url('Laporan_infaq/filter'); ?>" method="POST">
 	<div class="row">
 		<div class="col-lg-6 col-sm-12">
 			<div class="input-group date">
 				<span class="input-group-addon" ><i class="glyphicon glyphicon-calendar"></i></span>
-				<input class="form-control" type="date" id="startDate" name="startDate" placeholder="Tanggal Mulai"> 
+				<input class="form-control" type="date" id="startDate" name="startDate" value="<?php echo ($filter['start'] != '' ? $filter['start'] : ''); ?>" placeholder="Tanggal Mulai"> 
 			</div>
 		</div>
 		<div class="col-lg-6 col-sm-12">
 			<div class="input-group date">
 				<span class="input-group-addon" ><i class="glyphicon glyphicon-calendar"></i></span>
-				<input class="form-control" type="date" id="endDate" name="endDate" placeholder="Tanggal Akhir"> 
+				<input class="form-control" type="date" id="endDate" name="endDate" value="<?php echo ($filter['end'] != '' ? $filter['end'] : ''); ?>" placeholder="Tanggal Akhir"> 
 			</div>
 		</div>
 	</div>
@@ -132,10 +155,10 @@
 			<div class="input-group date"> 
 				<label for="">Status Infaq</label>
 				<select name="status_infaq" id="status_infaq" autocomplete="off">
-					<option value="" selected="selected">Pilih status infaq</option>
-					<option value="Menunggu Konfirmasi">Menunggu Konfirmasi</option>
-					<option value="Valid">Valid</option>
-					<option value="Tidak Valid">Tidak Valid</option>
+					<option value="" <?php echo ($filter['status_infaq'] == '' ? 'selected="selected"' : '')?>>Semua status infaq</option>
+					<option value="Menunggu Konfirmasi" <?php echo ($filter['status_infaq'] == 'Menunggu Konfirmasi' ? 'selected="selected"' : '')?>>Menunggu Konfirmasi</option>
+					<option value="Valid" <?php echo ($filter['status_infaq'] == 'Valid' ? 'selected="selected"' : '')?>>Valid</option>
+					<option value="Tidak Valid" <?php echo ($filter['status_infaq'] == 'Tidak Valid' ? 'selected="selected"' : '')?>>Tidak Valid</option>
 				</select>
 			</div>
 		</div>
@@ -146,9 +169,9 @@
 			<div class="input-group date">
 				<label for="">Status Uang</label> 
 				<select name="status_uang" id="status_uang" autocomplete="off">
-					<option value="" selected="selected">Pilih status uang</option>
-					<option value="Kas Baznas">Kas Baznas</option>
-					<option value="Sudah Terdistribusi">Sudah Terdistribusi</option>
+					<option value="" <?php echo ($filter['status_uang'] == '' ? 'selected="selected"' : '')?>>Semua status uang</option>
+					<option value="Kas Baznas" <?php echo ($filter['status_uang'] == 'Kas Baznas' ? 'selected="selected"' : '')?>>Kas Baznas</option>
+					<option value="Sudah Terdistribusi" <?php echo ($filter['status_uang'] == 'Sudah Terdistribusi' ? 'selected="selected"' : '')?>>Sudah Terdistribusi</option>
 				</select>
 			</div>
 		</div>
@@ -187,19 +210,19 @@
 
       //$('#idImgLoader').show(2000);
 
-	  $('#idImgLoader').fadeOut(2000);
+	//   $('#idImgLoader').fadeOut(2000);
 
-	  setTimeout(function(){
+	//   setTimeout(function(){
 
-            data();
+    //         data();
 
-      }, 2000);
+    //   }, 2000);
 
-	  setTimeout(function(){
+	//   setTimeout(function(){
 
-            ckeditor();
+    //         ckeditor();
 
-      }, 2000);
+    //   }, 2000);
 
 	//   setTimeout(function(){
 	// 	reload_table();
@@ -209,69 +232,69 @@
 
 	
 
-	function ckeditor(){
+	// function ckeditor(){
 
-		tinymce.init({
+	// 	tinymce.init({
 
-			selector: "textarea"
+	// 		selector: "textarea"
 
-		});
+	// 	});
 
-	}
+	// }
 
 	
 
-	function data(){
+	// function data(){
 
-		$('#data').fadeIn();
+	// 	$('#data').fadeIn();
 
-	}
+	// }
 
 	
 
 	$(document).ready(function() {
 
-		table = $('#example').DataTable({ 
+	// 	table = $('#example').DataTable({ 
 
 
 
-        "processing": true, //Feature control the processing indicator.
+    //     "processing": true, //Feature control the processing indicator.
 
-        "serverSide": true, 
+    //     "serverSide": true, 
 
-        "order": [], //Initial no order.
-
-
-
-        // Load data for the table's content from an Ajax source
-
-        "ajax": {
-
-            "url": "<?php echo site_url('Laporan_infaq/ajax_list')?>",
-
-            "type": "POST"
-
-        },
+    //     "order": [], //Initial no order.
 
 
 
-        //Set column definition initialisation properties.
+    //     // Load data for the table's content from an Ajax source
 
-       responsive: {
-            details: {
-                type: 'column'
-            }
-        },
-        columnDefs: [ {
-            className: 'control',
-            orderable: false,
-            targets:   0
-        } ],
-        order: [ 1, 'asc' ]
+    //     "ajax": {
+
+    //         "url": "<?php echo site_url('Laporan_infaq/ajax_list')?>",
+
+    //         "type": "POST"
+
+    //     },
 
 
 
-    });
+    //     //Set column definition initialisation properties.
+
+    //    responsive: {
+    //         details: {
+    //             type: 'column'
+    //         }
+    //     },
+    //     columnDefs: [ {
+    //         className: 'control',
+    //         orderable: false,
+    //         targets:   0
+    //     } ],
+    //     order: [ 1, 'asc' ]
+
+
+
+    // });
 
 	
 
@@ -279,25 +302,25 @@
 
 	
 
-	function reload_table() {
+	// function reload_table() {
 
-    	table.ajax.reload(null, false);
+    // 	table.ajax.reload(null, false);
 
-	}
+	// }
 
 
 
-	function Tambah() {
+	// function Tambah() {
 
-		save_method = 'add'; 
+	// 	save_method = 'add'; 
 
-		$('#panel-data').fadeOut('slow');
+	// 	$('#panel-data').fadeOut('slow');
 
-		$('#form-data').fadeIn('slow'); 
+	// 	$('#form-data').fadeIn('slow'); 
 
-		//document.getElementById('formAksi').reset();
+	// 	//document.getElementById('formAksi').reset();
 
-	}
+	// }
 
 	
 
@@ -391,127 +414,127 @@
 
 	
 
-	function Batal() { 
+	// function Batal() { 
 
-		$('#form-data').slideUp(500,'swing');
+	// 	$('#form-data').slideUp(500,'swing');
 
-		$('#panel-data').fadeIn(1000); 
+	// 	$('#panel-data').fadeIn(1000); 
 
-	}
-
-	
-
-	function edit(id) {
-
-			save_method = 'update';
-
-			$('#panel-data').fadeOut('slow');
-
-			$('#form-data').fadeIn('slow');
-
-			document.getElementById('formAksi').reset();
-
-			$.ajax({
-
-				url : "<?php echo site_url('Infaq')?>/ajax_edit/"+id,
-
-				type: "GET",
-
-				dataType: "JSON",
-
-				success: function(result) {  
-
-					//document.getElementById('fc_kdbahan').setAttribute('readonly','readonly');
-
-					$('[name="id_infaq"]').val(result.id_infaq);
-					$('[name="ostatus_infaq"]').val(result.status_infaq);
-
-					$('[name="nama_pengirim"]').val(result.nama_pengirim);
-
-					$('[name="bank_pengirim"]').val(result.bank_pengirim);
-
-					$('[name="pemilik_rekening"]').val(result.pemilik_rekening);
-
-                    $('[name="norek_pengirim"]').val(result.norek_pengirim);
-
-                    $('[name="jumlah_infaq"]').val(result.jumlah_infaq);
-
-                    $('[name="tanggal_infaq"]').val(result.tanggal_infaq);
-
-                    if(result.status_infaq == 'Menunggu Konfirmasi') {
-                        $('#status_infaq .c1').attr('selected', 'selected');
-                    } else if(result.status_infaq == 'Valid') {
-                        $('#status_infaq .c2').attr('selected', 'selected');
-                    } else if(result.status_infaq == 'Tidak Valid') {
-                        $('#status_infaq .c3').attr('selected', 'selected');
-                    }
-
-                    if(result.status_uang == 'Belum Dikirim') {
-                        $('#status_uang .c1').attr('selected', 'selected');
-                    } else if(result.status_uang == 'Sudah Dikirim') {
-                        $('#status_uang .c2').attr('selected', 'selected');
-                    }
-
-                    var _classess = ".c" + result.id_zis;
-					$('#id_zis ' + _classess).attr('selected', 'selected');
-
-					// console.log(_classess);
-
-				}, error: function (jqXHR, textStatus, errorThrown) {
-
-					alert('Error get data from ajax');
-
-				}
-
-			});
-
-	}
+	// }
 
 	
 
-	function hapus(id) {
+	// function edit(id) {
 
-		if (confirm('Are you sure delete this data?')) {
+	// 		save_method = 'update';
 
-			$.ajax ({
+	// 		$('#panel-data').fadeOut('slow');
 
-				url : "<?php echo site_url('Laporan_infaq/ajax_delete')?>/"+id,
+	// 		$('#form-data').fadeIn('slow');
 
-				type: "POST",
+	// 		document.getElementById('formAksi').reset();
 
-				dataType: "JSON",
+	// 		$.ajax({
 
-				success: function(data) {
+	// 			url : "<?php echo site_url('Infaq')?>/ajax_edit/"+id,
 
-					setTimeout(function(){
+	// 			type: "GET",
 
-                        Batal();
+	// 			dataType: "JSON",
 
-                    }, 1000);
+	// 			success: function(result) {  
+
+	// 				//document.getElementById('fc_kdbahan').setAttribute('readonly','readonly');
+
+	// 				$('[name="id_infaq"]').val(result.id_infaq);
+	// 				$('[name="ostatus_infaq"]').val(result.status_infaq);
+
+	// 				$('[name="nama_pengirim"]').val(result.nama_pengirim);
+
+	// 				$('[name="bank_pengirim"]').val(result.bank_pengirim);
+
+	// 				$('[name="pemilik_rekening"]').val(result.pemilik_rekening);
+
+    //                 $('[name="norek_pengirim"]').val(result.norek_pengirim);
+
+    //                 $('[name="jumlah_infaq"]').val(result.jumlah_infaq);
+
+    //                 $('[name="tanggal_infaq"]').val(result.tanggal_infaq);
+
+    //                 if(result.status_infaq == 'Menunggu Konfirmasi') {
+    //                     $('#status_infaq .c1').attr('selected', 'selected');
+    //                 } else if(result.status_infaq == 'Valid') {
+    //                     $('#status_infaq .c2').attr('selected', 'selected');
+    //                 } else if(result.status_infaq == 'Tidak Valid') {
+    //                     $('#status_infaq .c3').attr('selected', 'selected');
+    //                 }
+
+    //                 if(result.status_uang == 'Belum Dikirim') {
+    //                     $('#status_uang .c1').attr('selected', 'selected');
+    //                 } else if(result.status_uang == 'Sudah Dikirim') {
+    //                     $('#status_uang .c2').attr('selected', 'selected');
+    //                 }
+
+    //                 var _classess = ".c" + result.id_zis;
+	// 				$('#id_zis ' + _classess).attr('selected', 'selected');
+
+	// 				// console.log(_classess);
+
+	// 			}, error: function (jqXHR, textStatus, errorThrown) {
+
+	// 				alert('Error get data from ajax');
+
+	// 			}
+
+	// 		});
+
+	// }
+
+	
+
+	// function hapus(id) {
+
+	// 	if (confirm('Are you sure delete this data?')) {
+
+	// 		$.ajax ({
+
+	// 			url : "<?php echo site_url('Laporan_infaq/ajax_delete')?>/"+id,
+
+	// 			type: "POST",
+
+	// 			dataType: "JSON",
+
+	// 			success: function(data) {
+
+	// 				setTimeout(function(){
+
+    //                     Batal();
+
+    //                 }, 1000);
 
 					
 
-					setTimeout(function(){
+	// 				setTimeout(function(){
 
-                        reload_table();
+    //                     reload_table();
 
-					}, 1000);
+	// 				}, 1000);
 
-					swal_berhasil(); 
+	// 				swal_berhasil(); 
 
-				}, error: function (jqXHR, textStatus, errorThrown) {
+	// 			}, error: function (jqXHR, textStatus, errorThrown) {
 
-					swal({ title:"ERROR", text:"Error delete data", type: "warning", closeOnConfirm: true}); 
+	// 				swal({ title:"ERROR", text:"Error delete data", type: "warning", closeOnConfirm: true}); 
 
-					$('#btnSave').text('save'); $('#btnSave').attr('disabled',false); 
+	// 				$('#btnSave').text('save'); $('#btnSave').attr('disabled',false); 
 
-				}
+	// 			}
 
-			});
+	// 		});
 
-		}
+	// 	}
 
-	}
+	// }
 
 </script>	
 
@@ -750,119 +773,3 @@
     </div>
   </div>
 </div>	
-
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script>
-	$(document).ready(function(e){
-		konfirmasiStatus = function(_this) {
-			var id_infaq = _this.data('id'),
-				jumlah = _this.data('jumlah'),
-				pengirim = _this.data('pengirim'),
-				url = _this.data('url'),
-				konfirmasi = _this.data('konfirmasi');
-
-			if(konfirmasi == 'tidak') {
-				$.ajax({
-					type: 'POST',
-					url: url,
-					data: 'id_infaq=' + id_infaq + '&status_infaq=Tidak Valid&jumlah_infaq=' + jumlah,
-					dataType: 'json',
-					processData:false,
-					success: function(result) {
-						if (result.status) {
-							swal({ title:"SUCCESS", text:"Berhasil dikonfirmasi.", type: "success", closeOnConfirm: true});
-
-							document.location.href = '';
-						}
-					}, error: function(jqXHR, textStatus, errorThrown) {
-						// alert('Error adding/update data');
-						swal({ title:"ERROR", text:"Gagal dikonfirmasi.", type: "warning", closeOnConfirm: true});  
-					}
-				});
-			} else {
-				$('#konfirmasiIdInfaq').val(id_infaq);
-				$('#konfirmasiPengirim').html(pengirim);
-				$('#konfirmasiJumlahInfaq').val(jumlah);
-				$('#modalKonfirmasi').modal('show');
-			}
-		}
-
-		$('#KonfirmasiStatus').on('submit', (function(e) {
-			e.preventDefault();
-
-			var url = $(this).data('url');
-
-			$.ajax({
-				type: 'POST',
-				url: url,
-				data: new FormData(this),
-				dataType: 'json',
-				contentType: false,
-				cache: false,
-				processData:false,
-				success: function(result) {
-                    if (result.status) {
-						swal({ title:"SUCCESS", text:"Berhasil dikonfirmasi.", type: "success", closeOnConfirm: true});
-
-						document.location.href = '';
-					}
-				}, error: function(jqXHR, textStatus, errorThrown) {
-					// alert('Error adding/update data');
-					swal({ title:"ERROR", text:"Gagal dikonfirmasi.", type: "warning", closeOnConfirm: true});  
-				}
-			});
-		}))
-
-		$("#formAksi").on('submit', function(e){
-			e.preventDefault();
-
-			$('#btn_save').text('Saving...');
-			$('#btn_save').attr('disabled', true);
-
-			var url;
-			if (save_method == 'add') {
-				url = "<?php echo site_url('Infaq')?>/ajax_add";
-			} else {
-				url = "<?php echo site_url('Infaq')?>/ajax_update"; 
-			}
-
-			$.ajax({
-				type: 'POST',
-				url: url,
-				data: new FormData(this),
-				dataType: 'json',
-				contentType: false,
-				cache: false,
-				processData:false,
-				beforeSend: function(){
-				},
-				success: function(result) {
-                    if (result.status) {
-						
-							setTimeout(function(){
-								Batal();
-							}, 1000);
-						
-						setTimeout(function(){
-							reload_table();
-						}, 1000);
-					}
-					setTimeout(function(){
-						$('#btn_save').text('Save');
-						$('#btn_save').attr('disabled', false);
-						document.getElementById('formAksi').reset();
-					}, 1000);
-					swal_berhasil(); 
-					setTimeout(function(){
-							reload_table();
-					}, 1000);
-				}, error: function(jqXHR, textStatus, errorThrown) {
-					// alert('Error adding/update data');
-					swal({ title:"ERROR", text:"Error adding / update data", type: "warning", closeOnConfirm: true}); 
-					$('#btnSave').text('save'); $('#btnSave').attr('disabled',false);  
-				}
-			});
-		});
-	});
-</script>
