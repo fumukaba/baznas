@@ -117,7 +117,6 @@ class Laporan_zakat_fitrah extends CI_Controller {
             $row[] = $zakat->tanggal_zakat;
             $row[] = $print_status;
             $row[] = $zakat->status_uang_zakat;
-            $row[] = '<img src="'.base_url('uploads/zakat_fitrah/'.$zakat->bukti_zakat).'" alt="" width="100" height="100">';
 			$data[] = $row;
 		}
 

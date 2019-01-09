@@ -104,7 +104,6 @@
              <th>Tanggal</th>
              <th>Status</th>
              <th>Uang</th>
-			 <th>Bukti Transfer</th>
 
         </tr>
 

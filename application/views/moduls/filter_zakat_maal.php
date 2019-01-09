@@ -31,7 +31,7 @@
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
 
-<?php $title = "<i class='fa fa-money'></i>&nbsp;Laporan Infaq"; ?>
+<?php $title = "<i class='fa fa-money'></i>&nbsp;Laporan Zakat Maal"; ?>
 
 <!-- <div id="idImgLoader" style="margin: 0 auto; text-align: center;">
 
@@ -151,9 +151,9 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="input-group date"> 
-				<label for="">Status Infaq</label>
+				<label for="">Status Zakat Maal</label>
 				<select name="status_maal" id="status_maal" autocomplete="off">
-					<option value="" <?php echo ($filter['status_maal'] == '' ? 'selected="selected"' : '')?>>Semua status infaq</option>
+					<option value="" <?php echo ($filter['status_maal'] == '' ? 'selected="selected"' : '')?>>Semua status zakat Maal</option>
 					<option value="Menunggu Konfirmasi" <?php echo ($filter['status_maal'] == 'Menunggu Konfirmasi' ? 'selected="selected"' : '')?>>Menunggu Konfirmasi</option>
 					<option value="Valid" <?php echo ($filter['status_maal'] == 'Valid' ? 'selected="selected"' : '')?>>Valid</option>
 					<option value="Tidak Valid" <?php echo ($filter['status_maal'] == 'Tidak Valid' ? 'selected="selected"' : '')?>>Tidak Valid</option>

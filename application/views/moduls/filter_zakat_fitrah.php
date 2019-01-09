@@ -134,7 +134,7 @@
 
 </table> <br>
 
-<form action="<?php echo base_url('Laporan_infaq/filter'); ?>" method="POST">
+<form action="<?php echo base_url('Laporan_zakat_fitrah/filter'); ?>" method="POST">
 	<div class="row">
 		<div class="col-lg-6 col-sm-12">
 			<div class="input-group date">
@@ -155,7 +155,7 @@
 			<div class="input-group date"> 
 				<label for="">Status Zakat Fitrah</label>
 				<select name="status_zakat_fitrah" id="status_zakat_fitrah" autocomplete="off">
-					<option value="" <?php echo ($filter['status_zakat_fitrah'] == '' ? 'selected="selected"' : '')?>>Semua status infaq</option>
+					<option value="" <?php echo ($filter['status_zakat_fitrah'] == '' ? 'selected="selected"' : '')?>>Semua status zakat Fitrah</option>
 					<option value="Menunggu Konfirmasi" <?php echo ($filter['status_zakat_fitrah'] == 'Menunggu Konfirmasi' ? 'selected="selected"' : '')?>>Menunggu Konfirmasi</option>
 					<option value="Valid" <?php echo ($filter['status_zakat_fitrah'] == 'Valid' ? 'selected="selected"' : '')?>>Valid</option>
 					<option value="Tidak Valid" <?php echo ($filter['status_zakat_fitrah'] == 'Tidak Valid' ? 'selected="selected"' : '')?>>Tidak Valid</option>
