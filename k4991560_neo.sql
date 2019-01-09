@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0.1
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 07 Jan 2019 pada 07.07
--- Versi server: 10.1.32-MariaDB
--- Versi PHP: 7.2.5
+-- Waktu pembuatan: 09 Jan 2019 pada 06.25
+-- Versi server: 10.1.36-MariaDB
+-- Versi PHP: 7.2.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -49,7 +49,8 @@ INSERT INTO `mainmenu` (`seq`, `idmenu`, `nama_menu`, `active_menu`, `icon_class
 (2, 2, 'Master', '', 'menu-icon fa fa-file', '#', '', '2019-01-04 08:22:30', NULL),
 (3, 3, 'About', '', 'menu-icon fa fa-question', 'About', '', '2019-01-04 08:31:13', NULL),
 (4, 4, 'Setting', '', 'menu-icon fa fa-gear', 'Setting', '', '2019-01-05 02:49:07', NULL),
-(5, 5, 'Kas', '', 'menu-icon fa fa-money', '#', '', '2019-01-05 08:46:05', NULL);
+(5, 5, 'Kas', '', 'menu-icon fa fa-money', '#', '', '2019-01-05 08:46:05', NULL),
+(6, 6, 'Mutasi Uang', '', 'menu-icon fa fa-arrow-right', 'Mutasi_uang', '', '2019-01-09 02:55:38', NULL);
 
 -- --------------------------------------------------------
 
@@ -109,7 +110,8 @@ INSERT INTO `tab_akses_mainmenu` (`id`, `id_menu`, `id_level`, `c`, `r`, `u`, `d
 (3, 2, 2, 0, 1, 0, 0, '2019-01-04 08:29:52', ''),
 (4, 4, 1, 0, 1, 0, 0, '2019-01-05 02:46:39', ''),
 (5, 5, 1, 0, 1, 0, 0, '2019-01-05 08:48:44', ''),
-(6, 5, 2, 0, 1, 0, 0, '2019-01-05 08:48:44', '');
+(6, 5, 2, 0, 1, 0, 0, '2019-01-05 08:48:44', ''),
+(7, 6, 1, 0, 1, 0, 0, '2019-01-08 03:24:36', '');
 
 -- --------------------------------------------------------
 
@@ -190,7 +192,7 @@ CREATE TABLE `tb_infaq` (
 --
 
 INSERT INTO `tb_infaq` (`id_infaq`, `nama_pengirim`, `bank_pengirim`, `pemilik_rekening`, `norek_pengirim`, `jumlah_infaq`, `tanggal_infaq`, `bukti_infaq`, `status_infaq`, `status_uang`, `diperbarui_oleh`, `terakhir_diperbarui`, `id_zis`) VALUES
-('t26a53f7e1179e70b78a3951a1159e2030', 'Fuad', 'BRI', 'Nugroho', '0099019429100', 1000000, '2018-01-04 08:00:00', 'profile.jpg', 'Valid', 'Kas Baznas', 1, '2019-01-05 02:39:10', '0');
+('t28e21d5164ce9ba998d5f62433e43081d', 'Fuad', 'BRI', 'Hadi', '002002920', 100000, '2019-01-09 11:30:00', '', 'Valid', 'Kas Baznas', 1, '2019-01-09 04:31:45', 't14fef34479d29c15a4e5bbe00c3120787');
 
 -- --------------------------------------------------------
 
@@ -209,12 +211,7 @@ CREATE TABLE `tb_kasbas` (
 --
 
 INSERT INTO `tb_kasbas` (`id_kasbas`, `tanggal_kasbas`, `total_kasbas`) VALUES
-(1, '2019-01-05 02:18:43', 1000000),
-(2, '2019-01-05 05:04:45', 1125000),
-(3, '2019-01-05 05:14:01', 1225000),
-(4, '2019-01-05 08:53:27', 1025000),
-(5, '2019-01-07 01:57:17', 1026000),
-(6, '2019-01-07 03:53:33', 1027000);
+(1, '2019-01-09 04:31:45', 100000);
 
 -- --------------------------------------------------------
 
@@ -231,13 +228,6 @@ CREATE TABLE `tb_kaskel` (
   `dibuat_oleh` int(11) NOT NULL,
   `terakhir_diperbarui` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data untuk tabel `tb_kaskel`
---
-
-INSERT INTO `tb_kaskel` (`id_kaskel`, `tanggal_kaskel`, `keperluan_kaskel`, `id_zis`, `jumlah_kaskel`, `dibuat_oleh`, `terakhir_diperbarui`) VALUES
-(1, '2018-01-04 15:23:37', 'Membangun jembatan', 't14fef34479d29c15a4e5bbe00c3120787', 200000, 1, '2019-01-05 08:53:27');
 
 -- --------------------------------------------------------
 
@@ -258,11 +248,7 @@ CREATE TABLE `tb_kasmas` (
 --
 
 INSERT INTO `tb_kasmas` (`id_kasmas`, `tanggal_kasmas`, `asal_kasmas`, `id_asal`, `jumlah_kasmas`) VALUES
-(1, '2019-01-05 02:18:43', 'Infaq', 't26a53f7e1179e70b78a3951a1159e2030', 1000000),
-(2, '2019-01-05 05:06:08', 'Zakat Fitrah', 't3dac69f4982004526b7fc5d7dc9ab3f35', 125000),
-(3, '2019-01-05 05:14:01', 'Zakat Fitrah', '2328d29whd29wd2', 100000),
-(4, '2019-01-07 01:57:17', 'Zakat Maal', '2', 1000),
-(5, '2019-01-07 03:53:33', 'Zakat Maal', '2', 1000);
+(1, '2019-01-09 04:31:45', 'Infaq', 't28e21d5164ce9ba998d5f62433e43081d', 100000);
 
 -- --------------------------------------------------------
 
@@ -283,7 +269,7 @@ CREATE TABLE `tb_setting` (
 
 INSERT INTO `tb_setting` (`id_setting`, `tahun`, `meta_key`, `meta_value`) VALUES
 (1, 2019, 'nominal_zakat_fitrah', '25000'),
-(2, 2019, 'nomimal_barang_temuan', '35000');
+(2, 2019, 'nominal_barang_temuan', '35000');
 
 -- --------------------------------------------------------
 
@@ -309,14 +295,6 @@ CREATE TABLE `tb_zakat_fitrah` (
   `id_zis` varchar(34) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data untuk tabel `tb_zakat_fitrah`
---
-
-INSERT INTO `tb_zakat_fitrah` (`id_zakat_fitrah`, `nama_pengirim`, `bank_pengirim`, `pemilik_rekening`, `norek_pengirim`, `jumlah_orang`, `harga_zakat`, `total_zakat`, `tanggal_zakat`, `bukti_zakat`, `status_zakat`, `status_uang_zakat`, `diperbarui_oleh`, `terakhir_diperbarui`, `id_zis`) VALUES
-('2328d29whd29wd2', 'Sugiono', 'BRI', 'Suwarno', '009230810002', 4, 25000, 100000, '2019-01-05 00:00:00', 'i352f05b9eb1d836e69572d1fe1ca35c9c.png', 'Valid', 'Kas Baznas', 1, '2019-01-07 03:42:18', 't1d94f343a14ea9ab9ef7a7b8eaf999e04'),
-('t3dac69f4982004526b7fc5d7dc9ab3f35', 'Bambang', 'BRI', 'Bambang', '298220000291', 5, 25000, 125000, '2018-12-10 08:00:00', 'i31fa29053f202533ceb42e758277ef8cb.png', 'Valid', 'Kas Baznas', 1, '2019-01-07 03:42:00', 't14fef34479d29c15a4e5bbe00c3120787');
-
 -- --------------------------------------------------------
 
 --
@@ -339,14 +317,6 @@ CREATE TABLE `tb_zakat_maal` (
   `jenis_maal` enum('Uang','Emas','Perdagangan','Pertanian','Pertambangan') NOT NULL DEFAULT 'Uang',
   `id_zis` varchar(34) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data untuk tabel `tb_zakat_maal`
---
-
-INSERT INTO `tb_zakat_maal` (`id_maal`, `nama_pengirim`, `bank_pengirim`, `pemilik_rekening`, `norek_pengirim`, `jumlah_maal`, `tanggal_maal`, `bukti_maal`, `status_maal`, `status_uang`, `diperbarui_oleh`, `terakhir_diperbarui`, `jenis_maal`, `id_zis`) VALUES
-(1, 'Fuad', 'BNI', 'fhadi', '989898878', 100000, '2018-01-20 18:00:00', 'i46df2ba7846906255671318310678331a.png', 'Menunggu Konfirmasi', 'Kas Baznas', 1, '2019-01-07 03:53:25', 'Pertanian', '0'),
-(2, 'Nirwan', 'BNI', 'Habibi', '123', 1000, '2019-01-05 15:53:27', 'i434452c2f3dd98775fedecd9b591e4501.png', 'Valid', 'Kas Baznas', 1, '2019-01-07 03:53:33', 'Perdagangan', '0');
 
 -- --------------------------------------------------------
 
@@ -426,6 +396,29 @@ INSERT INTO `user_type` (`user_type_id`, `user_type_name`, `nama`) VALUES
 (1, 'Super Admin', NULL),
 (2, 'Administrator', NULL),
 (3, 'Pengurus ZIS', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in struktur untuk tampilan `v_mutasi`
+-- (Lihat di bawah untuk tampilan aktual)
+--
+CREATE TABLE `v_mutasi` (
+`id_zis` varchar(34)
+,`nama_zis` varchar(100)
+,`kas_masuk` double
+,`kas_keluar` double
+,`sisa_kas` double
+);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur untuk view `v_mutasi`
+--
+DROP TABLE IF EXISTS `v_mutasi`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_mutasi`  AS  select `z`.`id_zis` AS `id_zis`,`z`.`nama_zis` AS `nama_zis`,((coalesce((select sum(`i`.`jumlah_infaq`) from `tb_infaq` `i` where ((`i`.`status_infaq` = 'Valid') and (`i`.`id_zis` = `z`.`id_zis`))),0) + coalesce((select sum(`zm`.`jumlah_maal`) from `tb_zakat_maal` `zm` where ((`zm`.`status_maal` = 'Valid') and (`zm`.`id_zis` = `z`.`id_zis`))),0)) + coalesce((select sum(`zf`.`total_zakat`) from `tb_zakat_fitrah` `zf` where ((`zf`.`status_zakat` = 'Valid') and (`zf`.`id_zis` = `z`.`id_zis`))),0)) AS `kas_masuk`,((coalesce((select sum(`i`.`jumlah_infaq`) from `tb_infaq` `i` where ((`i`.`status_infaq` = 'Valid') and (`i`.`status_uang` = 'Sudah Terdistribusi') and (`i`.`id_zis` = `z`.`id_zis`))),0) + coalesce((select sum(`zm`.`jumlah_maal`) from `tb_zakat_maal` `zm` where ((`zm`.`status_maal` = 'Valid') and (`zm`.`status_uang` = 'Sudah Terdistribusi') and (`zm`.`id_zis` = `z`.`id_zis`))),0)) + coalesce((select sum(`zf`.`total_zakat`) from `tb_zakat_fitrah` `zf` where ((`zf`.`status_zakat` = 'Valid') and (`zf`.`status_uang_zakat` = 'Sudah Terdistribusi') and (`zf`.`id_zis` = `z`.`id_zis`))),0)) AS `kas_keluar`,(((coalesce((select sum(`i`.`jumlah_infaq`) from `tb_infaq` `i` where ((`i`.`status_infaq` = 'Valid') and (`i`.`id_zis` = `z`.`id_zis`))),0) + coalesce((select sum(`zm`.`jumlah_maal`) from `tb_zakat_maal` `zm` where ((`zm`.`status_maal` = 'Valid') and (`zm`.`id_zis` = `z`.`id_zis`))),0)) + coalesce((select sum(`zf`.`total_zakat`) from `tb_zakat_fitrah` `zf` where ((`zf`.`status_zakat` = 'Valid') and (`zf`.`id_zis` = `z`.`id_zis`))),0)) - ((coalesce((select sum(`i`.`jumlah_infaq`) from `tb_infaq` `i` where ((`i`.`status_infaq` = 'Valid') and (`i`.`status_uang` = 'Sudah Terdistribusi') and (`i`.`id_zis` = `z`.`id_zis`))),0) + coalesce((select sum(`zm`.`jumlah_maal`) from `tb_zakat_maal` `zm` where ((`zm`.`status_maal` = 'Valid') and (`zm`.`status_uang` = 'Sudah Terdistribusi') and (`zm`.`id_zis` = `z`.`id_zis`))),0)) + coalesce((select sum(`zf`.`total_zakat`) from `tb_zakat_fitrah` `zf` where ((`zf`.`status_zakat` = 'Valid') and (`zf`.`status_uang_zakat` = 'Sudah Terdistribusi') and (`zf`.`id_zis` = `z`.`id_zis`))),0))) AS `sisa_kas` from `tb_zis` `z` ;
 
 --
 -- Indexes for dumped tables
@@ -539,7 +532,7 @@ ALTER TABLE `user_type`
 -- AUTO_INCREMENT untuk tabel `mainmenu`
 --
 ALTER TABLE `mainmenu`
-  MODIFY `seq` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `seq` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `submenu`
@@ -551,7 +544,7 @@ ALTER TABLE `submenu`
 -- AUTO_INCREMENT untuk tabel `tab_akses_mainmenu`
 --
 ALTER TABLE `tab_akses_mainmenu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT untuk tabel `tab_akses_submenu`
@@ -569,19 +562,19 @@ ALTER TABLE `tb_about`
 -- AUTO_INCREMENT untuk tabel `tb_kasbas`
 --
 ALTER TABLE `tb_kasbas`
-  MODIFY `id_kasbas` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_kasbas` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_kaskel`
 --
 ALTER TABLE `tb_kaskel`
-  MODIFY `id_kaskel` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_kaskel` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_kasmas`
 --
 ALTER TABLE `tb_kasmas`
-  MODIFY `id_kasmas` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_kasmas` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_setting`
@@ -593,7 +586,7 @@ ALTER TABLE `tb_setting`
 -- AUTO_INCREMENT untuk tabel `tb_zakat_maal`
 --
 ALTER TABLE `tb_zakat_maal`
-  MODIFY `id_maal` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_maal` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `tm_user`
