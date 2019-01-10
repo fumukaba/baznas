@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 09, 2019 at 10:28 AM
+-- Generation Time: Jan 10, 2019 at 03:16 AM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.3.0
 
@@ -45,13 +45,12 @@ CREATE TABLE `mainmenu` (
 --
 
 INSERT INTO `mainmenu` (`seq`, `idmenu`, `nama_menu`, `active_menu`, `icon_class`, `link_menu`, `menu_akses`, `entry_date`, `entry_user`) VALUES
-(1, 1, 'Dashboard', '', 'menu-icon fa fa-dashboard', 'Dashboard', '', '2019-01-04 08:22:30', NULL),
-(2, 2, 'Master', '', 'menu-icon fa fa-file', '#', '', '2019-01-04 08:22:30', NULL),
-(3, 3, 'About', '', 'menu-icon fa fa-question', 'About', '', '2019-01-04 08:31:13', NULL),
-(4, 4, 'Setting', '', 'menu-icon fa fa-gear', 'Setting', '', '2019-01-05 02:49:07', NULL),
-(5, 5, 'Kas Baznas', '', 'menu-icon fa fa-money', '#', '', '2019-01-09 09:25:47', NULL),
-(6, 6, 'Mutasi Uang', '', 'menu-icon fa fa-arrow-right', 'Mutasi_uang', '', '2019-01-09 02:55:38', NULL),
-(8, 8, 'Laporan', '', 'menu-icon fa fa-book', '#', '', '2019-01-09 05:53:45', NULL);
+(1, 1, 'About', '', 'menu-icon fa fa-question', 'About', '', '2019-01-10 01:37:11', NULL),
+(2, 2, 'Master', '', 'menu-icon fa fa-file', '#', '', '2019-01-10 01:37:11', NULL),
+(3, 3, 'Kas Baznas', '', 'menu-icon fa fa-money', '#', '', '2019-01-10 01:38:58', NULL),
+(4, 4, 'Mutasi Uang', '', 'menu-icon fa fa-arrow-right', 'Mutasi_uang', '', '2019-01-10 01:38:58', NULL),
+(5, 5, 'Laporan', '', 'menu-icon fa fa-book', '#', '', '2019-01-10 01:39:46', NULL),
+(6, 6, 'Setting', '', 'menu-icon fa fa-gear', 'Setting', '', '2019-01-10 01:39:46', NULL);
 
 -- --------------------------------------------------------
 
@@ -76,15 +75,16 @@ CREATE TABLE `submenu` (
 --
 
 INSERT INTO `submenu` (`id_sub`, `nama_sub`, `mainmenu_idmenu`, `active_sub`, `icon_class`, `link_sub`, `sub_akses`, `entry_date`, `entry_user`) VALUES
-(2, 'User', 2, '', '', 'User', '', '2019-01-04 08:23:35', NULL),
-(3, 'Tempat ZIS', 2, '', '', 'Zis', '', '2019-01-05 02:32:33', NULL),
-(4, 'Infaq', 2, '', '', 'Infaq', '', '2019-01-04 08:24:13', NULL),
-(6, 'Zakat Fitrah', 2, '', '', 'Zakat_fitrah', '', '2019-01-05 04:17:05', NULL),
-(7, 'Kas Keluar', 5, '', '', 'Kas_keluar', '', '2019-01-05 08:47:14', NULL),
-(8, 'Zakat Maal', 2, '', '', 'Zakat_maal', '', '2019-01-05 09:32:31', NULL),
-(10, 'Laporan Zakat Fitrah', 8, '', '', 'Laporan_zakat_fitrah', '', '2019-01-09 07:13:10', NULL),
-(9, 'Laporan Infaq', 8, '', '', 'Laporan_infaq', '', '2019-01-09 06:26:49', NULL),
-(11, 'Kas Masuk', 5, '', '', 'Kas_masuk', '', '2019-01-09 06:22:44', NULL);
+(1, 'User', 2, '', '', 'User', '', '2019-01-10 01:50:43', NULL),
+(2, 'Tempat ZIS', 2, '', '', 'Zis', '', '2019-01-10 01:50:47', NULL),
+(3, 'Infaq', 2, '', '', 'Infaq', '', '2019-01-10 01:50:52', NULL),
+(4, 'Zakat Fitrah', 2, '', '', 'Zakat_fitrah', '', '2019-01-10 01:50:56', NULL),
+(5, 'Zakat Maal', 2, '', '', 'Zakat_maal', '', '2019-01-10 01:50:59', NULL),
+(6, 'Kas Keluar', 3, '', '', 'Kas_keluar', '', '2019-01-10 01:51:03', NULL),
+(7, 'Kas Masuk', 3, '', '', 'Kas_masuk', '', '2019-01-10 01:51:06', NULL),
+(8, 'Laporan Infaq', 5, '', '', 'Laporan_infaq', '', '2019-01-10 01:46:55', NULL),
+(9, 'Laporan Zakat Fitrah', 5, '', '', 'Laporan_zakat_fitrah', '', '2019-01-10 01:46:55', NULL),
+(10, 'Laporan Zakat Maal', 5, '', '', 'Laporan_zakat_maal', '', '2019-01-10 01:47:11', NULL);
 
 -- --------------------------------------------------------
 
@@ -109,14 +109,12 @@ CREATE TABLE `tab_akses_mainmenu` (
 --
 
 INSERT INTO `tab_akses_mainmenu` (`id`, `id_menu`, `id_level`, `c`, `r`, `u`, `d`, `entry_date`, `entry_user`) VALUES
-(1, 2, 1, 0, 1, 0, 0, '2019-01-04 08:25:54', ''),
-(2, 3, 1, 0, 1, 0, 0, '2019-01-04 08:25:54', ''),
-(3, 2, 2, 0, 1, 0, 0, '2019-01-04 08:29:52', ''),
-(4, 4, 1, 0, 1, 0, 0, '2019-01-05 02:46:39', ''),
-(5, 5, 1, 0, 1, 0, 0, '2019-01-05 08:48:44', ''),
-(6, 5, 2, 0, 1, 0, 0, '2019-01-05 08:48:44', ''),
-(7, 6, 1, 0, 1, 0, 0, '2019-01-08 03:24:36', ''),
-(9, 8, 1, 0, 1, 0, 0, '2019-01-09 06:08:38', '');
+(1, 1, 1, 0, 1, 0, 0, '2019-01-10 01:40:21', ''),
+(2, 2, 1, 0, 1, 0, 0, '2019-01-10 01:40:21', ''),
+(3, 3, 1, 0, 1, 0, 0, '2019-01-10 01:40:48', ''),
+(4, 4, 1, 0, 1, 0, 0, '2019-01-10 01:40:48', ''),
+(5, 5, 1, 0, 1, 0, 0, '2019-01-10 01:41:09', ''),
+(6, 6, 1, 0, 1, 0, 0, '2019-01-10 01:41:09', '');
 
 -- --------------------------------------------------------
 
@@ -141,20 +139,16 @@ CREATE TABLE `tab_akses_submenu` (
 --
 
 INSERT INTO `tab_akses_submenu` (`id`, `id_sub_menu`, `id_level`, `c`, `r`, `u`, `d`, `entry_date`, `entry_user`) VALUES
-(2, 2, 1, 0, 1, 0, 0, '2019-01-04 08:26:41', ''),
-(3, 3, 1, 0, 1, 0, 0, '2019-01-04 08:27:14', ''),
-(4, 4, 1, 0, 1, 0, 0, '2019-01-04 08:27:14', ''),
-(5, 3, 2, 0, 1, 0, 0, '2019-01-04 08:30:15', ''),
-(6, 4, 2, 0, 1, 0, 0, '2019-01-04 08:30:15', ''),
-(7, 6, 1, 0, 1, 0, 0, '2019-01-05 04:18:39', ''),
-(8, 6, 2, 0, 1, 0, 0, '2019-01-05 04:18:42', ''),
-(9, 7, 1, 0, 1, 0, 0, '2019-01-05 08:51:07', ''),
-(10, 7, 2, 0, 1, 0, 0, '2019-01-05 08:51:07', ''),
-(11, 8, 1, 0, 1, 0, 0, '2019-01-05 09:33:22', ''),
-(12, 8, 2, 0, 1, 0, 0, '2019-01-05 09:33:35', ''),
-(14, 10, 1, 0, 1, 0, 0, '2019-01-09 06:14:21', ''),
-(13, 9, 1, 0, 1, 0, 0, '2019-01-09 06:18:57', ''),
-(15, 11, 1, 0, 1, 0, 0, '2019-01-09 06:29:44', '');
+(1, 1, 1, 0, 1, 0, 0, '2019-01-10 01:47:45', ''),
+(2, 2, 1, 0, 1, 0, 0, '2019-01-10 01:47:45', ''),
+(3, 3, 1, 0, 1, 0, 0, '2019-01-10 01:48:02', ''),
+(4, 4, 1, 0, 1, 0, 0, '2019-01-10 01:48:02', ''),
+(5, 5, 1, 0, 1, 0, 0, '2019-01-10 01:48:41', ''),
+(6, 6, 1, 0, 1, 0, 0, '2019-01-10 01:48:41', ''),
+(7, 7, 1, 0, 1, 0, 0, '2019-01-10 01:48:56', ''),
+(8, 8, 1, 0, 1, 0, 0, '2019-01-10 01:48:56', ''),
+(9, 9, 1, 0, 1, 0, 0, '2019-01-10 01:49:26', ''),
+(10, 10, 1, 0, 1, 0, 0, '2019-01-10 01:49:26', '');
 
 -- --------------------------------------------------------
 
@@ -172,6 +166,13 @@ CREATE TABLE `tb_about` (
   `atas_nama` varchar(50) NOT NULL,
   `terakhir_diperbarui` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tb_about`
+--
+
+INSERT INTO `tb_about` (`id_about`, `about_logo`, `about_deskripsi`, `id_admin`, `nama_bank`, `nomor_rekening`, `atas_nama`, `terakhir_diperbarui`) VALUES
+(1, NULL, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\r\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\r\nquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\r\nconsequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\r\ncillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\r\nproident, sunt in culpa qui officia deserunt mollit anim id est laborum.', NULL, 'BNI Syariah', '009876543888', 'Baznas Indonesia', '2019-01-10 02:15:44');
 
 -- --------------------------------------------------------
 
@@ -200,8 +201,8 @@ CREATE TABLE `tb_infaq` (
 --
 
 INSERT INTO `tb_infaq` (`id_infaq`, `nama_pengirim`, `bank_pengirim`, `pemilik_rekening`, `norek_pengirim`, `jumlah_infaq`, `tanggal_infaq`, `bukti_infaq`, `status_infaq`, `status_uang`, `diperbarui_oleh`, `terakhir_diperbarui`, `id_zis`) VALUES
-('t28e21d5164ce9ba998d5f62433e43081d', 'Fuad', 'BRI', 'Hadi', '002002920', 100000, '2019-01-09 11:30:00', '', 'Valid', 'Kas Baznas', 1, '2019-01-09 04:31:45', 't14fef34479d29c15a4e5bbe00c3120787'),
-('t2eb3ff6d7b81859a7030e6f1de19bc3ad', 'Rocky', 'BRI', 'Rodi', '321', 2000, '2019-01-09 10:30:00', 'i2eb3ff6d7b81859a7030e6f1de19bc3ad.jpg', 'Valid', 'Kas Baznas', 1, '2019-01-09 06:34:37', 't1d94f343a14ea9ab9ef7a7b8eaf999e04');
+('t2252e0564f408d5fb7f2dcafeee75a51b', 'Tatong Airman', 'BNI', 'Tatong Airman Isnandar', '0089635345323', 200000, '2019-01-10 08:55:00', 'i2fcb2d9eb4a98363bdee84fcaf58f7e34.png', 'Valid', 'Kas Baznas', 1, '2019-01-10 01:59:40', 't111d028a9730d95238b409b44e92dbd09'),
+('t2e4d1144614d608135cd3f57c9d159c2d', 'Jaluhadi', 'BRI', 'Hadi', '0089765433', 1000000, '2019-01-07 09:45:00', 'i2e4d1144614d608135cd3f57c9d159c2d.jpg', 'Valid', 'Kas Baznas', 1, '2019-01-10 02:08:46', '0');
 
 -- --------------------------------------------------------
 
@@ -220,9 +221,9 @@ CREATE TABLE `tb_kasbas` (
 --
 
 INSERT INTO `tb_kasbas` (`id_kasbas`, `tanggal_kasbas`, `total_kasbas`) VALUES
-(1, '2019-01-09 04:31:45', 100000),
-(2, '2019-01-09 06:01:44', 150000),
-(3, '2019-01-09 06:34:38', 152000);
+(1, '2019-01-10 01:59:40', 200000),
+(2, '2019-01-10 02:04:17', 300000),
+(3, '2019-01-10 02:08:46', 1300000);
 
 -- --------------------------------------------------------
 
@@ -259,9 +260,9 @@ CREATE TABLE `tb_kasmas` (
 --
 
 INSERT INTO `tb_kasmas` (`id_kasmas`, `tanggal_kasmas`, `asal_kasmas`, `id_asal`, `jumlah_kasmas`) VALUES
-(1, '2019-01-09 04:31:45', 'Infaq', 't28e21d5164ce9ba998d5f62433e43081d', 100000),
-(2, '2019-01-09 06:01:44', 'Zakat Fitrah', 't374f950ac9eefe057d17d3986fb526b18', 50000),
-(3, '2019-01-09 06:34:38', 'Infaq', 't2eb3ff6d7b81859a7030e6f1de19bc3ad', 2000);
+(1, '2019-01-10 01:59:40', 'Infaq', 't2252e0564f408d5fb7f2dcafeee75a51b', 200000),
+(2, '2019-01-10 02:04:17', 'Zakat Maal', 't4ffdfae51a7136cd1c545778b6238c077', 100000),
+(3, '2019-01-10 02:08:46', 'Infaq', 't2e4d1144614d608135cd3f57c9d159c2d', 1000000);
 
 -- --------------------------------------------------------
 
@@ -281,8 +282,8 @@ CREATE TABLE `tb_setting` (
 --
 
 INSERT INTO `tb_setting` (`id_setting`, `tahun`, `meta_key`, `meta_value`) VALUES
-(1, 2019, 'nominal_zakat_fitrah', '25000'),
-(2, 2019, 'nominal_barang_temuan', '35000');
+(1, 2019, 'nominal_zakat_fitrah', '30000'),
+(2, 2019, 'nominal_presentase', '2');
 
 -- --------------------------------------------------------
 
@@ -313,7 +314,7 @@ CREATE TABLE `tb_zakat_fitrah` (
 --
 
 INSERT INTO `tb_zakat_fitrah` (`id_zakat_fitrah`, `nama_pengirim`, `bank_pengirim`, `pemilik_rekening`, `norek_pengirim`, `jumlah_orang`, `harga_zakat`, `total_zakat`, `tanggal_zakat`, `bukti_zakat`, `status_zakat`, `status_uang_zakat`, `diperbarui_oleh`, `terakhir_diperbarui`, `id_zis`) VALUES
-('t374f950ac9eefe057d17d3986fb526b18', 'Nirwan', 'BNI', 'Fuad', '123', 2, 25000, 50000, '2019-01-09 14:30:00', 'i374f950ac9eefe057d17d3986fb526b18.jpg', 'Valid', 'Kas Baznas', 1, '2019-01-09 06:01:44', 't14fef34479d29c15a4e5bbe00c3120787');
+('t318110e3a13254222f9c2e7ac2c7a62cb', 'Qudus Al-Qodri', 'BNI', 'Qudusi', '008544324565', 2, 30000, 60000, '2019-01-10 10:50:00', 'i318110e3a13254222f9c2e7ac2c7a62cb.png', 'Menunggu Konfirmasi', 'Kas Baznas', 1, '2019-01-10 02:01:45', 't111d028a9730d95238b409b44e92dbd09');
 
 -- --------------------------------------------------------
 
@@ -338,6 +339,13 @@ CREATE TABLE `tb_zakat_maal` (
   `id_zis` varchar(34) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `tb_zakat_maal`
+--
+
+INSERT INTO `tb_zakat_maal` (`id_maal`, `nama_pengirim`, `bank_pengirim`, `pemilik_rekening`, `norek_pengirim`, `jumlah_maal`, `tanggal_maal`, `bukti_maal`, `status_maal`, `status_uang`, `diperbarui_oleh`, `terakhir_diperbarui`, `jenis_maal`, `id_zis`) VALUES
+(1, 'Arna Waula', 'BRi', 'Barinomo', '00897263242', 100000, '2019-01-08 09:45:00', 'i4ffdfae51a7136cd1c545778b6238c077.jpg', 'Valid', 'Kas Baznas', 1, '2019-01-10 02:04:17', 'Emas', 't1930a31aa17a48279e587207abf45d06f');
+
 -- --------------------------------------------------------
 
 --
@@ -361,9 +369,10 @@ CREATE TABLE `tb_zis` (
 --
 
 INSERT INTO `tb_zis` (`id_zis`, `nama_zis`, `alamat_zis`, `kelurahan_zis`, `kecamatan_zis`, `qrcode_zis`, `pengurus_zis`, `dibuat_oleh`, `terakhir_diperbarui`) VALUES
-('0', 'Baznas', '<p>Jalan Raya Legian No. 357, Legian, Kuta, Kabupaten Badung, Bali 80361</p>', 'Badung', 'Legian', 't1b247b9de58ee72c3c0573502a652c86e.png', 5, 2, '2019-01-04 08:43:19'),
-('t14fef34479d29c15a4e5bbe00c3120787', 'Masjid Nurul Hikmah', '<p>Jalan Tibung Sari No. 1, Denpasar Barat, Dalung, Kuta Utara, Kabupaten Badung, Bali 80117</p>', 'Dalung', 'Tibung', 't14fef34479d29c15a4e5bbe00c3120787.png', 3, 2, '2019-01-04 08:33:53'),
-('t1d94f343a14ea9ab9ef7a7b8eaf999e04', 'Masjid Agung Asasuttaqwa', '<p>Jalan Waringin, Tuban, Kuta, Kabupaten Badung, Bali</p>', 'Tuban', 'Waringin', 't1d94f343a14ea9ab9ef7a7b8eaf999e04.png', 4, 2, '2019-01-04 08:36:04');
+('0', 'Baznas', '<p>Jl. Baznas no 3b</p>', 'Lowokwaru', 'Mojolangu', 't1b3394538faa87a207ff757e930424ecd.png', 6, 1, '2019-01-10 02:07:51'),
+('t111d028a9730d95238b409b44e92dbd09', 'Panti Asuhan Dakudi', '<p>jl. asuhan no 9b</p>', 'Saden', 'Horomi', 't111d028a9730d95238b409b44e92dbd09.png', 5, 1, '2019-01-10 01:58:19'),
+('t1474925ca3f57c4874084765d17fe9158', 'Masjid Al-Hidayah', '<p>jl. hidayah no 3b</p>', 'Kecangan', 'Mbanto', 't1474925ca3f57c4874084765d17fe9158.png', 3, 1, '2019-01-10 01:55:39'),
+('t1930a31aa17a48279e587207abf45d06f', 'Ponpes Al-Ikhlas', '<p>jl. ikhlas no 4A</p>', 'Bandun', 'Waleh', 't1930a31aa17a48279e587207abf45d06f.png', 4, 1, '2019-01-10 01:57:11');
 
 -- --------------------------------------------------------
 
@@ -390,11 +399,12 @@ CREATE TABLE `tm_user` (
 --
 
 INSERT INTO `tm_user` (`id_user`, `nama`, `email`, `foto`, `password`, `nama_rek_user`, `no_rek_user`, `bank_rek_user`, `view_password`, `admin_level`, `id`) VALUES
-('super', 'Super', 'super@gmail.com', NULL, '1b3231655cebb7a1f783eddf27d254ca', 'Super', '123', 'BRI', 'super', 1, 1),
-('administrator', 'Administrator', 'administrator@gmail.com', NULL, '200ceb26807d6bf99fd6f4f0d1ca54d4', 'Baznas ', '12345678', 'BNI', 'administrator', 2, 2),
-('nirwan', 'Nirwan', 'nirwan@gmail.com', NULL, 'ef4113dcac30d9fea0cd4ed7caa66ee8', 'Moch Nirwan Firdaus', '5678902', 'Syariah', 'pengurus', 3, 3),
-('habibi', 'Habibi', 'habibi@gmail.com', NULL, 'ef4113dcac30d9fea0cd4ed7caa66ee8', 'Abdulloh Habibie', '7654321', 'BRI', 'pengurus', 3, 4),
-('nugroho', 'Pengurus Baznas', 'nugroho@gmail.com', NULL, '5588432fffd3b845fe662e6e9e9ea924', 'Groho Santo', '1234212123', 'BNI', 'nugroho', 3, 5);
+('super', 'Super', 'super@gmail.com', NULL, '1b3231655cebb7a1f783eddf27d254ca', 'Ahmad super', '0098311789', 'BNI', 'super', 1, 1),
+('administrator', 'Administrator', 'admin@gmail.com', NULL, '200ceb26807d6bf99fd6f4f0d1ca54d4', 'admin bahaudin', '009876543241', 'BRI', 'administrator', 2, 2),
+('fuad', 'Fuad HD', 'fuad@gmail.com', NULL, 'd0b0caa56fee5e734ca286516b5885dc', 'Jhon Fuad', '008232323232', 'BNI', 'fuad', 3, 3),
+('nirwan', 'Nirwan', 'nirwan@gmail.com', NULL, '28e47f714c1fcb538a669b971ee6ce46', 'Moch Nirwan', '0089623242', 'BRI', 'nirwan', 3, 4),
+('habibi', 'Habibi', 'habibi@gmail.com', NULL, '91a47ceb597e7e6f65335dbb063c26c2', 'Habobi', '008764353543', 'BRi', 'habibi', 3, 5),
+('baznas', 'Baznas', 'baznas@gmail.com', NULL, '596abd832ae81066c4cf716f6f70243c', 'Baznas Indonesia', '009876543', 'BNI Syariah', 'baznas', 3, 6);
 
 -- --------------------------------------------------------
 
@@ -413,9 +423,9 @@ CREATE TABLE `user_type` (
 --
 
 INSERT INTO `user_type` (`user_type_id`, `user_type_name`, `nama`) VALUES
-(1, 'Super Admin', NULL),
-(2, 'Administrator', NULL),
-(3, 'Pengurus ZIS', NULL);
+(1, 'Super', ''),
+(2, 'Administrator', ''),
+(3, 'Pengurus ZIS', '');
 
 -- --------------------------------------------------------
 
@@ -552,31 +562,31 @@ ALTER TABLE `user_type`
 -- AUTO_INCREMENT for table `mainmenu`
 --
 ALTER TABLE `mainmenu`
-  MODIFY `seq` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `seq` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `submenu`
 --
 ALTER TABLE `submenu`
-  MODIFY `id_sub` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_sub` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `tab_akses_mainmenu`
 --
 ALTER TABLE `tab_akses_mainmenu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tab_akses_submenu`
 --
 ALTER TABLE `tab_akses_submenu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `tb_about`
 --
 ALTER TABLE `tb_about`
-  MODIFY `id_about` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_about` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tb_kasbas`
@@ -606,13 +616,13 @@ ALTER TABLE `tb_setting`
 -- AUTO_INCREMENT for table `tb_zakat_maal`
 --
 ALTER TABLE `tb_zakat_maal`
-  MODIFY `id_maal` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_maal` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tm_user`
 --
 ALTER TABLE `tm_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `user_type`

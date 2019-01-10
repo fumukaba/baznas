@@ -103,11 +103,7 @@ class Laporan_zakat_fitrah extends CI_Controller {
             
             $print_status = "";
 
-            if($zakat->status_zakat == 'Menunggu Konfirmasi') {
-                $print_status = '<span>' . $zakat->status_zakat . '</span><br /><a onclick="konfirmasiStatus($(this))" data-url="'. base_url('Zakat_fitrah/konfirmasi') . '" data-id="' . $zakat->id_zakat_fitrah . '" data-konfirmasi="ya" data-total="' . $zakat->total_zakat . '" data-pengirim="' . $zakat->nama_pengirim . '<br>A.n ' . $zakat->pemilik_rekening. '<br>' . $zakat->norek_pengirim . '<br>' . $zakat->bank_pengirim .'" href="#">Valid</a>&nbsp;&mdash;&nbsp;<a onclick="konfirmasiStatus($(this))" data-url="'. base_url('Zakat_fitrah/konfirmasi') . '" data-id="' . $zakat->id_zakat_fitrah . '" data-konfirmasi="tidak" data-total="' . $zakat->total_zakat . '" data-pengirim="' . $zakat->nama_pengirim . '<br>A.n ' . $zakat->pemilik_rekening. '<br>' . $zakat->norek_pengirim . '<br>' . $zakat->bank_pengirim .'" href="#">Tidak Valid</a>';
-            } else {
-                $print_status = $zakat->status_zakat;
-            }
+
 
 			$row = array();
 			$row[] = '';
@@ -115,7 +111,7 @@ class Laporan_zakat_fitrah extends CI_Controller {
 			$row[] = $zakat->pemilik_rekening . "<br>" . $zakat->norek_pengirim . "<br>" . $zakat->bank_pengirim;
             $row[] = $zakat->total_zakat;
             $row[] = $zakat->tanggal_zakat;
-            $row[] = $print_status;
+            $row[] = $zakat->status_zakat;
             $row[] = $zakat->status_uang_zakat;
 			$data[] = $row;
 		}
