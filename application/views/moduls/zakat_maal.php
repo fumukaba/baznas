@@ -240,7 +240,8 @@
 
 
 	function Tambah() {
-
+		$('#form_status').hide();
+		$('#status_uang .c1').attr('selected', 'selected');
 		save_method = 'add'; 
 
 		$('#panel-data').fadeOut('slow');
@@ -354,6 +355,7 @@
 	
 
 	function edit(id) {
+			$('#form_status').show();
 
 			save_method = 'update';
 
@@ -613,7 +615,7 @@
 		</div>
 	</div>
 
-    <div class="form-group">
+    <div class="form-group" id="form_status">
 	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Status Uang </label>
 		<div class="col-sm-4">
 			<select name="status_uang" id="status_uang" class="form-control" required="required" autocomplete="off">
@@ -626,7 +628,7 @@
     <div class="form-group">
 	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Bukti Transfer </label>
 		<div class="col-sm-10">
-			<input type="file" id="bukti_maal" name="bukti_maal" required="required"  placeholder="Foto" class="col-xs-10 col-sm-5" />
+			<input type="file" id="bukti_maal" name="bukti_maal"  placeholder="Foto" class="col-xs-10 col-sm-5" />
 		</div>
 	</div>
 

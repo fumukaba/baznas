@@ -239,6 +239,8 @@
 
 
 	function Tambah() {
+		$('#form_status').hide();
+		$('#status_uang_zakat .c1').attr('selected', 'selected');
 
 		save_method = 'add'; 
 
@@ -353,7 +355,7 @@
 	
 
 	function edit(id) {
-
+			$('#form_status').show();
 			save_method = 'update';
 
 			$('#panel-data').fadeOut('slow');
@@ -617,7 +619,7 @@
 		</div>
 	</div>
 
-    <div class="form-group">
+    <div class="form-group" id="form_status">
 	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Status Uang </label>
 		<div class="col-sm-4">
 			<select name="status_uang_zakat" id="status_uang_zakat" class="form-control" required="required" autocomplete="off">
