@@ -36,6 +36,14 @@ class Login extends CI_Controller {
 				$this->session->set_userdata('admin_level',$user->admin_level);
 				$this->session->set_userdata('id',$user->id);
 
+				$level = $this->db->get_where('user_type', array('user_type_id' => $user->admin_level))->result_array();
+				$this->session->set_userdata('level', $level[0]['user_type_name']);
+
+				if($level[0]['user_type_name'] == 'Pengurus ZIS') {
+					$zis = $this->db->get_where('tb_zis', array('pengurus_zis' => $user->id))->result_array();
+					$this->session->set_userdata('id_zis', $zis[0]['id_zis']);
+					$this->session->set_userdata('nama_zis', $zis[0]['nama_zis']);
+				}
 
 				$data['hasil']=1;
 				echo json_encode($data);	

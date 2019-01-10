@@ -14,8 +14,10 @@ class Laporan_zakat_fitrah extends CI_Controller {
 	
 	function index(){
        // $this->mdl_home->getsqurity();
-        $data['view_file']    = "moduls/Laporan_zakat_fitrah";
-		$this->load->view('admin_view',$data);
+        // $data['view_file']    = "moduls/Laporan_zakat_fitrah";
+        // $this->load->view('admin_view',$data);
+        
+        $this->filter();
     }
 
     function filter() {
@@ -45,6 +47,13 @@ class Laporan_zakat_fitrah extends CI_Controller {
 
         if($status_uang != '') {
             $this->db->where('status_uang_zakat', $status_uang);
+        }
+
+        $sess_id = $this->session->userdata('id_zis');
+        $sess_level = $this->session->userdata('level');
+
+        if($sess_level == 'Pengurus ZIS') {
+            $this->db->where('id_zis', $sess_id);
         }
 
         $semua_data = $this->db->get('tb_zakat_fitrah')->result_array();
@@ -95,7 +104,15 @@ class Laporan_zakat_fitrah extends CI_Controller {
     }
 	
 	public function ajax_list() {
-		$list = $this->Mdl_zakatfitrah->get_datatables();
+        $sess_id = $this->session->userdata('id_zis');
+        $sess_level = $this->session->userdata('level');
+
+        if($sess_level == 'Pengurus ZIS') {
+            $list = $this->db->get_where('tb_zakat_fitrah', array('id_zis' => $sess_id))->result();
+        } else {
+            $list = $this->Mdl_zakatfitrah->get_datatables();
+        }
+
 		$data = array();
 		$no = $_REQUEST['start'];
 		foreach ($list as $zakat) {
