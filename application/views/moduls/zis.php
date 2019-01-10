@@ -320,9 +320,8 @@
 					swal_berhasil(); 
 
 					setTimeout(function(){
-
-							reload_table();
-
+						// reload_table();
+						document.location.href = '';
 					}, 1000);
 
 				}, error: function(jqXHR, textStatus, errorThrown) {
@@ -422,13 +421,18 @@
 
 					
 
-					setTimeout(function(){
+					// setTimeout(function(){
 
-                        reload_table();
+                    //     reload_table();
 
-					}, 1000);
+					// }, 1000);
 
 					swal_berhasil(); 
+
+					setTimeout(function(){
+						// reload_table();
+						document.location.href = '';
+					}, 1000);
 
 				}, error: function (jqXHR, textStatus, errorThrown) {
 

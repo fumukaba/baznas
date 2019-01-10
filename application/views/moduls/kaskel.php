@@ -216,7 +216,8 @@
 					}, 1000);
 					swal_berhasil(); 
 					setTimeout(function(){
-							reload_table();
+						// reload_table();
+						document.location.href = '';
 					}, 1000);
 				}, error: function(jqXHR, textStatus, errorThrown) {
 					// alert('Error adding/update data');
@@ -261,7 +262,8 @@
                     }, 1000);
 					
 					setTimeout(function(){
-                        reload_table();
+						// reload_table();
+						document.location.href = '';
 					}, 1000);
 					swal_berhasil(); 
 				}, error: function (jqXHR, textStatus, errorThrown) {

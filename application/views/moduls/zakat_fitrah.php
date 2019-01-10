@@ -447,9 +447,8 @@
 					
 
 					setTimeout(function(){
-
-                        reload_table();
-
+						// reload_table();
+						document.location.href = '';
 					}, 1000);
 
 					swal_berhasil(); 
@@ -744,7 +743,10 @@
 						if (result.status) {
 							swal({ title:"SUCCESS", text:"Berhasil dikonfirmasi.", type: "success", closeOnConfirm: true});
 
-							document.location.href = '';
+							setTimeout(function(){
+								// reload_table();
+								document.location.href = '';
+							}, 1000);
 						}
 					}, error: function(jqXHR, textStatus, errorThrown) {
 						// alert('Error adding/update data');
@@ -776,7 +778,10 @@
                     if (result.status) {
 						swal({ title:"SUCCESS", text:"Berhasil dikonfirmasi.", type: "success", closeOnConfirm: true});
 
-						document.location.href = '';
+						setTimeout(function(){
+							// reload_table();
+							document.location.href = '';
+						}, 1000);
 					}
 				}, error: function(jqXHR, textStatus, errorThrown) {
 					// alert('Error adding/update data');
@@ -835,7 +840,8 @@
 					}, 1000);
 					swal_berhasil(); 
 					setTimeout(function(){
-							reload_table();
+						// reload_table();
+						document.location.href = '';
 					}, 1000);
 				}, error: function(jqXHR, textStatus, errorThrown) {
 					// alert('Error adding/update data');

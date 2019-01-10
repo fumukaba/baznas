@@ -187,7 +187,8 @@
 					}, 1000);
 					swal_berhasil(); 
 					setTimeout(function(){
-							reload_table();
+						// reload_table();
+						document.location.href = '';
 					}, 1000);
 				}, error: function(jqXHR, textStatus, errorThrown) {
 					// alert('Error adding/update data');
@@ -235,10 +236,15 @@
                         Batal();
                     }, 1000);
 					
-					setTimeout(function(){
-                        reload_table();
-					}, 1000);
+					// setTimeout(function(){
+                    //     reload_table();
+					// }, 1000);
 					swal_berhasil(); 
+
+					setTimeout(function(){
+						// reload_table();
+						document.location.href = '';
+					}, 1000);
 				}, error: function (jqXHR, textStatus, errorThrown) {
 					swal({ title:"ERROR", text:"Error delete data", type: "warning", closeOnConfirm: true}); 
 					$('#btnSave').text('save'); $('#btnSave').attr('disabled',false); 
@@ -397,7 +403,8 @@
 					}, 1000);
 					swal_berhasil(); 
 					setTimeout(function(){
-							reload_table();
+						// reload_table();
+						document.location.href = '';
 					}, 1000);
 				}, error: function(jqXHR, textStatus, errorThrown) {
 					// alert('Error adding/update data');
