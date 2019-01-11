@@ -72,7 +72,7 @@ class Zakat_maal extends CI_Controller {
             }
  
 			$row = array();
-			$row[] = '';
+			// $row[] = '';
 			$row[] = $no;
 			$row[] = $zakat_maal->nama_pengirim . "<br>" . $zakat_maal->norek_pengirim . "<br>" . $zakat_maal->bank_pengirim;
             $row[] = $zakat_maal->jumlah_maal;

@@ -73,7 +73,7 @@ class Infaq extends CI_Controller {
             }
 
 			$row = array();
-			$row[] = '';
+			// $row[] = '';
 			$row[] = $no;
 			$row[] = $infaq->nama_pengirim . "<br>" . $infaq->norek_pengirim . "<br>" . $infaq->bank_pengirim;
             $row[] = $infaq->jumlah_infaq;
