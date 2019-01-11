@@ -81,7 +81,6 @@ class Laporan_zakat_maal extends CI_Controller {
             
 
 			$row = array();
-			$row[] = '';
 			$row[] = $no;
 			$row[] = $maal->nama_pengirim . "<br>" . $maal->norek_pengirim . "<br>" . $maal->bank_pengirim;
             $row[] = $maal->jumlah_maal;

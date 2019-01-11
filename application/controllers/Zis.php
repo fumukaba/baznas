@@ -45,7 +45,6 @@ class Zis extends CI_Controller {
 
 			$no++;
 			$row = array();
-			$row[] = '';
 			$row[] = $no;
 			$row[] = $zis->nama_zis . "<br>" . $zis->alamat_zis;
 			$row[] = $convert_pengurus;

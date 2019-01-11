@@ -87,7 +87,6 @@
 <table id="example" class="display responsive nowrap" cellspacing="0" width="100%"> 
     <thead>
         <tr>
-        	<th></th>
             <th>No.</th>
             <th>Nama</th>
             <th>Nama Pengurus</th>
@@ -195,11 +194,7 @@
 
         //Set column definition initialisation properties.
 
-       responsive: {
-            details: {
-                type: 'column'
-            }
-        },
+       
         columnDefs: [ {
             className: 'control',
             orderable: false,

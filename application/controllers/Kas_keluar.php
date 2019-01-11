@@ -42,7 +42,6 @@ class Kas_keluar extends CI_Controller {
 			
 			$no++;
 			$row = array();
-			$row[] = '';
 			$row[] = $no;
 			$row[] = $kaskel->tanggal_kaskel;
 			$row[] = $kaskel->keperluan_kaskel;

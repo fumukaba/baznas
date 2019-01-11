@@ -70,12 +70,21 @@ class Zakat_maal extends CI_Controller {
             } else {
                 $print_status = $zakat_maal->status_maal;
             }
+
+            $id_zis = $zakat_maal->id_zis;
+            $asal = $this->db->query("SELECT * FROM tb_zis");
+            foreach($asal->result() as $row_zis)	{
+            if($id_zis==$row_zis->id_zis){						
+                $dataZis_1=$row_zis->nama_zis;
+                $dataZis_2=$row_zis->alamat_zis;
+                }
+            }		
   
 			$row = array();
-			// $row[] = '';
 			$row[] = $no;
 			$row[] = $zakat_maal->nama_pengirim . "<br>" . $zakat_maal->norek_pengirim . "<br>" . $zakat_maal->bank_pengirim;
             $row[] = $zakat_maal->jumlah_maal;
+            $row[] = $dataZis_1 . "<br>" . $dataZis_2;
             $row[] = $zakat_maal->tanggal_maal;
             $row[] = $print_status;
             $row[] = $zakat_maal->status_uang;

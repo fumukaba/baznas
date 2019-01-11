@@ -71,12 +71,21 @@ class Infaq extends CI_Controller {
             } else {
                 $print_status = $infaq->status_infaq;
             }
+            $id_zis = $infaq->id_zis;
+            $asal = $this->db->query("SELECT * FROM tb_zis");
+            foreach($asal->result() as $row_zis)	{
+            if($id_zis==$row_zis->id_zis){						
+                $dataZis_1=$row_zis->nama_zis;
+                $dataZis_2=$row_zis->alamat_zis;
+                }
+            }			
+
 
 			$row = array();
-			// $row[] = '';
 			$row[] = $no;
 			$row[] = $infaq->nama_pengirim . "<br>" . $infaq->norek_pengirim . "<br>" . $infaq->bank_pengirim;
             $row[] = $infaq->jumlah_infaq;
+            $row[] = $dataZis_1 . "<br>" . $dataZis_2;
             $row[] = $infaq->tanggal_infaq;
             $row[] = $print_status;
             $row[] = $infaq->status_uang;

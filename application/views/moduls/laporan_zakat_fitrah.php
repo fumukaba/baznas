@@ -95,7 +95,7 @@
     <thead>
 
         <tr>
-        	<th></th>
+        	<!-- <th></th> -->
             <th>No.</th>
 
             <th>Pengirim</th>
@@ -259,11 +259,11 @@
 
         //Set column definition initialisation properties.
 
-       responsive: {
-            details: {
-                type: 'column'
-            }
-        },
+    //    responsive: {
+    //         details: {
+    //             type: 'column'
+    //         }
+    //     },
         columnDefs: [ {
             className: 'control',
             orderable: false,

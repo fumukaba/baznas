@@ -59,7 +59,6 @@ class Kas_masuk extends CI_Controller {
 
 			$no++;
 			$row = array();
-			$row[] = '';
 			$row[] = $no;
 			$row[] = $kasmas->tanggal_kasmas;
 			$row[] = $dataRek_1 . "<br>" . $dataRek_2 . "<br>" . $dataRek_3;
