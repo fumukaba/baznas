@@ -3,8 +3,8 @@
 class Mdl_user extends CI_Model {
 	
 	var $table = 'tm_user';
-	var $column_order = array('a.id_user','a.nama','a.email','a.level','b.user_type_name',null); //set column field database for datatable orderable
-	var $column_search = array('a.id_user','a.nama','a.email','a.level','b.user_type_name'); //set column field database for datatable searchable just title , author , category are searchable
+	var $column_order = array('a.id_user','a.nama','a.email','a.admin_level','b.user_type_name',null); //set column field database for datatable orderable
+	var $column_search = array('a.id_user','a.nama','a.email','a.admin_level','b.user_type_name'); //set column field database for datatable searchable just title , author , category are searchable
 	var $order = array('a.id_user' => 'asc'); // default order
 	
 	private function _get_datatables_query() {

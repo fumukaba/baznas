@@ -1,4 +1,4 @@
-<?php
+<?php  
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class User extends CI_Controller {
@@ -9,12 +9,13 @@ class User extends CI_Controller {
 		$this->auth->restrict();
 		date_default_timezone_set("Asia/Jakarta");
 		$this->load->library("session");
+		// $this->load->library("phpqrcode/qrlib");
 	}
 	
-	 function index(){
+	function index(){
        // $this->mdl_home->getsqurity();
         $data['view_file']    = "moduls/user";
-        $this->load->view('admin_view',$data);
+		$this->load->view('admin_view',$data);
     }
 	
 	public function ajax_list() {
@@ -22,11 +23,7 @@ class User extends CI_Controller {
 		$data = array();
 		$no = $_REQUEST['start'];
 		foreach ($list as $user) {
-			if($user->id=='18'){
-				$link = '';
-			}else{
-				$link = '<li><a href="javascript:void(0)" onclick="hapus('."'".$user->id."'".')">Delete</a></li>';
-			}
+
 			$no++;
 			$row = array();
 			$row[] = '';
@@ -41,8 +38,8 @@ class User extends CI_Controller {
 			<div class="btn-group">
                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Aksi <span class="caret"></span></button>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="javascript:void(0)" onclick="edit('."'".$user->id."'".')">Edit</a></li>
-                            '.$link.'
+                           <li><a href="javascript:void(0)" onclick="edit('."'".$user->id."'".')">Edit</a></li>
+                            <li><a href="javascript:void(0)" onclick="hapus('."'".$user->id."'".')">Delete</a></li>
                         </ul>
             </div>';
 			$data[] = $row;
@@ -56,7 +53,7 @@ class User extends CI_Controller {
 				);
 		echo json_encode($output);
 	}
-	
+
 	public function ajax_add() {
 		$gambar = $_FILES['admin_foto']['name'];
 		$config['upload_path'] = './uploads/user/';
@@ -150,11 +147,4 @@ class User extends CI_Controller {
       echo json_encode(array("status" => TRUE));
     }
 
-}
-
-// Tambahan //
-// Email
-// nama_rek(atas nama)
-// no_rek
-// bank
-// Foto
+}	

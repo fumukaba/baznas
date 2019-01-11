@@ -84,31 +84,19 @@
 
 </div><br />
 
-<table id="example" class="display responsive nowrap" cellspacing="0" width="100%">
-
+<table id="example" class="display responsive nowrap" cellspacing="0" width="100%"> 
     <thead>
-
         <tr>
         	<th></th>
             <th>No.</th>
-
             <th>Nama</th>
-
             <th>Nama Pengurus</th>
-
             <th>Rekening Pengurus</th>
-
-
              <th>QR Code</th>
-
             <th>Aksi</th>
-
         </tr>
-
     </thead>
-
     <tbody></tbody>
-
 </table>
 
 </div><!-- /.span -->

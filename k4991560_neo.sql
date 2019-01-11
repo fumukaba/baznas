@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 10, 2019 at 03:16 AM
+-- Generation Time: Jan 10, 2019 at 08:55 AM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.3.0
 
@@ -114,7 +114,8 @@ INSERT INTO `tab_akses_mainmenu` (`id`, `id_menu`, `id_level`, `c`, `r`, `u`, `d
 (3, 3, 1, 0, 1, 0, 0, '2019-01-10 01:40:48', ''),
 (4, 4, 1, 0, 1, 0, 0, '2019-01-10 01:40:48', ''),
 (5, 5, 1, 0, 1, 0, 0, '2019-01-10 01:41:09', ''),
-(6, 6, 1, 0, 1, 0, 0, '2019-01-10 01:41:09', '');
+(6, 6, 1, 0, 1, 0, 0, '2019-01-10 01:41:09', ''),
+(7, 5, 3, 0, 1, 0, 0, '2019-01-10 03:47:39', '');
 
 -- --------------------------------------------------------
 
@@ -148,7 +149,10 @@ INSERT INTO `tab_akses_submenu` (`id`, `id_sub_menu`, `id_level`, `c`, `r`, `u`,
 (7, 7, 1, 0, 1, 0, 0, '2019-01-10 01:48:56', ''),
 (8, 8, 1, 0, 1, 0, 0, '2019-01-10 01:48:56', ''),
 (9, 9, 1, 0, 1, 0, 0, '2019-01-10 01:49:26', ''),
-(10, 10, 1, 0, 1, 0, 0, '2019-01-10 01:49:26', '');
+(10, 10, 1, 0, 1, 0, 0, '2019-01-10 01:49:26', ''),
+(11, 8, 3, 0, 1, 0, 0, '2019-01-10 03:50:25', ''),
+(12, 9, 3, 0, 1, 0, 0, '2019-01-10 03:50:25', ''),
+(13, 10, 3, 0, 1, 0, 0, '2019-01-10 03:51:42', '');
 
 -- --------------------------------------------------------
 
@@ -172,7 +176,7 @@ CREATE TABLE `tb_about` (
 --
 
 INSERT INTO `tb_about` (`id_about`, `about_logo`, `about_deskripsi`, `id_admin`, `nama_bank`, `nomor_rekening`, `atas_nama`, `terakhir_diperbarui`) VALUES
-(1, NULL, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\r\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\r\nquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\r\nconsequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\r\ncillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\r\nproident, sunt in culpa qui officia deserunt mollit anim id est laborum.', NULL, 'BNI Syariah', '009876543888', 'Baznas Indonesia', '2019-01-10 02:15:44');
+(1, '1.jpg', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>', 0, 'BNI Syariah', '009876543888', 'Baznas Indonesia', '2019-01-10 03:29:32');
 
 -- --------------------------------------------------------
 
@@ -223,7 +227,15 @@ CREATE TABLE `tb_kasbas` (
 INSERT INTO `tb_kasbas` (`id_kasbas`, `tanggal_kasbas`, `total_kasbas`) VALUES
 (1, '2019-01-10 01:59:40', 200000),
 (2, '2019-01-10 02:04:17', 300000),
-(3, '2019-01-10 02:08:46', 1300000);
+(3, '2019-01-10 02:08:46', 1300000),
+(4, '2019-01-10 02:29:16', 1001300000),
+(5, '2019-01-10 02:31:59', 1001300100),
+(6, '2019-01-10 02:32:41', 1001300200),
+(7, '2019-01-10 02:33:54', 1001360200),
+(8, '2019-01-10 02:34:29', 1001420200),
+(9, '2019-01-10 02:35:18', 1001420212),
+(10, '2019-01-10 02:41:00', 1001419000),
+(11, '2019-01-10 02:41:45', 1001418877);
 
 -- --------------------------------------------------------
 
@@ -262,7 +274,13 @@ CREATE TABLE `tb_kasmas` (
 INSERT INTO `tb_kasmas` (`id_kasmas`, `tanggal_kasmas`, `asal_kasmas`, `id_asal`, `jumlah_kasmas`) VALUES
 (1, '2019-01-10 01:59:40', 'Infaq', 't2252e0564f408d5fb7f2dcafeee75a51b', 200000),
 (2, '2019-01-10 02:04:17', 'Zakat Maal', 't4ffdfae51a7136cd1c545778b6238c077', 100000),
-(3, '2019-01-10 02:08:46', 'Infaq', 't2e4d1144614d608135cd3f57c9d159c2d', 1000000);
+(3, '2019-01-10 02:08:46', 'Infaq', 't2e4d1144614d608135cd3f57c9d159c2d', 1000000),
+(4, '2019-01-10 02:29:16', 'Infaq', 't2ab9e58069f89399a27dcc3e3e2da2860', 1000000000),
+(5, '2019-01-10 02:31:59', 'Zakat Maal', 't46f1dfccaa0d72a041c1210efd5ccf7d0', 100),
+(6, '2019-01-10 02:32:41', 'Zakat Maal', '2', 100),
+(7, '2019-01-10 02:33:54', 'Zakat Fitrah', 't348012715d047026f1d51a777ea2e8807', 60000),
+(8, '2019-01-10 02:34:29', 'Zakat Fitrah', 't348012715d047026f1d51a777ea2e8807', 60000),
+(9, '2019-01-10 02:35:18', 'Zakat Maal', 't43f06ed24b9526a7a4284770ee73f12c0', 12);
 
 -- --------------------------------------------------------
 
@@ -574,13 +592,13 @@ ALTER TABLE `submenu`
 -- AUTO_INCREMENT for table `tab_akses_mainmenu`
 --
 ALTER TABLE `tab_akses_mainmenu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `tab_akses_submenu`
 --
 ALTER TABLE `tab_akses_submenu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `tb_about`
@@ -592,7 +610,7 @@ ALTER TABLE `tb_about`
 -- AUTO_INCREMENT for table `tb_kasbas`
 --
 ALTER TABLE `tb_kasbas`
-  MODIFY `id_kasbas` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_kasbas` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `tb_kaskel`
@@ -604,7 +622,7 @@ ALTER TABLE `tb_kaskel`
 -- AUTO_INCREMENT for table `tb_kasmas`
 --
 ALTER TABLE `tb_kasmas`
-  MODIFY `id_kasmas` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_kasmas` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `tb_setting`
