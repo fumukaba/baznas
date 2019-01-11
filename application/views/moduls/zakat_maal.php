@@ -91,7 +91,7 @@
     <thead>
 
         <tr>
-        	<th></th>
+        	<!-- <th></th> -->
             <th>No.</th>
 
             <th>Nama Muzaki</th>
@@ -209,11 +209,11 @@
 
         //Set column definition initialisation properties.
 
-       responsive: {
-            details: {
-                type: 'column'
-            }
-        },
+    //    responsive: {
+    //         details: {
+    //             type: 'column'
+    //         }
+    //     },
         columnDefs: [ {
             className: 'control',
             orderable: false,
