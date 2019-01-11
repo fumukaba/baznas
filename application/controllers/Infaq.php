@@ -17,7 +17,7 @@ class Infaq extends CI_Controller {
         $data['view_file']    = "moduls/infaq";
 		$this->load->view('admin_view',$data);
     }
-
+ 
     function konfirmasi() {
         $data = array(
             'jumlah_infaq' => $this->input->post('jumlah_infaq'),

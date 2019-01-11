@@ -70,7 +70,7 @@ class Zakat_maal extends CI_Controller {
             } else {
                 $print_status = $zakat_maal->status_maal;
             }
-
+ 
 			$row = array();
 			$row[] = '';
 			$row[] = $no;

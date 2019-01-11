@@ -21,7 +21,7 @@
 <div id="idImgLoader" style="margin: 0 auto; text-align: center;">
 
 	<img src='<?php echo base_url();?>assets/img/loader-dark.gif' />
-
+ 
 </div>
 
 <div id="data" style="display:none;">
