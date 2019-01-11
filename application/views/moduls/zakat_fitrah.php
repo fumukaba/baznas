@@ -93,10 +93,11 @@
         <tr>
         	<!-- <th></th> -->
             <th>No.</th>
-
+ 
             <th>Pengirim</th>
 
              <th>Jumlah</th>
+             <th>Tujuan</th>
              <th>Tanggal</th>
              <th>Status</th>
              <th>Uang</th>
