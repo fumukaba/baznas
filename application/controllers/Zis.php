@@ -11,7 +11,7 @@ class Zis extends CI_Controller {
 		$this->load->library("session");
 		// $this->load->library("phpqrcode/qrlib");
 	}
-	
+	 
 	function index(){
        // $this->mdl_home->getsqurity();
         $data['view_file']    = "moduls/zis";
