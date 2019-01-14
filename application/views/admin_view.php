@@ -267,8 +267,55 @@ function undelete_data(table,id) {
 
 				<div class="navbar-buttons navbar-header pull-right  collapse navbar-collapse" role="navigation">
 					<?php
-						$r_kasbas = $this->db->query("SELECT * FROM tb_kasbas ORDER BY id_kasbas DESC LIMIT 0, 1")->result_array();
-						$kas = (count($r_kasbas) > 0 ? $r_kasbas[0]['total_kasbas'] : 0);
+						if($this->session->userdata('id_zis') != '') {
+							$id_zis = $this->session->userdata('id_zis');
+							$zis = $this->db->get_where('tb_zis', array('id_zis' => $id_zis))->result_array();
+
+							$data_infaq = $this->db->get_where('tb_infaq', array('status_infaq' => 'Valid', 'status_uang' => 'Kas Baznas', 'id_zis' => $id_zis))->result_array();
+							$data_fitrah = $this->db->get_where('tb_zakat_fitrah', array('status_zakat' => 'Valid', 'status_uang_zakat' => 'Kas Baznas', 'id_zis' => $id_zis))->result_array();
+							$data_maal = $this->db->get_where('tb_zakat_maal', array('status_maal' => 'Valid', 'status_uang' => 'Kas Baznas', 'id_zis' => $id_zis))->result_array();
+
+							$semua_data = array();
+
+							foreach($data_infaq as $infaq) {
+								$push = array(
+									'id' => $infaq['id_infaq'],
+									'jenis' => 'Infaq',
+									'uang' => $infaq['jumlah_infaq']
+								);
+
+								array_push($semua_data, $push);
+							}
+
+							foreach($data_fitrah as $fitrah) {
+								$push = array(
+									'id' => $fitrah['id_zakat_fitrah'],
+									'jenis' => 'Zakat Fitrah',
+									'uang' => $fitrah['total_zakat']
+								);
+
+								array_push($semua_data, $push);
+							}
+
+							foreach($data_maal as $maal) {
+								$push = array(
+									'id' => $maal['id_maal'],
+									'jenis' => 'Zakat Maal',
+									'uang' => $maal['jumlah_maal']
+								);
+
+								array_push($semua_data, $push);
+							}
+
+							$kas = 0;
+
+							foreach($semua_data as $data) {
+								$kas += $data['uang'];
+							}
+						} else {
+							$r_kasbas = $this->db->query("SELECT * FROM tb_kasbas ORDER BY id_kasbas DESC LIMIT 0, 1")->result_array();
+							$kas = (count($r_kasbas) > 0 ? $r_kasbas[0]['total_kasbas'] : 0);
+						}
 					?>
 					<ul class="nav ace-nav">
 						<li style="background-color: #222222; color: #ffffff; opacity: 0.5; font-weight: bold; padding-left: 10px; padding-right: 10px;">Kas Baznas: <?php echo "Rp. " . number_format($kas, 0, ',', '.'); ?></li>
