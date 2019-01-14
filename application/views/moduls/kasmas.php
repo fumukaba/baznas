@@ -62,6 +62,7 @@
             <th>Tempat ZIS</th>
             <th>Asal Kas</th>
             <th>Jumlah Kas</th>
+			<th>Status</th>
         </tr>
     </thead>
     <tbody></tbody>

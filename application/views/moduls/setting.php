@@ -18,16 +18,7 @@
 			<i class="green ace-icon fa fa-home bigger-120"></i>
 				Zakat Fitrah
 			</a>
-		</li>
-
-		<li>
-			<a data-toggle="tab" href="#presentase">
-			<i class="green ace-icon fa fa-money bigger-120"></i>
-				Presentase
-			</a>
-		</li>
-
-											
+		</li>											
 	</ul>
 
 	<div class="tab-content">
@@ -61,64 +52,6 @@
 	</form>
 	</div>
 
-	<div id="presentase" class="tab-pane fade">
-	<form action="#" id="form2" name="form2" class="form-horizontal" enctype="multipart/form-data">
-
-		<input type="hidden" name="id_setting"/> 
-		<div class="form-group">
-		
-		<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Tahun </label>
-			<div class="col-sm-6">
-            <input type="text" id="tahun" name="tahun" placeholder="Tahun" readonly="readonly" value="<?php echo date('Y'); ?>" />
-				<span class="help-block"></span>
-			</div>
-		</div>
-		<div class="form-group">  
-
-		<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Nominal Presentase </label>
-			<div class="col-sm-6">
-				<input type="text" id="nominal2" name="nominal2" placeholder="Nominal" />
-			</div>	
-		</div>
-		<div class="form-group">
-		
-			<div class="col-md-offset-2 col-md-9">
-				<button type="button" value="Add2" id="btnSave2" onclick="save2()" class="btn btn-primary">Save</button>
-				
-			</div>
-		</div>
-		
-	</form>
-	<!-- <form action="#" id="form" name="form" class="form-horizontal" enctype="multipart/form-data">
-
-		<input type="hidden" name="id_setting"/> 
-		<div class="form-group">
-		
-		<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Tahun </label>
-			<div class="col-sm-6">
-            <input type="text" id="tahun" name="tahun" placeholder="Tahun" readonly="readonly" />
-				<span class="help-block"></span>
-			</div>
-		</div>
-		<div class="form-group"> 
-
-		<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Nominal </label>
-			<div class="col-sm-6">
-				<input type="text" id="nominal" name="nominal" placeholder="Nominal" />
-			</div>	
-		</div>
-		<div class="form-group">
-		
-			<div class="col-md-offset-2 col-md-9">
-				<button type="button" value="Add" id="btnSave" onclick="save()" class="btn btn-primary">Save</button>
-				
-			</div>
-		</div>
-		
-	</form> -->
-	</div>
-
-	</div>
 </div>
 </div>
 

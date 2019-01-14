@@ -27,26 +27,31 @@ class Kas_masuk extends CI_Controller {
 		if($asal_kasmas='Infaq'){
 			$tabel='tb_infaq';
 			$kolom='id_infaq';
+			$kolom2='status_uang';
 		}else if($asal_kasmas='Zakat Fitrah'){
 			$tabel='tb_zakat_fitrah';
 			$kolom='id_zakat_fitrah';
+			$kolom2='status_uang_zakat';
 		}else{
 			$tabel='tb_zakat_maal';
 			$kolom='id_zakat_maal';
+			$kolom2='status_uang';
 		}
 
 		$id_asal = $kasmas->id_asal;
 		$asal = $this->db->query("SELECT * FROM $tabel");
 		foreach($asal->result() as $row_asal)	{
 
-			$id_transaksi = $row_asal->$kolom; 		
+			$id_transaksi = $row_asal->$kolom; 	
 			if($id_asal==$id_transaksi){						
 					$dataRek_1=$row_asal->pemilik_rekening;
 					$dataRek_2=$row_asal->norek_pengirim;
 					$dataRek_3=$row_asal->bank_pengirim;
 					$id_zis=$row_asal->id_zis;
-				}
-			}			
+					$status1=$row_asal->$kolom2;		
+			}
+
+		}			
 
 			$bahan_zis = $this->db->query("SELECT * FROM tb_zis");
 			foreach($bahan_zis->result() as $row_zis)	{
@@ -55,7 +60,9 @@ class Kas_masuk extends CI_Controller {
 						$dataZis_1=$row_zis->nama_zis;
 						$dataZis_2=$row_zis->alamat_zis;
 					}
-				}			
+				}	
+				
+
 
 			$no++;
 			$row = array();
@@ -65,6 +72,7 @@ class Kas_masuk extends CI_Controller {
 			$row[] = $dataZis_1 . "<br>" . $dataZis_2;
 			$row[] = $kasmas->asal_kasmas;
 			$row[] = $kasmas->jumlah_kasmas;
+			$row[] = $status1;
 			$row[] = '
 			<div class="btn-group">
                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Aksi <span class="caret"></span></button>
