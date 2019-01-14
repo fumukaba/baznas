@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0.1
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 14 Jan 2019 pada 04.22
--- Versi server: 10.1.32-MariaDB
--- Versi PHP: 7.2.5
+-- Generation Time: Jan 10, 2019 at 08:55 AM
+-- Server version: 10.1.37-MariaDB
+-- PHP Version: 7.3.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -25,7 +25,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `mainmenu`
+-- Table structure for table `mainmenu`
 --
 
 CREATE TABLE `mainmenu` (
@@ -41,7 +41,7 @@ CREATE TABLE `mainmenu` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `mainmenu`
+-- Dumping data for table `mainmenu`
 --
 
 INSERT INTO `mainmenu` (`seq`, `idmenu`, `nama_menu`, `active_menu`, `icon_class`, `link_menu`, `menu_akses`, `entry_date`, `entry_user`) VALUES
@@ -55,7 +55,7 @@ INSERT INTO `mainmenu` (`seq`, `idmenu`, `nama_menu`, `active_menu`, `icon_class
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `submenu`
+-- Table structure for table `submenu`
 --
 
 CREATE TABLE `submenu` (
@@ -71,7 +71,7 @@ CREATE TABLE `submenu` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `submenu`
+-- Dumping data for table `submenu`
 --
 
 INSERT INTO `submenu` (`id_sub`, `nama_sub`, `mainmenu_idmenu`, `active_sub`, `icon_class`, `link_sub`, `sub_akses`, `entry_date`, `entry_user`) VALUES
@@ -89,7 +89,7 @@ INSERT INTO `submenu` (`id_sub`, `nama_sub`, `mainmenu_idmenu`, `active_sub`, `i
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tab_akses_mainmenu`
+-- Table structure for table `tab_akses_mainmenu`
 --
 
 CREATE TABLE `tab_akses_mainmenu` (
@@ -105,7 +105,7 @@ CREATE TABLE `tab_akses_mainmenu` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `tab_akses_mainmenu`
+-- Dumping data for table `tab_akses_mainmenu`
 --
 
 INSERT INTO `tab_akses_mainmenu` (`id`, `id_menu`, `id_level`, `c`, `r`, `u`, `d`, `entry_date`, `entry_user`) VALUES
@@ -115,12 +115,12 @@ INSERT INTO `tab_akses_mainmenu` (`id`, `id_menu`, `id_level`, `c`, `r`, `u`, `d
 (4, 4, 1, 0, 1, 0, 0, '2019-01-10 01:40:48', ''),
 (5, 5, 1, 0, 1, 0, 0, '2019-01-10 01:41:09', ''),
 (6, 6, 1, 0, 1, 0, 0, '2019-01-10 01:41:09', ''),
-(7, 5, 3, 0, 1, 0, 0, '2019-01-10 03:47:40', '');
+(7, 5, 3, 0, 1, 0, 0, '2019-01-10 03:47:39', '');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tab_akses_submenu`
+-- Table structure for table `tab_akses_submenu`
 --
 
 CREATE TABLE `tab_akses_submenu` (
@@ -136,7 +136,7 @@ CREATE TABLE `tab_akses_submenu` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `tab_akses_submenu`
+-- Dumping data for table `tab_akses_submenu`
 --
 
 INSERT INTO `tab_akses_submenu` (`id`, `id_sub_menu`, `id_level`, `c`, `r`, `u`, `d`, `entry_date`, `entry_user`) VALUES
@@ -150,14 +150,14 @@ INSERT INTO `tab_akses_submenu` (`id`, `id_sub_menu`, `id_level`, `c`, `r`, `u`,
 (8, 8, 1, 0, 1, 0, 0, '2019-01-10 01:48:56', ''),
 (9, 9, 1, 0, 1, 0, 0, '2019-01-10 01:49:26', ''),
 (10, 10, 1, 0, 1, 0, 0, '2019-01-10 01:49:26', ''),
-(11, 8, 3, 0, 1, 0, 0, '2019-01-10 03:48:07', ''),
-(12, 9, 3, 0, 1, 0, 0, '2019-01-10 03:48:07', ''),
-(13, 10, 3, 0, 1, 0, 0, '2019-01-10 03:48:38', '');
+(11, 8, 3, 0, 1, 0, 0, '2019-01-10 03:50:25', ''),
+(12, 9, 3, 0, 1, 0, 0, '2019-01-10 03:50:25', ''),
+(13, 10, 3, 0, 1, 0, 0, '2019-01-10 03:51:42', '');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tb_about`
+-- Table structure for table `tb_about`
 --
 
 CREATE TABLE `tb_about` (
@@ -172,22 +172,21 @@ CREATE TABLE `tb_about` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `tb_about`
+-- Dumping data for table `tb_about`
 --
 
 INSERT INTO `tb_about` (`id_about`, `about_logo`, `about_deskripsi`, `id_admin`, `nama_bank`, `nomor_rekening`, `atas_nama`, `terakhir_diperbarui`) VALUES
-(1, NULL, '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>', 0, 'BNI Syariah', '009876543888', 'Baznas Indonesia', '2019-01-11 03:16:20');
+(1, '1.jpg', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>', 0, 'BNI Syariah', '009876543888', 'Baznas Indonesia', '2019-01-10 03:29:32');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tb_infaq`
+-- Table structure for table `tb_infaq`
 --
 
 CREATE TABLE `tb_infaq` (
   `id_infaq` varchar(34) NOT NULL,
   `nama_pengirim` varchar(50) NOT NULL,
-  `telp_pengirim` varchar(20) NOT NULL,
   `bank_pengirim` varchar(50) NOT NULL,
   `pemilik_rekening` varchar(50) NOT NULL,
   `norek_pengirim` varchar(20) NOT NULL,
@@ -202,17 +201,17 @@ CREATE TABLE `tb_infaq` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `tb_infaq`
+-- Dumping data for table `tb_infaq`
 --
 
-INSERT INTO `tb_infaq` (`id_infaq`, `nama_pengirim`, `telp_pengirim`, `bank_pengirim`, `pemilik_rekening`, `norek_pengirim`, `jumlah_infaq`, `tanggal_infaq`, `bukti_infaq`, `status_infaq`, `status_uang`, `diperbarui_oleh`, `terakhir_diperbarui`, `id_zis`) VALUES
-('t2252e0564f408d5fb7f2dcafeee75a51b', 'Tatong Airman', '', 'BNI', 'Tatong Airman Isnandar', '0089635345323', 200000, '2019-01-10 08:55:00', 'i2fcb2d9eb4a98363bdee84fcaf58f7e34.png', 'Valid', 'Sudah Terdistribusi', 1, '2019-01-11 03:21:37', 't111d028a9730d95238b409b44e92dbd09'),
-('t2e4d1144614d608135cd3f57c9d159c2d', 'Jaluhadi', '', 'BRI', 'Hadi', '0089765433', 1000000, '2019-01-07 09:45:00', 'i2e4d1144614d608135cd3f57c9d159c2d.jpg', 'Valid', 'Kas Baznas', 1, '2019-01-10 02:08:46', '0');
+INSERT INTO `tb_infaq` (`id_infaq`, `nama_pengirim`, `bank_pengirim`, `pemilik_rekening`, `norek_pengirim`, `jumlah_infaq`, `tanggal_infaq`, `bukti_infaq`, `status_infaq`, `status_uang`, `diperbarui_oleh`, `terakhir_diperbarui`, `id_zis`) VALUES
+('t2252e0564f408d5fb7f2dcafeee75a51b', 'Tatong Airman', 'BNI', 'Tatong Airman Isnandar', '0089635345323', 200000, '2019-01-10 08:55:00', 'i2fcb2d9eb4a98363bdee84fcaf58f7e34.png', 'Valid', 'Kas Baznas', 1, '2019-01-10 01:59:40', 't111d028a9730d95238b409b44e92dbd09'),
+('t2e4d1144614d608135cd3f57c9d159c2d', 'Jaluhadi', 'BRI', 'Hadi', '0089765433', 1000000, '2019-01-07 09:45:00', 'i2e4d1144614d608135cd3f57c9d159c2d.jpg', 'Valid', 'Kas Baznas', 1, '2019-01-10 02:08:46', '0');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tb_kasbas`
+-- Table structure for table `tb_kasbas`
 --
 
 CREATE TABLE `tb_kasbas` (
@@ -222,21 +221,26 @@ CREATE TABLE `tb_kasbas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `tb_kasbas`
+-- Dumping data for table `tb_kasbas`
 --
 
 INSERT INTO `tb_kasbas` (`id_kasbas`, `tanggal_kasbas`, `total_kasbas`) VALUES
 (1, '2019-01-10 01:59:40', 200000),
 (2, '2019-01-10 02:04:17', 300000),
 (3, '2019-01-10 02:08:46', 1300000),
-(4, '2019-01-10 02:52:44', 1400000),
-(5, '2019-01-11 03:20:19', 1460000),
-(6, '2019-01-11 03:21:37', 1264000);
+(4, '2019-01-10 02:29:16', 1001300000),
+(5, '2019-01-10 02:31:59', 1001300100),
+(6, '2019-01-10 02:32:41', 1001300200),
+(7, '2019-01-10 02:33:54', 1001360200),
+(8, '2019-01-10 02:34:29', 1001420200),
+(9, '2019-01-10 02:35:18', 1001420212),
+(10, '2019-01-10 02:41:00', 1001419000),
+(11, '2019-01-10 02:41:45', 1001418877);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tb_kaskel`
+-- Table structure for table `tb_kaskel`
 --
 
 CREATE TABLE `tb_kaskel` (
@@ -249,17 +253,10 @@ CREATE TABLE `tb_kaskel` (
   `terakhir_diperbarui` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data untuk tabel `tb_kaskel`
---
-
-INSERT INTO `tb_kaskel` (`id_kaskel`, `tanggal_kaskel`, `keperluan_kaskel`, `id_zis`, `jumlah_kaskel`, `dibuat_oleh`, `terakhir_diperbarui`) VALUES
-(1, '2019-01-11 10:21:37', 'Mutasi sebesar Rp. 196,000', 't111d028a9730d95238b409b44e92dbd09', 196000, 1, '2019-01-11 03:21:37');
-
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tb_kasmas`
+-- Table structure for table `tb_kasmas`
 --
 
 CREATE TABLE `tb_kasmas` (
@@ -271,19 +268,24 @@ CREATE TABLE `tb_kasmas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `tb_kasmas`
+-- Dumping data for table `tb_kasmas`
 --
 
 INSERT INTO `tb_kasmas` (`id_kasmas`, `tanggal_kasmas`, `asal_kasmas`, `id_asal`, `jumlah_kasmas`) VALUES
 (1, '2019-01-10 01:59:40', 'Infaq', 't2252e0564f408d5fb7f2dcafeee75a51b', 200000),
+(2, '2019-01-10 02:04:17', 'Zakat Maal', 't4ffdfae51a7136cd1c545778b6238c077', 100000),
 (3, '2019-01-10 02:08:46', 'Infaq', 't2e4d1144614d608135cd3f57c9d159c2d', 1000000),
-(4, '2019-01-10 02:52:44', 'Zakat Maal', '1', 100000),
-(5, '2019-01-11 03:20:19', 'Zakat Fitrah', 't3225087268168fcde6d93d176f7875c44', 60000);
+(4, '2019-01-10 02:29:16', 'Infaq', 't2ab9e58069f89399a27dcc3e3e2da2860', 1000000000),
+(5, '2019-01-10 02:31:59', 'Zakat Maal', 't46f1dfccaa0d72a041c1210efd5ccf7d0', 100),
+(6, '2019-01-10 02:32:41', 'Zakat Maal', '2', 100),
+(7, '2019-01-10 02:33:54', 'Zakat Fitrah', 't348012715d047026f1d51a777ea2e8807', 60000),
+(8, '2019-01-10 02:34:29', 'Zakat Fitrah', 't348012715d047026f1d51a777ea2e8807', 60000),
+(9, '2019-01-10 02:35:18', 'Zakat Maal', 't43f06ed24b9526a7a4284770ee73f12c0', 12);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tb_setting`
+-- Table structure for table `tb_setting`
 --
 
 CREATE TABLE `tb_setting` (
@@ -294,7 +296,7 @@ CREATE TABLE `tb_setting` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `tb_setting`
+-- Dumping data for table `tb_setting`
 --
 
 INSERT INTO `tb_setting` (`id_setting`, `tahun`, `meta_key`, `meta_value`) VALUES
@@ -304,13 +306,12 @@ INSERT INTO `tb_setting` (`id_setting`, `tahun`, `meta_key`, `meta_value`) VALUE
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tb_zakat_fitrah`
+-- Table structure for table `tb_zakat_fitrah`
 --
 
 CREATE TABLE `tb_zakat_fitrah` (
   `id_zakat_fitrah` varchar(34) NOT NULL,
   `nama_pengirim` varchar(50) NOT NULL,
-  `telp_pengirim` varchar(20) NOT NULL,
   `bank_pengirim` varchar(50) NOT NULL,
   `pemilik_rekening` varchar(50) NOT NULL,
   `norek_pengirim` varchar(20) NOT NULL,
@@ -327,22 +328,21 @@ CREATE TABLE `tb_zakat_fitrah` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `tb_zakat_fitrah`
+-- Dumping data for table `tb_zakat_fitrah`
 --
 
-INSERT INTO `tb_zakat_fitrah` (`id_zakat_fitrah`, `nama_pengirim`, `telp_pengirim`, `bank_pengirim`, `pemilik_rekening`, `norek_pengirim`, `jumlah_orang`, `harga_zakat`, `total_zakat`, `tanggal_zakat`, `bukti_zakat`, `status_zakat`, `status_uang_zakat`, `diperbarui_oleh`, `terakhir_diperbarui`, `id_zis`) VALUES
-('t3225087268168fcde6d93d176f7875c44', 'Qudus Al-Qodri', '', 'BNI', 'Qudusi', '008544324565', 2, 30000, 60000, '2019-01-10 10:50:00', 'i318110e3a13254222f9c2e7ac2c7a62cb.png', 'Menunggu Konfirmasi', 'Kas Baznas', 1, '2019-01-14 02:48:02', 't111d028a9730d95238b409b44e92dbd09');
+INSERT INTO `tb_zakat_fitrah` (`id_zakat_fitrah`, `nama_pengirim`, `bank_pengirim`, `pemilik_rekening`, `norek_pengirim`, `jumlah_orang`, `harga_zakat`, `total_zakat`, `tanggal_zakat`, `bukti_zakat`, `status_zakat`, `status_uang_zakat`, `diperbarui_oleh`, `terakhir_diperbarui`, `id_zis`) VALUES
+('t318110e3a13254222f9c2e7ac2c7a62cb', 'Qudus Al-Qodri', 'BNI', 'Qudusi', '008544324565', 2, 30000, 60000, '2019-01-10 10:50:00', 'i318110e3a13254222f9c2e7ac2c7a62cb.png', 'Menunggu Konfirmasi', 'Kas Baznas', 1, '2019-01-10 02:01:45', 't111d028a9730d95238b409b44e92dbd09');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tb_zakat_maal`
+-- Table structure for table `tb_zakat_maal`
 --
 
 CREATE TABLE `tb_zakat_maal` (
   `id_maal` bigint(20) NOT NULL,
   `nama_pengirim` varchar(50) NOT NULL,
-  `telp_pengirim` varchar(20) NOT NULL,
   `bank_pengirim` varchar(50) NOT NULL,
   `pemilik_rekening` varchar(50) NOT NULL,
   `norek_pengirim` varchar(20) NOT NULL,
@@ -353,20 +353,21 @@ CREATE TABLE `tb_zakat_maal` (
   `status_uang` enum('Kas Baznas','Sudah Terdistribusi') NOT NULL DEFAULT 'Kas Baznas',
   `diperbarui_oleh` int(11) NOT NULL,
   `terakhir_diperbarui` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `jenis_maal` enum('Uang','Emas','Perdagangan','Pertanian','Pertambangan') NOT NULL DEFAULT 'Uang',
   `id_zis` varchar(34) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `tb_zakat_maal`
+-- Dumping data for table `tb_zakat_maal`
 --
 
-INSERT INTO `tb_zakat_maal` (`id_maal`, `nama_pengirim`, `telp_pengirim`, `bank_pengirim`, `pemilik_rekening`, `norek_pengirim`, `jumlah_maal`, `tanggal_maal`, `bukti_maal`, `status_maal`, `status_uang`, `diperbarui_oleh`, `terakhir_diperbarui`, `id_zis`) VALUES
-(1, 'Arna Waula', '085707236937', 'BRi', 'Barinomo', '00897263242', 100000, '2019-01-08 09:45:00', 'i4ffdfae51a7136cd1c545778b6238c077.jpg', 'Valid', 'Kas Baznas', 1, '2019-01-14 03:03:02', 't1930a31aa17a48279e587207abf45d06f');
+INSERT INTO `tb_zakat_maal` (`id_maal`, `nama_pengirim`, `bank_pengirim`, `pemilik_rekening`, `norek_pengirim`, `jumlah_maal`, `tanggal_maal`, `bukti_maal`, `status_maal`, `status_uang`, `diperbarui_oleh`, `terakhir_diperbarui`, `jenis_maal`, `id_zis`) VALUES
+(1, 'Arna Waula', 'BRi', 'Barinomo', '00897263242', 100000, '2019-01-08 09:45:00', 'i4ffdfae51a7136cd1c545778b6238c077.jpg', 'Valid', 'Kas Baznas', 1, '2019-01-10 02:04:17', 'Emas', 't1930a31aa17a48279e587207abf45d06f');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tb_zis`
+-- Table structure for table `tb_zis`
 --
 
 CREATE TABLE `tb_zis` (
@@ -382,7 +383,7 @@ CREATE TABLE `tb_zis` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `tb_zis`
+-- Dumping data for table `tb_zis`
 --
 
 INSERT INTO `tb_zis` (`id_zis`, `nama_zis`, `alamat_zis`, `kelurahan_zis`, `kecamatan_zis`, `qrcode_zis`, `pengurus_zis`, `dibuat_oleh`, `terakhir_diperbarui`) VALUES
@@ -394,7 +395,7 @@ INSERT INTO `tb_zis` (`id_zis`, `nama_zis`, `alamat_zis`, `kelurahan_zis`, `keca
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tm_user`
+-- Table structure for table `tm_user`
 --
 
 CREATE TABLE `tm_user` (
@@ -412,7 +413,7 @@ CREATE TABLE `tm_user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `tm_user`
+-- Dumping data for table `tm_user`
 --
 
 INSERT INTO `tm_user` (`id_user`, `nama`, `email`, `foto`, `password`, `nama_rek_user`, `no_rek_user`, `bank_rek_user`, `view_password`, `admin_level`, `id`) VALUES
@@ -426,7 +427,7 @@ INSERT INTO `tm_user` (`id_user`, `nama`, `email`, `foto`, `password`, `nama_rek
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `user_type`
+-- Table structure for table `user_type`
 --
 
 CREATE TABLE `user_type` (
@@ -436,7 +437,7 @@ CREATE TABLE `user_type` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
 --
--- Dumping data untuk tabel `user_type`
+-- Dumping data for table `user_type`
 --
 
 INSERT INTO `user_type` (`user_type_id`, `user_type_name`, `nama`) VALUES
@@ -447,8 +448,8 @@ INSERT INTO `user_type` (`user_type_id`, `user_type_name`, `nama`) VALUES
 -- --------------------------------------------------------
 
 --
--- Stand-in struktur untuk tampilan `v_mutasi`
--- (Lihat di bawah untuk tampilan aktual)
+-- Stand-in structure for view `v_mutasi`
+-- (See below for the actual view)
 --
 CREATE TABLE `v_mutasi` (
 `id_zis` varchar(34)
@@ -461,7 +462,7 @@ CREATE TABLE `v_mutasi` (
 -- --------------------------------------------------------
 
 --
--- Struktur untuk view `v_mutasi`
+-- Structure for view `v_mutasi`
 --
 DROP TABLE IF EXISTS `v_mutasi`;
 
@@ -472,37 +473,37 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 
 --
--- Indeks untuk tabel `mainmenu`
+-- Indexes for table `mainmenu`
 --
 ALTER TABLE `mainmenu`
   ADD PRIMARY KEY (`seq`);
 
 --
--- Indeks untuk tabel `submenu`
+-- Indexes for table `submenu`
 --
 ALTER TABLE `submenu`
   ADD PRIMARY KEY (`id_sub`);
 
 --
--- Indeks untuk tabel `tab_akses_mainmenu`
+-- Indexes for table `tab_akses_mainmenu`
 --
 ALTER TABLE `tab_akses_mainmenu`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `tab_akses_submenu`
+-- Indexes for table `tab_akses_submenu`
 --
 ALTER TABLE `tab_akses_submenu`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `tb_about`
+-- Indexes for table `tb_about`
 --
 ALTER TABLE `tb_about`
   ADD PRIMARY KEY (`id_about`);
 
 --
--- Indeks untuk tabel `tb_infaq`
+-- Indexes for table `tb_infaq`
 --
 ALTER TABLE `tb_infaq`
   ADD PRIMARY KEY (`id_infaq`),
@@ -510,13 +511,13 @@ ALTER TABLE `tb_infaq`
   ADD KEY `diperbarui_oleh` (`diperbarui_oleh`);
 
 --
--- Indeks untuk tabel `tb_kasbas`
+-- Indexes for table `tb_kasbas`
 --
 ALTER TABLE `tb_kasbas`
   ADD PRIMARY KEY (`id_kasbas`);
 
 --
--- Indeks untuk tabel `tb_kaskel`
+-- Indexes for table `tb_kaskel`
 --
 ALTER TABLE `tb_kaskel`
   ADD PRIMARY KEY (`id_kaskel`),
@@ -524,19 +525,19 @@ ALTER TABLE `tb_kaskel`
   ADD KEY `dibuat_oleh` (`dibuat_oleh`);
 
 --
--- Indeks untuk tabel `tb_kasmas`
+-- Indexes for table `tb_kasmas`
 --
 ALTER TABLE `tb_kasmas`
   ADD PRIMARY KEY (`id_kasmas`);
 
 --
--- Indeks untuk tabel `tb_setting`
+-- Indexes for table `tb_setting`
 --
 ALTER TABLE `tb_setting`
   ADD PRIMARY KEY (`id_setting`);
 
 --
--- Indeks untuk tabel `tb_zakat_fitrah`
+-- Indexes for table `tb_zakat_fitrah`
 --
 ALTER TABLE `tb_zakat_fitrah`
   ADD PRIMARY KEY (`id_zakat_fitrah`),
@@ -544,13 +545,13 @@ ALTER TABLE `tb_zakat_fitrah`
   ADD KEY `id_zis` (`id_zis`);
 
 --
--- Indeks untuk tabel `tb_zakat_maal`
+-- Indexes for table `tb_zakat_maal`
 --
 ALTER TABLE `tb_zakat_maal`
   ADD PRIMARY KEY (`id_maal`);
 
 --
--- Indeks untuk tabel `tb_zis`
+-- Indexes for table `tb_zis`
 --
 ALTER TABLE `tb_zis`
   ADD PRIMARY KEY (`id_zis`),
@@ -559,128 +560,128 @@ ALTER TABLE `tb_zis`
   ADD KEY `pengurus_zis` (`pengurus_zis`);
 
 --
--- Indeks untuk tabel `tm_user`
+-- Indexes for table `tm_user`
 --
 ALTER TABLE `tm_user`
   ADD PRIMARY KEY (`id`),
   ADD KEY `admin_level` (`admin_level`);
 
 --
--- Indeks untuk tabel `user_type`
+-- Indexes for table `user_type`
 --
 ALTER TABLE `user_type`
   ADD PRIMARY KEY (`user_type_id`) USING BTREE;
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `mainmenu`
+-- AUTO_INCREMENT for table `mainmenu`
 --
 ALTER TABLE `mainmenu`
   MODIFY `seq` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT untuk tabel `submenu`
+-- AUTO_INCREMENT for table `submenu`
 --
 ALTER TABLE `submenu`
   MODIFY `id_sub` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT untuk tabel `tab_akses_mainmenu`
+-- AUTO_INCREMENT for table `tab_akses_mainmenu`
 --
 ALTER TABLE `tab_akses_mainmenu`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT untuk tabel `tab_akses_submenu`
+-- AUTO_INCREMENT for table `tab_akses_submenu`
 --
 ALTER TABLE `tab_akses_submenu`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- AUTO_INCREMENT untuk tabel `tb_about`
+-- AUTO_INCREMENT for table `tb_about`
 --
 ALTER TABLE `tb_about`
   MODIFY `id_about` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT untuk tabel `tb_kasbas`
+-- AUTO_INCREMENT for table `tb_kasbas`
 --
 ALTER TABLE `tb_kasbas`
-  MODIFY `id_kasbas` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_kasbas` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT untuk tabel `tb_kaskel`
+-- AUTO_INCREMENT for table `tb_kaskel`
 --
 ALTER TABLE `tb_kaskel`
-  MODIFY `id_kaskel` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_kaskel` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `tb_kasmas`
+-- AUTO_INCREMENT for table `tb_kasmas`
 --
 ALTER TABLE `tb_kasmas`
-  MODIFY `id_kasmas` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_kasmas` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT untuk tabel `tb_setting`
+-- AUTO_INCREMENT for table `tb_setting`
 --
 ALTER TABLE `tb_setting`
   MODIFY `id_setting` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT untuk tabel `tb_zakat_maal`
+-- AUTO_INCREMENT for table `tb_zakat_maal`
 --
 ALTER TABLE `tb_zakat_maal`
   MODIFY `id_maal` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT untuk tabel `tm_user`
+-- AUTO_INCREMENT for table `tm_user`
 --
 ALTER TABLE `tm_user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT untuk tabel `user_type`
+-- AUTO_INCREMENT for table `user_type`
 --
 ALTER TABLE `user_type`
   MODIFY `user_type_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+-- Constraints for dumped tables
 --
 
 --
--- Ketidakleluasaan untuk tabel `tb_infaq`
+-- Constraints for table `tb_infaq`
 --
 ALTER TABLE `tb_infaq`
   ADD CONSTRAINT `tb_infaq_ibfk_1` FOREIGN KEY (`id_zis`) REFERENCES `tb_zis` (`id_zis`) ON DELETE CASCADE,
   ADD CONSTRAINT `tb_infaq_ibfk_2` FOREIGN KEY (`diperbarui_oleh`) REFERENCES `tm_user` (`id`) ON DELETE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `tb_kaskel`
+-- Constraints for table `tb_kaskel`
 --
 ALTER TABLE `tb_kaskel`
   ADD CONSTRAINT `tb_kaskel_ibfk_1` FOREIGN KEY (`id_zis`) REFERENCES `tb_zis` (`id_zis`) ON DELETE CASCADE,
   ADD CONSTRAINT `tb_kaskel_ibfk_2` FOREIGN KEY (`dibuat_oleh`) REFERENCES `tm_user` (`id`) ON DELETE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `tb_zakat_fitrah`
+-- Constraints for table `tb_zakat_fitrah`
 --
 ALTER TABLE `tb_zakat_fitrah`
   ADD CONSTRAINT `tb_zakat_fitrah_ibfk_1` FOREIGN KEY (`diperbarui_oleh`) REFERENCES `tm_user` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `tb_zakat_fitrah_ibfk_2` FOREIGN KEY (`id_zis`) REFERENCES `tb_zis` (`id_zis`) ON DELETE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `tb_zis`
+-- Constraints for table `tb_zis`
 --
 ALTER TABLE `tb_zis`
   ADD CONSTRAINT `tb_zis_ibfk_1` FOREIGN KEY (`pengurus_zis`) REFERENCES `tm_user` (`id`) ON DELETE SET NULL,
   ADD CONSTRAINT `tb_zis_ibfk_2` FOREIGN KEY (`dibuat_oleh`) REFERENCES `tm_user` (`id`) ON DELETE SET NULL;
 
 --
--- Ketidakleluasaan untuk tabel `tm_user`
+-- Constraints for table `tm_user`
 --
 ALTER TABLE `tm_user`
   ADD CONSTRAINT `tm_user_ibfk_1` FOREIGN KEY (`admin_level`) REFERENCES `user_type` (`user_type_id`) ON DELETE CASCADE;
