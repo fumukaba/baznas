@@ -3,8 +3,8 @@
 class Mdl_zakatmaal extends CI_Model {
 	
 	var $table = 'tb_zakat_maal';
-	var $column_order = array('id_maal','nama_pengirim','jumlah_maal','tanggal_maal','status_maal','status_uang','jenis_maal',null); //set column field database for datatable orderable
-	var $column_search = array('id_maal','nama_pengirim','jumlah_maal','tanggal_maal','status_maal','status_uang','jenis_maal'); //set column field database for datatable searchable just title , author , category are searchable
+	var $column_order = array('id_maal','nama_pengirim','jumlah_maal','tanggal_maal','status_maal','status_uang',null); //set column field database for datatable orderable
+	var $column_search = array('id_maal','nama_pengirim','jumlah_maal','tanggal_maal','status_maal','status_uang'); //set column field database for datatable searchable just title , author , category are searchable
 	var $order = array('id_maal' => 'asc'); // default order
 
 	private function _get_datatables_query() {
