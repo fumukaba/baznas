@@ -96,35 +96,14 @@ class Mutasi_uang extends CI_Controller {
 		$tanggal_kaskel = date('Y-m-d H:i:s', time());
 		$keperluan_kaskel = $this->input->post('keperluan_kaskel');
 		$id_zis = $this->input->post('id_zis');
+		$jumlah_kaskel = 0;
 
 		$semua_mutasi = explode(',', $this->input->post('data'));
 
 		foreach($semua_mutasi as $item) {
 			if($item != '') {
 				$semua_data = explode(':', $item);
-
-				$data = array(
-					'tanggal_kaskel'			=> $tanggal_kaskel,
-					'keperluan_kaskel'         	=> $keperluan_kaskel,
-					'id_zis'      			   	=> $id_zis,
-					'jumlah_kaskel'         	=> $semua_data[1],
-					'dibuat_oleh' 				=> $id		
-				);
-			
-				$insert = $this->db->insert('tb_kaskel', $data);
-		
-				// Kasbas
-				$jumlah_kaskel = $semua_data[1];
-				$r_kasbas = $this->db->query("SELECT * FROM tb_kasbas ORDER BY id_kasbas DESC LIMIT 0, 1")->result_array();
-				$old_total = (count($r_kasbas) > 0 ? $r_kasbas[0]['total_kasbas'] : 0);
-				$new_total = $old_total - $jumlah_kaskel;
-
-				$kasbas = array(
-					'id_kasbas' => '',
-					'total_kasbas' => $new_total
-				);
-
-				$this->db->insert('tb_kasbas', $kasbas);
+				$jumlah_kaskel += $semua_data[1];
 
 				if($semua_data[2] == 'Infaq') {
 					$data = array(
@@ -151,6 +130,29 @@ class Mutasi_uang extends CI_Controller {
 				}
 			}
 		}
+
+		$data = array(
+			'tanggal_kaskel'			=> $tanggal_kaskel,
+			'keperluan_kaskel'         	=> $keperluan_kaskel,
+			'id_zis'      			   	=> $id_zis,
+			'jumlah_kaskel'         	=> $jumlah_kaskel,
+			'dibuat_oleh' 				=> $id		
+		);
+	
+		$insert = $this->db->insert('tb_kaskel', $data);
+
+		// Kasbas
+		$jumlah_kaskel = $jumlah_kaskel;
+		$r_kasbas = $this->db->query("SELECT * FROM tb_kasbas ORDER BY id_kasbas DESC LIMIT 0, 1")->result_array();
+		$old_total = (count($r_kasbas) > 0 ? $r_kasbas[0]['total_kasbas'] : 0);
+		$new_total = $old_total - $jumlah_kaskel;
+
+		$kasbas = array(
+			'id_kasbas' => '',
+			'total_kasbas' => $new_total
+		);
+
+		$this->db->insert('tb_kasbas', $kasbas);
 
 		//print_r($this->db->last_query());
 		echo json_encode(array('status' => TRUE));
