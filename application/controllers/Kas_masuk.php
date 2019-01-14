@@ -23,45 +23,46 @@ class Kas_masuk extends CI_Controller {
 		$no = $_REQUEST['start'];
 		foreach ($list as $kasmas) {
 
-		$asal_kasmas = $kasmas->asal_kasmas;			
-		if($asal_kasmas='Infaq'){
+		$asal_kasmas = $kasmas->asal_kasmas;
+		
+		$id_asal = $kasmas->id_asal;
+
+		$query = "";
+
+		if($asal_kasmas=='Infaq'){
 			$tabel='tb_infaq';
 			$kolom='id_infaq';
 			$kolom2='status_uang';
-		}else if($asal_kasmas='Zakat Fitrah'){
+			$query = "SELECT * FROM tb_infaq WHERE id_infaq = '$id_asal'";
+		}else if($asal_kasmas=='Zakat Fitrah'){
 			$tabel='tb_zakat_fitrah';
 			$kolom='id_zakat_fitrah';
 			$kolom2='status_uang_zakat';
+			$query = "SELECT * FROM tb_zakat_fitrah WHERE id_zakat_fitrah = '$id_asal'";
 		}else{
 			$tabel='tb_zakat_maal';
 			$kolom='id_zakat_maal';
-			$kolom2='status_uang';
+			$kolom2='status_maal';
+			$query = "SELECT * FROM tb_zakat_maal WHERE id_maal = '$id_asal'";
 		}
+		
+		$id_zis = 0;
+		$dataRek_1 = "";
+		$dataRek_2 = "";
+		$dataRek_3 = "";
 
-		$id_asal = $kasmas->id_asal;
-		$asal = $this->db->query("SELECT * FROM $tabel");
-		foreach($asal->result() as $row_asal)	{
+		$asal = $this->db->query($query)->result_array();					
+			$dataRek_1=$asal[0]['pemilik_rekening'];
+			$dataRek_2=$asal[0]['norek_pengirim'];
+			$dataRek_3=$asal[0]['bank_pengirim'];
+			$id_zis=$asal[0]['id_zis'];
+			$status1=$asal[0][$kolom2];				
 
-			$id_transaksi = $row_asal->$kolom; 	
-			if($id_asal==$id_transaksi){						
-					$dataRek_1=$row_asal->pemilik_rekening;
-					$dataRek_2=$row_asal->norek_pengirim;
-					$dataRek_3=$row_asal->bank_pengirim;
-					$id_zis=$row_asal->id_zis;
-					$status1=$row_asal->$kolom2;		
-			}
-
-		}			
-
-			$bahan_zis = $this->db->query("SELECT * FROM tb_zis");
-			foreach($bahan_zis->result() as $row_zis)	{
-	 		
-				if($id_zis==$row_zis->id_zis){						
-						$dataZis_1=$row_zis->nama_zis;
-						$dataZis_2=$row_zis->alamat_zis;
-					}
-				}	
-				
+		$bahan_zis = $this->db->query("SELECT * FROM tb_zis WHERE id_zis = '$id_zis'")->result_array();
+								
+			$dataZis_1=$bahan_zis[0]['nama_zis'];
+			$dataZis_2=$bahan_zis[0]['alamat_zis'];
+			
 
 
 			$no++;
