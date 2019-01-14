@@ -78,8 +78,8 @@
         	<th>No.</th>
             <th>Jenis</th>
             <th>Jumlah Uang</th>
-            <th>Potongan (2%)</th>
-            <th>Setelah Dipotong</th>
+            <!-- <th>Potongan (2%)</th> -->
+            <!-- <th>Setelah Dipotong</th> -->
             <th>Aksi</th>
         </tr>
     </thead>
@@ -90,24 +90,24 @@
             $potongan = (0.02 * $data['uang']);
             $sub1 += $data['uang'];
             $sub2 += $potongan;
-            $total += $data['uang'] - $potongan;
+            $total += $data['uang'];
         ?>
         <tr>
             <td><?php echo ++$i; ?></td>
             <td><?php echo $data['jenis']; ?></td>
-            <td><?php echo "Rp. " . number_format($data['uang'], 0, '.', ','); ?></td>
-            <td><?php echo "Rp. " . number_format($potongan, 0, '.', ','); ?></td>
-            <td><?php echo "Rp. " . number_format($data['uang'] - $potongan, 0, '.', ','); ?></td>
-            <td><input type="checkbox" class="ids" autocomplete="off" data-id="<?php echo $data['id']; ?>" data-uang="<?php echo $data['uang'] - $potongan; ?>" data-jenis="<?php echo $data['jenis']; ?>"></td>
+            <td><?php echo "Rp. " . number_format($data['uang'], 0, ',', '.'); ?></td>
+            <!-- <td><?php // echo "Rp. " . number_format($potongan, 0, ',', '.'); ?></td> -->
+            <!-- <td><?php // echo "Rp. " . number_format($data['uang'] - $potongan, 0, ',', '.'); ?></td> -->
+            <td><input type="checkbox" class="ids" autocomplete="off" data-id="<?php echo $data['id']; ?>" data-uang="<?php echo $data['uang']; ?>" data-jenis="<?php echo $data['jenis']; ?>"></td>
         </tr>
         <?php } ?>
     </tbody>
     <tbody>
         <tr>
             <td colspan="2">Sub Total</td>
-            <td><?php echo "Rp. " . number_format($sub1, 0, '.', ','); ?></td>
-            <td><?php echo "Rp. " . number_format($sub2, 0, '.', ','); ?></td>
-            <td><?php echo "Rp. " . number_format($total, 0, '.', ','); ?></td>
+            <td><?php echo "Rp. " . number_format($sub1, 0, ',', '.'); ?></td>
+            <!-- <td><?php // echo "Rp. " . number_format($sub2, 0, ',', '.'); ?></td> -->
+            <!-- <td><?php // echo "Rp. " . number_format($total, 0, ',', '.'); ?></td> -->
             <td><input id="centangSemua" type="checkbox" autocomplete="off" data-jumlah="<?php echo $i; ?>"></td>
         </tr>
     </tbody>
@@ -119,7 +119,7 @@
         </tr>
         <tr>
             <td>Total uang keseluruhan</td>
-            <td><?php echo "Rp. " . number_format($total, 0, '.', ','); ?></td>
+            <td><?php echo "Rp. " . number_format($total, 0, ',', '.'); ?></td>
         </tr>
         <tr>
             <td>Total yang akan dimutasi</td>
