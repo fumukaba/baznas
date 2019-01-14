@@ -85,8 +85,8 @@ class Zakat_fitrah extends CI_Controller {
 			// $row[] = '';
 			$row[] = $no;
 			$row[] = $zakat->nama_pengirim . "<br>" . $zakat->norek_pengirim . "<br>" . $zakat->bank_pengirim;
-            $row[] = $zakat->total_zakat;
-            $row[] = $dataZis_1 . "<br>" . $dataZis_2;
+            $row[] = $zakat->telp_pengirim;
+            $row[] = $zakat->total_zakat. "<br>" .$dataZis_1 . "<br>" . $dataZis_2;
             $row[] = $zakat->tanggal_zakat;
             $row[] = $print_status;
             $row[] = $zakat->status_uang_zakat;
@@ -134,6 +134,7 @@ class Zakat_fitrah extends CI_Controller {
 			$data = array(
                 'id_zakat_fitrah' => $id_zakat_fitrah,
                 'nama_pengirim' => $this->input->post('nama_pengirim'),
+                'telp_pengirim' => $this->input->post('telp_pengirim'),               
                 'bank_pengirim' => $this->input->post('bank_pengirim'),
                 'pemilik_rekening' => $this->input->post('pemilik_rekening'),
                 'norek_pengirim' => $this->input->post('norek_pengirim'),
@@ -151,6 +152,7 @@ class Zakat_fitrah extends CI_Controller {
 			$data = array(
                 'id_zakat_fitrah' => $id_zakat_fitrah,
                 'nama_pengirim' => $this->input->post('nama_pengirim'),
+                'telp_pengirim' => $this->input->post('telp_pengirim'),                
                 'bank_pengirim' => $this->input->post('bank_pengirim'),
                 'pemilik_rekening' => $this->input->post('pemilik_rekening'),
                 'norek_pengirim' => $this->input->post('norek_pengirim'),
@@ -222,6 +224,7 @@ class Zakat_fitrah extends CI_Controller {
         if(empty($gambar)){
 			$data = array(
                 'nama_pengirim' => $this->input->post('nama_pengirim'),
+                'telp_pengirim' => $this->input->post('telp_pengirim'),                
                 'bank_pengirim' => $this->input->post('bank_pengirim'),
                 'pemilik_rekening' => $this->input->post('pemilik_rekening'),
                 'norek_pengirim' => $this->input->post('norek_pengirim'),
@@ -238,6 +241,7 @@ class Zakat_fitrah extends CI_Controller {
             $data_gambar =$this->upload->data();
 			$data = array(
                 'nama_pengirim' => $this->input->post('nama_pengirim'),
+                'telp_pengirim' => $this->input->post('telp_pengirim'),
                 'bank_pengirim' => $this->input->post('bank_pengirim'),
                 'pemilik_rekening' => $this->input->post('pemilik_rekening'),
                 'norek_pengirim' => $this->input->post('norek_pengirim'),

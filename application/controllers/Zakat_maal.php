@@ -83,12 +83,12 @@ class Zakat_maal extends CI_Controller {
 			$row = array();
 			$row[] = $no;
 			$row[] = $zakat_maal->nama_pengirim . "<br>" . $zakat_maal->norek_pengirim . "<br>" . $zakat_maal->bank_pengirim;
-            $row[] = $zakat_maal->jumlah_maal;
-            $row[] = $dataZis_1 . "<br>" . $dataZis_2;
+            $row[] = $zakat_maal->telp_pengirim;
+            $row[] = $zakat_maal->jumlah_maal . "<br>" . $dataZis_1 . "<br>" . $dataZis_2;
             $row[] = $zakat_maal->tanggal_maal;
             $row[] = $print_status;
             $row[] = $zakat_maal->status_uang;
-            $row[] = $zakat_maal->jenis_maal;
+            // $row[] = $zakat_maal->jenis_maal;
             $row[] = '<img src="'.base_url('uploads/ZakatMaal/'.$zakat_maal->bukti_maal).'" alt="" width="100" height="100">';
 			$row[] = '
 			<div class="btn-group">
@@ -128,6 +128,7 @@ class Zakat_maal extends CI_Controller {
 			$data = array(
                 'id_maal' => $id_maal,
                 'nama_pengirim' => $this->input->post('nama_pengirim'),
+                'telp_pengirim' => $this->input->post('telp_pengirim'),                
                 'bank_pengirim' => $this->input->post('bank_pengirim'),
                 'pemilik_rekening' => $this->input->post('pemilik_rekening'),
                 'norek_pengirim' => $this->input->post('norek_pengirim'),
@@ -136,7 +137,6 @@ class Zakat_maal extends CI_Controller {
                 'status_maal' => $this->input->post('status_maal'),
                 'status_uang' => $this->input->post('status_uang'),
                 'diperbarui_oleh' => $id,
-                'jenis_maal' => $this->input->post('jenis_maal'),
                 'id_zis' => $this->input->post('id_zis')
             );
  		}else{
@@ -144,6 +144,7 @@ class Zakat_maal extends CI_Controller {
 			$data = array(
                 'id_maal' => $id_maal,
                 'nama_pengirim' => $this->input->post('nama_pengirim'),
+                'telp_pengirim' => $this->input->post('telp_pengirim'),                
                 'bank_pengirim' => $this->input->post('bank_pengirim'),
                 'pemilik_rekening' => $this->input->post('pemilik_rekening'),
                 'norek_pengirim' => $this->input->post('norek_pengirim'),
@@ -153,7 +154,6 @@ class Zakat_maal extends CI_Controller {
                 'status_maal' => $this->input->post('status_maal'),
                 'status_uang' => $this->input->post('status_uang'),
                 'diperbarui_oleh' => $id,
-                'jenis_maal' => $this->input->post('jenis_maal'),
                 'id_zis' => $this->input->post('id_zis')
             ); 			
         }
@@ -212,6 +212,7 @@ class Zakat_maal extends CI_Controller {
         if(empty($gambar)){
 			$data = array(
                 'nama_pengirim' => $this->input->post('nama_pengirim'),
+                'telp_pengirim' => $this->input->post('telp_pengirim'),
                 'bank_pengirim' => $this->input->post('bank_pengirim'),
                 'pemilik_rekening' => $this->input->post('pemilik_rekening'),
                 'norek_pengirim' => $this->input->post('norek_pengirim'),
@@ -220,13 +221,13 @@ class Zakat_maal extends CI_Controller {
                 'status_maal' => $this->input->post('status_maal'),
                 'status_uang' => $this->input->post('status_uang'),
                 'diperbarui_oleh' => $id,
-                'jenis_maal' => $this->input->post('jenis_maal'),
                 'id_zis' => $this->input->post('id_zis')
             );
  		}else{
             $data_gambar =$this->upload->data();
 			$data = array(
                 'nama_pengirim' => $this->input->post('nama_pengirim'),
+                'telp_pengirim' => $this->input->post('telp_pengirim'),                
                 'bank_pengirim' => $this->input->post('bank_pengirim'),
                 'pemilik_rekening' => $this->input->post('pemilik_rekening'),
                 'norek_pengirim' => $this->input->post('norek_pengirim'),
@@ -236,7 +237,6 @@ class Zakat_maal extends CI_Controller {
                 'status_maal' => $this->input->post('status_maal'),
                 'status_uang' => $this->input->post('status_uang'),
                 'diperbarui_oleh' => $id,
-                'jenis_maal' => $this->input->post('jenis_maal'),
                 'id_zis' => $this->input->post('id_zis')
             ); 			
         }

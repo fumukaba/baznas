@@ -1,4 +1,4 @@
-<?php
+<?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Infaq extends CI_Controller {
@@ -84,8 +84,8 @@ class Infaq extends CI_Controller {
 			$row = array();
 			$row[] = $no;
 			$row[] = $infaq->nama_pengirim . "<br>" . $infaq->norek_pengirim . "<br>" . $infaq->bank_pengirim;
-            $row[] = $infaq->jumlah_infaq;
-            $row[] = $dataZis_1 . "<br>" . $dataZis_2;
+            $row[] = $infaq->telp_pengirim;
+            $row[] = $infaq->jumlah_infaq. "<br>" . $dataZis_1 . "<br>" . $dataZis_2;
             $row[] = $infaq->tanggal_infaq;
             $row[] = $print_status;
             $row[] = $infaq->status_uang;
@@ -129,6 +129,7 @@ class Infaq extends CI_Controller {
 			$data = array(
                 'id_infaq' => $id_infaq,
                 'nama_pengirim' => $this->input->post('nama_pengirim'),
+                'telp_pengirim' => $this->input->post('telp_pengirim'),                   
                 'bank_pengirim' => $this->input->post('bank_pengirim'),
                 'pemilik_rekening' => $this->input->post('pemilik_rekening'),
                 'norek_pengirim' => $this->input->post('norek_pengirim'),
@@ -145,6 +146,7 @@ class Infaq extends CI_Controller {
 			$data = array(
                 'id_infaq' => $id_infaq,
                 'nama_pengirim' => $this->input->post('nama_pengirim'),
+                'telp_pengirim' => $this->input->post('telp_pengirim'),                
                 'bank_pengirim' => $this->input->post('bank_pengirim'),
                 'pemilik_rekening' => $this->input->post('pemilik_rekening'),
                 'norek_pengirim' => $this->input->post('norek_pengirim'),
@@ -212,6 +214,7 @@ class Infaq extends CI_Controller {
         if(empty($gambar)){
 			$data = array(
                 'nama_pengirim' => $this->input->post('nama_pengirim'),
+                'telp_pengirim' => $this->input->post('telp_pengirim'),                
                 'bank_pengirim' => $this->input->post('bank_pengirim'),
                 'pemilik_rekening' => $this->input->post('pemilik_rekening'),
                 'norek_pengirim' => $this->input->post('norek_pengirim'),
@@ -227,6 +230,7 @@ class Infaq extends CI_Controller {
 
 			$data = array(
                 'nama_pengirim' => $this->input->post('nama_pengirim'),
+                'telp_pengirim' => $this->input->post('telp_pengirim'),                
                 'bank_pengirim' => $this->input->post('bank_pengirim'),
                 'pemilik_rekening' => $this->input->post('pemilik_rekening'),
                 'norek_pengirim' => $this->input->post('norek_pengirim'),

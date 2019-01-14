@@ -5,7 +5,7 @@
  <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
  <script src="<?php echo base_url('assets/datetimepicker/js/bootstrap-datetimepicker.min.js') ?>"></script>
  <link rel="stylesheet" href="<?php echo base_url('assets/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>">
-
+ 
  <style type="text/css">
  	
  	td.details-control {
@@ -95,12 +95,12 @@
 
             <th>Nama Muzaki</th>
 
-             <th>Jumlah</th>
-			 <th>Tujuan</th>
+             <th>Telp Pengirim</th>
+			 <th>Transfer</th>
              <th>Tanggal</th>
              <th>Status</th>
              <th>Uang</th>
-			 <th>Jenis Zakat Maal</th>
+			 <!-- <th>Jenis Zakat Maal</th> -->
 			 <th>Bukti Transfer</th>
 
             <th>Aksi</th>
@@ -378,6 +378,8 @@
 
 					$('[name="nama_pengirim"]').val(result.nama_pengirim);
 
+					$('[name="telp_pengirim"]').val(result.telp_pengirim);
+
 					$('[name="bank_pengirim"]').val(result.bank_pengirim);
 
 					$('[name="pemilik_rekening"]').val(result.pemilik_rekening);
@@ -539,6 +541,13 @@
 
 	</div>
 
+    <div class="form-group">
+	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> No Telp. Pengirim </label>
+		<div class="col-sm-10">
+			<input type="text" id="telp_pengirim" required="required" name="telp_pengirim"  placeholder="No Telp. Pengirim" class="col-xs-10 col-sm-5" />
+		</div>
+	</div>
+
 	<div class="form-group">
 
 	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Bank Pengirim </label>
@@ -627,7 +636,7 @@
 		</div>
 	</div>
 
-	<div class="form-group">
+	<!-- <div class="form-group">
 	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Jenis Zakat Maal </label>
 		<div class="col-sm-4">
 			<select name="jenis_maal" id="jenis_maal" class="form-control" required="required">
@@ -638,7 +647,7 @@
 				<option class="c5" value="Pertanian">Pertambangan</option>
             </select>
 		</div>
-	</div>
+	</div> -->
 
 	<div class="form-group">
 	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Tempat ZIS </label>
