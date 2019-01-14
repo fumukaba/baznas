@@ -42,7 +42,7 @@ class Kas_masuk extends CI_Controller {
 		}else{
 			$tabel='tb_zakat_maal';
 			$kolom='id_zakat_maal';
-			$kolom2='status_maal';
+			$kolom2='status_maal'; 
 			$query = "SELECT * FROM tb_zakat_maal WHERE id_maal = '$id_asal'";
 		}
 		
