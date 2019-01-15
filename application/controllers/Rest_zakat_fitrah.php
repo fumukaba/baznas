@@ -6,11 +6,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 require APPPATH . 'libraries/REST_Controller.php';
 require APPPATH . 'libraries/Format.php';
 
-class Makanan extends REST_Controller {
+class Rest_zakat_fitrah extends REST_Controller {
     // Konfigurasi letak folder untuk upload image
     private $folder_upload = 'uploads/zakat_fitrah';
     function all_get(){
-        $getMakanan = $this->db->query("
+        $getZakatFitrah = $this->db->query("
             SELECT
                 id_zakat_fitrah,
                 nama_pengirim,
@@ -30,34 +30,37 @@ class Makanan extends REST_Controller {
        $this->response(
            array(
                "status" => "success",
-               "result" => $getMakanan
+               "result" => $getZakatFitrah
            )
        );
     }
 
     function all_post() {
         $action  = $this->post('action');
-        $dataMakanan = array(
-     	               // 'idMakanan'  => $this->post('idMakanan'),
-     	               'menu'       => $this->post('menu'),
-                       'kategori'   => $this->post('kategori'),
-     	               'gambar'     => $this->post('gambar'),
-     	               'harga'      => $this->post('harga'),
-     	               'alamat'     => $this->post('alamat'),
-                       'review'     => $this->post('review'),
-                       'tanggal'    => $this->post('tanggal'),
-                       'suka'       => 0,
-                       'komentar'   => 0
+        $dataZakatFitrah = array(
+     	               'nama_pengirim'  => $this->post('nama_pengirim'),
+     	               'telp_pengirim'       => $this->post('telp_pengirim'),
+                       'bank_pengirim'   => $this->post('bank_pengirim'),
+     	               'pemilik_rekening'     => $this->post('pemilik_rekening'),
+     	               'norek_pengirim'      => $this->post('norek_pengirim'),
+     	               'jumlah_orang'     => $this->post('jumlah_orang'),
+                       'harga_zakat'     => $this->post('harga_zakat'),
+                       'total_zakat'    => $this->post('total_zakat'),
+                       'tanggal_zakat'    => $this->post('tanggal_zakat'),
+                       'bukti_zakat'    => $this->post('bukti_zakat'),
+                       'status_zakat'    => $this->post('status_zakat'),
+                       'status_uang_zakat'    => $this->post('status_uang_zakat'),
+                       'id_zis'    => $this->post('id_zis'),
  	               );
         switch ($action) {
             case 'insert':
-                $this->insertMakanan($dataMakanan);
+                $this->insertZakatFitrah($dataZakatFitrah);
                 break;           
             case 'update':
-                $this->updateMakanan($dataMakanan);
+                $this->updateZakatFitrah($dataZakatFitrah);
                 break;           
             case 'delete':
-                $this->deleteMakanan($dataMakanan);
+                $this->deleteZakatFitrah($dataZakatFitrah);
                 break;          
             default:
                 $this->response(
@@ -70,9 +73,9 @@ class Makanan extends REST_Controller {
         }
     }
 
-    function insertMakanan($dataMakanan){
+    function insertZakatFitrah($dataZakatFitrah){
  	   // Cek validasi
- 	    if (empty($dataMakanan['menu']) || empty($dataMakanan['kategori']) || empty($dataMakanan['harga']) || empty($dataMakanan['alamat']) || empty($dataMakanan['review']) || empty($dataMakanan['tanggal'])){
+ 	    if (empty($dataZakatFitrah['nama_pengirim']) || empty($dataZakatFitrah['telp_pengirim']) || empty($dataZakatFitrah['bank_pengirim']) || empty($dataZakatFitrah['pemilik_rekening']) || empty($dataZakatFitrah['norek_pengirim']) || empty($dataZakatFitrah['jumlah_orang']) || empty($dataZakatFitrah['harga_zakat']) || empty($dataZakatFitrah['total_zakat']) || empty($dataZakatFitrah['tanggal_zakat']) || empty($dataZakatFitrah['bukti_zakat']) || empty($dataZakatFitrah['status_zakat']) || empty($dataZakatFitrah['status_uang_zakat']) || empty($dataZakatFitrah['id_zis'])){
  	        $this->response(
  	           array(
  	               "status" => "failed",
@@ -80,13 +83,13 @@ class Makanan extends REST_Controller {
  	           )
  	       );
  	    } else {
- 	       $dataMakanan['gambar'] = $this->uploadPhoto();
- 	       $do_insert = $this->db->insert('makanan', $dataMakanan);
+ 	       $dataZakatFitrah['bukti_zakat'] = $this->uploadPhoto();
+ 	       $do_insert = $this->db->insert('tb_zakat_fitrah', $dataZakatFitrah);
      	   if ($do_insert){
          	   $this->response(
          	       array(
          	           "status" => "success",
-         	           "result" => array($dataMakanan),
+         	           "result" => array($dataZakatFitrah),
          	           "message" => $do_insert
          	       )
          	   );
@@ -94,9 +97,9 @@ class Makanan extends REST_Controller {
  	    }
     }
 
-    function updateMakanan($dataMakanan){
+    function updateZakatFitrah($dataZakatFitrah){
  	   // Cek validasi
- 	    if (empty($dataMakanan['menu']) || empty($dataMakanan['kategori']) || empty($dataMakanan['harga']) || empty($dataMakanan['alamat']) || empty($dataMakanan['review']) || empty($dataMakanan['tanggal'])){
+        if (empty($dataZakatFitrah['nama_pengirim']) || empty($dataZakatFitrah['telp_pengirim']) || empty($dataZakatFitrah['bank_pengirim']) || empty($dataZakatFitrah['pemilik_rekening']) || empty($dataZakatFitrah['norek_pengirim']) || empty($dataZakatFitrah['jumlah_orang']) || empty($dataZakatFitrah['harga_zakat']) || empty($dataZakatFitrah['total_zakat']) || empty($dataZakatFitrah['tanggal_zakat']) || empty($dataZakatFitrah['bukti_zakat']) || empty($dataZakatFitrah['status_zakat']) || empty($dataZakatFitrah['status_uang_zakat']) || empty($dataZakatFitrah['id_zis'])){
  	       $this->response(
  	           array(
  	               "status" => "failed",
@@ -105,51 +108,51 @@ class Makanan extends REST_Controller {
  	       );
  	    } else {
  	       // Cek apakah ada di database
- 	       $getMakanan_baseID = $this->db->query("
+ 	       $getZakatFitrah_baseID = $this->db->query("
  	           SELECT 1
- 	           FROM makanan
- 	           WHERE idMakanan =  {$dataMakanan['idMakanan']}")->num_rows();
- 	        if($getMakanan_baseID === 0){
+ 	           FROM tb_zakat_fitrah
+ 	           WHERE id_zakat_fitrah =  {$dataZakatFitrah['id_zakat_fitrah']}")->num_rows();
+ 	        if($getZakatFitrah_baseID === 0){
      	       // Jika tidak ada
      	       $this->response(
      	           array(
      	               "status"  => "failed",
-      	               "message" => "ID Makanan tidak ditemukan"
+      	               "message" => "ID Zakat Fitrah tidak ditemukan"
      	           )
      	       );
  	        } else {
- 	           $dataMakanan['gambar'] = $this->uploadPhoto();
-         	    if ($dataMakanan['gambar']){
+ 	           $dataZakatFitrah['gambar'] = $this->uploadPhoto();
+         	    if ($dataZakatFitrah['gambar']){
          	       // Jika upload foto berhasil, eksekusi update
          	       $update = $this->db->query("
          	           UPDATE makanan SET
-         	               menu = '{$dataMakanan['menu']}',
-         	               kategori = '{$dataMakanan['kategori']}',
-         	               gambar = '{$dataMakanan['gambar']}',
-                           harga = '{$dataMakanan['harga']}',
-                           alamat = '{$dataMakanan['alamat']}',
-                           review = '{$dataMakanan['review']}',
-                           tanggal = '{$dataMakanan['tanggal']}'
-         	           WHERE idMakanan = '{$dataMakanan['idMakanan']}'");
+         	               menu = '{$dataZakatFitrah['menu']}',
+         	               kategori = '{$dataZakatFitrah['kategori']}',
+         	               gambar = '{$dataZakatFitrah['gambar']}',
+                           harga = '{$dataZakatFitrah['harga']}',
+                           alamat = '{$dataZakatFitrah['alamat']}',
+                           review = '{$dataZakatFitrah['review']}',
+                           tanggal = '{$dataZakatFitrah['tanggal']}'
+         	           WHERE idMakanan = '{$dataZakatFitrah['idMakanan']}'");
          	    } else {
          	       // Jika foto kosong atau upload foto tidak berhasil, eksekusi update
                     $update = $this->db->query("
                         UPDATE makanan
                         SET
-                            menu = '{$dataMakanan['menu']}',
-                            kategori = '{$dataMakanan['kategori']}',
-                            harga = '{$dataMakanan['harga']}',
-                            alamat = '{$dataMakanan['alamat']}',
-                            review = '{$dataMakanan['review']}',
-                            tanggal = '{$dataMakanan['tanggal']}'
-                        WHERE idMakanan = {$dataMakanan['idMakanan']}"
+                            menu = '{$dataZakatFitrah['menu']}',
+                            kategori = '{$dataZakatFitrah['kategori']}',
+                            harga = '{$dataZakatFitrah['harga']}',
+                            alamat = '{$dataZakatFitrah['alamat']}',
+                            review = '{$dataZakatFitrah['review']}',
+                            tanggal = '{$dataZakatFitrah['tanggal']}'
+                        WHERE idMakanan = {$dataZakatFitrah['idMakanan']}"
                     );
          	    }        	  
          	    if ($update){
              	   $this->response(
              	       array(
              	           "status"    => "success",
-             	           "result"    => array($dataMakanan),
+             	           "result"    => array($dataZakatFitrah),
              	           "message"   => $update
              	       )
              	   );
@@ -158,8 +161,8 @@ class Makanan extends REST_Controller {
  	   }
     }
 
-    function deleteMakanan($dataMakanan){
-        if (empty($dataMakanan['idMakanan'])){
+    function deleteZakatFitrah($dataZakatFitrah){
+        if (empty($dataZakatFitrah['idMakanan'])){
  	       $this->response(
  	           array(
  	               "status" => "failed",
@@ -168,15 +171,15 @@ class Makanan extends REST_Controller {
  	       );
  	    } else {
  	       // Cek apakah ada di database
- 	       $getMakanan_baseID =$this->db->query("
+ 	       $getZakatFitrah_baseID =$this->db->query("
  	           SELECT 1
  	           FROM makanan
- 	           WHERE idMakanan = {$dataMakanan['idMakanan']}")->num_rows();
- 	        if($getMakanan_baseID > 0){        
+ 	           WHERE idMakanan = {$dataZakatFitrah['idMakanan']}")->num_rows();
+ 	        if($getZakatFitrah_baseID > 0){        
  	           $get_gambar =$this->db->query("
  	           SELECT gambar
  	           FROM makanan
- 	           WHERE idMakanan = {$dataMakanan['idMakanan']}")->result(); 	       
+ 	           WHERE idMakanan = {$dataZakatFitrah['idMakanan']}")->result(); 	       
                 if(!empty($get_gambar)){
                     // Dapatkan nama file
                     $photo_nama_file = basename($get_gambar[0]->gambar);
@@ -189,11 +192,11 @@ class Makanan extends REST_Controller {
          	        }
          	       $this->db->query("
          	           DELETE FROM makanan
-         	           WHERE idMakanan = {$dataMakanan['idMakanan']}");
+         	           WHERE idMakanan = {$dataZakatFitrah['idMakanan']}");
          	       $this->response(
          	           array(
          	               "status" => "success",
-         	               "message" => "Data ID = " .$dataMakanan['idMakanan']. " berhasil dihapus"
+         	               "message" => "Data ID = " .$dataZakatFitrah['idMakanan']. " berhasil dihapus"
          	            )
          	       );
          	   }	       
