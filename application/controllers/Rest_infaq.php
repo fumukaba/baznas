@@ -52,9 +52,9 @@ class Rest_infaq extends REST_Controller {
         $insert = $this->db->insert('tb_infaq', $data);
         
         if ($insert) {
-            $this->response($this->db->insert_id(), 200);
+            $this->response(array('status' => 'success', 'result' => $data, 'message' => 'Infaq Anda berhasil ditambahkan!'));
         } else {
-            $this->response(array('status' => 'fail', 502));
+            $this->response(array('status' => 'fail', 'message' => 'Infaq Anda gagal ditambahkan!'));
         }
     }
 

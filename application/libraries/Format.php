@@ -94,7 +94,6 @@ class Format {
      *
      * @param mixed $data Data to convert/parse
      * @param string $from_type Type to convert from e.g. json, csv, html
-     *
      * @return object Instance of the format class
      */
     public function factory($data, $from_type = NULL)
