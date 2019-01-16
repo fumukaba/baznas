@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Import_maal extends CI_Controller {
+class Import_fitrah extends CI_Controller {
 	private $filename = "import_data";
 
 	public function gencode($length, $keyspace = '123456789abcdefghijklmnopqrstuvwxyz') {
@@ -17,7 +17,7 @@ class Import_maal extends CI_Controller {
 
 	public function __construct() {
 		parent::__construct();
-		$this->load->model('Mdl_zakatmaal');
+		$this->load->model('Mdl_zakatfitrah');
 		$this->auth->restrict();
 		date_default_timezone_set("Asia/Jakarta");
 		$this->load->library("session");
@@ -62,51 +62,63 @@ class Import_maal extends CI_Controller {
 			}
 		}
 
-        $data['view_file']    = "moduls/import_maal";
+        $data['view_file']    = "moduls/import_fitrah";
 		$this->load->view('admin_view',$data);
 	}
 	
 	public function import() {
 		$data = json_decode($this->input->post('data'));
 		$id = $this->session->userdata('id');
-		
-		foreach($data as $maal) {
-			$id_maal = "t4" . $this->gencode(32);
+        
+        $query = $this->db->query("SELECT * FROM tb_setting");
+        foreach($query->result() as $row_zis)	{					
+            $setting=$row_zis->meta_value;
+        }
 
-			$zis = $this->db->get_where('tb_zis', array('nama_zis' => $maal->nama_zis))->result_array();
+
+
+		foreach($data as $fitrah) {
+			$id_fitrah = "t3" . $this->gencode(32);
+
+            $total=$fitrah->total_zakat;
+            $jumlah_orang=$total/$setting;
+
+			$zis = $this->db->get_where('tb_zis', array('nama_zis' => $fitrah->nama_zis))->result_array();
 
 			$tambah = array(
-                'id_maal' => $id_maal,
-                'nama_pengirim' => $maal->nama_pengirim,
-                'telp_pengirim' => $maal->telp_pengirim,                   
+                'id_zakat_fitrah' => $id_fitrah,
+                'nama_pengirim' => $fitrah->nama_pengirim,
+                'telp_pengirim' => $fitrah->telp_pengirim,                   
                 'bank_pengirim' => '',
                 'pemilik_rekening' => '',
                 'norek_pengirim' => '',
-                'jumlah_maal' => $maal->jumlah_maal,
-                'tanggal_maal' => date('Y-m-d h:i:s', strtotime($maal->tanggal_maal)),
-                'status_maal' => 'Valid',
-                'status_uang' => 'Kas Baznas',
+                'jumlah_orang' => $jumlah_orang,
+                'harga_zakat' => $setting,
+                'total_zakat' => $fitrah->total_zakat,
+                'tanggal_zakat' => date('Y-m-d h:i:s', strtotime($fitrah->tanggal_zakat)),
+                'status_zakat' => 'Valid',
+                'status_uang_zakat' => 'Kas Baznas',
 				'diperbarui_oleh' => $id,
 				'id_zis' => (count($zis) > 0 ? $zis[0]['id_zis'] : '0')
 			);
 			
-			$insert = $this->Mdl_zakatmaal->add($tambah);
+			$insert = $this->Mdl_zakatfitrah->add($tambah);
 
 			// Kasmas
             $kasmas = array(
                 'id_kasmas' => '',
-                'asal_kasmas' => 'Zakat Maal',
-                'id_asal' => $id_maal,
-                'jumlah_kasmas' => $maal->jumlah_maal
+                'asal_kasmas' => 'Zakat Fitrah',
+                'id_asal' => $id_fitrah,
+                'jumlah_kasmas' => $fitrah->total_zakat
             );
 
             $this->db->insert('tb_kasmas', $kasmas);
 
             // Kasbas
-            $jumlah_maal = $maal->jumlah_maal;
+            $total_zakat = $fitrah->total_zakat;
             $r_kasbas = $this->db->query("SELECT * FROM tb_kasbas ORDER BY id_kasbas DESC LIMIT 0, 1")->result_array();
             $old_total = (count($r_kasbas) > 0 ? $r_kasbas[0]['total_kasbas'] : 0);
-            $new_total = $old_total + $jumlah_maal;
+            $new_total = $old_total + $total_zakat;
 
             $kasbas = array(
                 'id_kasbas' => '',
@@ -116,6 +128,6 @@ class Import_maal extends CI_Controller {
             $this->db->insert('tb_kasbas', $kasbas);
 		}
 
-		echo "<script>alert('Import data zakat maal berhasil!'); document.location.href = '" . base_url('Import_maal') . "';</script>";
+		echo "<script>alert('Import data zakat fitrah berhasil!'); document.location.href = '" . base_url('Import_fitrah') . "';</script>";
 	}
 }	
