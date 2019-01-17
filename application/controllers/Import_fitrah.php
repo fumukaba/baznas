@@ -70,7 +70,7 @@ class Import_fitrah extends CI_Controller {
 		$data = json_decode($this->input->post('data'));
 		$id = $this->session->userdata('id');
         
-        $query = $this->db->query("SELECT * FROM tb_setting");
+        $query = $this->db->query("SELECT * FROM tb_setting WHERE meta_key='nominal_zakat_fitrah' ");
         foreach($query->result() as $row_zis)	{					
             $setting=$row_zis->meta_value;
         }
