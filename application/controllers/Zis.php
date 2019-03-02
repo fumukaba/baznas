@@ -30,11 +30,16 @@ class Zis extends CI_Controller {
 				$id2 = $row_pengurus->id; 		
 				if($id1==$id2){						
 						$convert_pengurus=$row_pengurus->nama;
+						$convert_pengurus2=$row_pengurus->nomor_hp;
 						$data_rekening1=$row_pengurus->nama_rek_user;
 						$data_rekening2=$row_pengurus->no_rek_user;
 						$data_rekening3=$row_pengurus->bank_rek_user;
 					}
 				}
+
+			foreach($this->db->get_where('tm_user', array('id' => $zis->dibuat_oleh))->result_array() as $row) {
+				$nama_orang = $row['nama'];
+			}
 
 				$btn_download = "";
 
@@ -47,9 +52,10 @@ class Zis extends CI_Controller {
 			$row = array();
 			$row[] = $no;
 			$row[] = $zis->nama_zis . "<br>" . $zis->alamat_zis;
-			$row[] = $convert_pengurus;
+			$row[] = $convert_pengurus . "<br>" . $convert_pengurus2;
 			$row[] = $data_rekening1 . "<br>" . $data_rekening2 . "<br>" . $data_rekening3;
 			$row[] = '<img src="'.base_url('uploads/qrcode/'.$zis->qrcode_zis).'" alt="">' . $btn_download;
+			$row[] = $nama_orang . "<br>" . $zis->terakhir_diperbarui;
 			$row[] = '
 			<div class="btn-group">
                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Aksi <span class="caret"></span></button>
@@ -75,7 +81,7 @@ class Zis extends CI_Controller {
 		$tempDir = './uploads/qrcode/';
 
 		$id_zis = "t1" . md5(time());
-		$codeContents = $id_zis;
+		$codeContents = $id_zis . "_" . $this->input->post('nama_zis');
     
     	$fileName = $id_zis . '.png';
     	$pngAbsoluteFilePath = $tempDir.$fileName;
@@ -107,6 +113,20 @@ class Zis extends CI_Controller {
 	}
 	
 	public function ajax_update() {
+		include('./application/libraries/phpqrcode/qrlib.php');
+		$tempDir = './uploads/qrcode/';
+
+		$codeContents = $this->input->post('id_zis') . "_" . $this->input->post('nama_zis');
+    
+    	$fileName = $this->input->post('id_zis') . '.png';
+    	$pngAbsoluteFilePath = $tempDir.$fileName;
+    
+		if (file_exists($pngAbsoluteFilePath)) {
+			unlink($pngAbsoluteFilePath);
+		}
+
+		QRcode::png($codeContents, $pngAbsoluteFilePath);
+
 		$dibuat_oleh = $this->session->userdata('id');
 
 		$data = array(

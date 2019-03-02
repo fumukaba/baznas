@@ -235,7 +235,7 @@
 				$('[name="about_title_meta"]').val(result.about_title_meta);
 				$('[name="about_deskripsi_meta"]').val(result.about_deskripsi_meta);
 				$('[name="about_keyword_meta"]').val(result.about_keyword_meta);
-				$('#preview-upload').attr('src', img);
+				$('#preview-upload').attr('src', '<?php echo base_url(); ?>uploads/about/' + result.about_logo);
 
 				}, error: function (jqXHR, textStatus, errorThrown) {
 					alert('Error get data from ajax');

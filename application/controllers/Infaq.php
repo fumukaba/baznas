@@ -17,6 +17,41 @@ class Infaq extends CI_Controller {
         $data['view_file']    = "moduls/infaq";
 		$this->load->view('admin_view',$data);
     }
+
+    function konfirmasi_uang() {
+        $id = $this->session->userdata('id');
+
+        $data = array(
+            'status_uang' => 'Sudah Terdistribusi'
+        );
+
+        $this->db->update('tb_infaq', $data, array('id_infaq' => $this->input->post('id_infaq')));
+
+		$data = array(
+            'tanggal_kaskel'			=> date('Y-m-d h:i:s', time()),
+            'keperluan_kaskel'         	=> "Mutasi sebesar Rp. " . number_format($this->input->post('jumlah_infaq'), 0, '', '.'),
+            'id_zis'      			   	=> $this->input->post('id_zis'),
+            'jumlah_kaskel'         	=> $this->input->post('jumlah_infaq'),
+            'dibuat_oleh' 				=> $id,				
+            
+        );
+		$insert = $this->db->insert('tb_kaskel', $data);
+
+        // Kasbas
+        $jumlah_kaskel = $this->input->post('jumlah_infaq');
+        $r_kasbas = $this->db->query("SELECT * FROM tb_kasbas ORDER BY id_kasbas DESC LIMIT 0, 1")->result_array();
+        $old_total = (count($r_kasbas) > 0 ? $r_kasbas[0]['total_kasbas'] : 0);
+        $new_total = $old_total - $jumlah_kaskel;
+
+        $kasbas = array(
+            'id_kasbas' => '',
+            'total_kasbas' => $new_total
+        );
+
+        $this->db->insert('tb_kasbas', $kasbas);
+
+        echo json_encode(array('status' => TRUE));
+    }
  
     function konfirmasi() {
         $data = array(
@@ -65,12 +100,20 @@ class Infaq extends CI_Controller {
             $no++;
             
             $print_status = "";
+            $print_uang = "";
 
             if($infaq->status_infaq == 'Menunggu Konfirmasi') {
-                $print_status = '<span>' . $infaq->status_infaq . '</span><br /><a onclick="konfirmasiStatus($(this))" data-url="'. base_url('Infaq/konfirmasi') . '" data-id="' . $infaq->id_infaq . '" data-konfirmasi="ya" data-jumlah="' . $infaq->jumlah_infaq . '" data-pengirim="' . $infaq->nama_pengirim . '<br>A.n ' . $infaq->pemilik_rekening. '<br>' . $infaq->norek_pengirim . '<br>' . $infaq->bank_pengirim .'" href="#">Valid</a>&nbsp;&mdash;&nbsp;<a onclick="konfirmasiStatus($(this))" data-url="'. base_url('Infaq/konfirmasi') . '" data-id="' . $infaq->id_infaq . '" data-konfirmasi="tidak" data-jumlah="' . $infaq->jumlah_infaq . '" data-pengirim="' . $infaq->nama_pengirim . '<br>A.n ' . $infaq->pemilik_rekening. '<br>' . $infaq->norek_pengirim . '<br>' . $infaq->bank_pengirim .'" href="#">Tidak Valid</a>';
+                $print_status = '<span>' . $infaq->status_infaq . '</span><br /><a onclick="konfirmasiStatus($(this))" data-url="'. base_url('Infaq/konfirmasi') . '" data-id="' . $infaq->id_infaq . '" data-konfirmasi="ya" data-jumlah="' . $infaq->jumlah_infaq . '" data-pengirim="' . $infaq->nama_pengirim . '<br>A.n ' . $infaq->pemilik_rekening. '<br>' . $infaq->norek_pengirim . '<br>' . $infaq->bank_pengirim .'" href="javascript:void(0)">Valid</a>&nbsp;&mdash;&nbsp;<a onclick="konfirmasiStatus($(this))" data-url="'. base_url('Infaq/konfirmasi') . '" data-id="' . $infaq->id_infaq . '" data-konfirmasi="tidak" data-jumlah="' . $infaq->jumlah_infaq . '" data-pengirim="' . $infaq->nama_pengirim . '<br>A.n ' . $infaq->pemilik_rekening. '<br>' . $infaq->norek_pengirim . '<br>' . $infaq->bank_pengirim .'" href="javascript:void(0)">Tidak Valid</a>';
             } else {
                 $print_status = $infaq->status_infaq;
             }
+
+            if($infaq->status_infaq == 'Valid' && $infaq->status_uang == 'Kas Baznas' && $infaq->id_zis != '0') {
+                $print_uang = '<span>' . $infaq->status_uang . '</span><br /><a onclick="konfirmasiUang($(this))" data-url="'. base_url('Infaq/konfirmasi_uang') . '" data-id="' . $infaq->id_infaq . '" data-zis="' . $infaq->id_zis . '" data-jumlah="' . $infaq->jumlah_infaq . '" href="javascript:void(0)">Sudah Terdistribusi</a>';
+            } else {
+                $print_uang = $infaq->status_uang;
+            }
+
             $id_zis = $infaq->id_zis;
             $asal = $this->db->query("SELECT * FROM tb_zis");
             foreach($asal->result() as $row_zis)	{
@@ -78,19 +121,30 @@ class Infaq extends CI_Controller {
                 $dataZis_1=$row_zis->nama_zis;
                 $dataZis_2=$row_zis->alamat_zis;
                 }
-            }			
+            }
+            
+            foreach($this->db->get_where('tm_user', array('id' => $infaq->diperbarui_oleh))->result_array() as $row) {
+				$nama_orang = $row['nama'];
+            }
+            
+            $btn_download = "";
+
+            if($infaq->bukti_infaq != '') {
+                $btn_download = '<br><a target="_blank" href="'. base_url('uploads/infaq/' . $infaq->bukti_infaq) .'" title="' . $infaq->bukti_infaq . '.png">Lihat Bukti</a>';
+            }
 
 
 			$row = array();
 			$row[] = $no;
-			$row[] = $infaq->nama_pengirim . "<br>" . $infaq->norek_pengirim . "<br>" . $infaq->bank_pengirim;
-            $row[] = $infaq->telp_pengirim;
+            $row[] = $infaq->nama_pengirim . "<br>" . $infaq->telp_pengirim;
+            $row[] = $infaq->pemilik_rekening . "<br>" . $infaq->norek_pengirim . "<br>" . $infaq->bank_pengirim;
             $row[] = $infaq->jumlah_infaq. "<br>" . $dataZis_1 . "<br>" . $dataZis_2;
             $row[] = $infaq->tanggal_infaq;
             $row[] = $print_status;
-            $row[] = $infaq->status_uang;
-            $row[] = '<img src="'.base_url('uploads/infaq/'.$infaq->bukti_infaq).'" alt="" width="100" height="100">';
-			$row[] = '
+            $row[] = $print_uang;
+            $row[] = '<img src="'.base_url('uploads/infaq/'.$infaq->bukti_infaq).'" alt="" width="100" height="100">' . $btn_download;
+            $row[] = $nama_orang . "<br>" . $infaq->terakhir_diperbarui;
+            $row[] = '
 			<div class="btn-group">
                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Aksi <span class="caret"></span></button>
                         <ul class="dropdown-menu" role="menu">
@@ -135,8 +189,8 @@ class Infaq extends CI_Controller {
                 'norek_pengirim' => $this->input->post('norek_pengirim'),
                 'jumlah_infaq' => $this->input->post('jumlah_infaq'),
                 'tanggal_infaq' => $this->input->post('tanggal_infaq'),
-                'status_infaq' => $this->input->post('status_infaq'),
-                'status_uang' => $this->input->post('status_uang'),
+                'status_infaq' => 'Valid',
+                'status_uang' => 'Kas Baznas',
                 'diperbarui_oleh' => $id,
                 'id_zis' => $this->input->post('id_zis')
             );
@@ -153,41 +207,43 @@ class Infaq extends CI_Controller {
                 'jumlah_infaq' => $this->input->post('jumlah_infaq'),
                 'tanggal_infaq' => $this->input->post('tanggal_infaq'),
                 'bukti_infaq' => $data_gambar['file_name'], // Iki
-                'status_infaq' => $this->input->post('status_infaq'),
-                'status_uang' => $this->input->post('status_uang'),
+                'status_infaq' => 'Valid',
+                'status_uang' => 'Kas Baznas',
                 'diperbarui_oleh' => $id,
                 'id_zis' => $this->input->post('id_zis')
             ); 			
         }
         
         $insert = $this->Mdl_infaq->add($data);
+
+        // Kasmas
+        $kasmas = array(
+            'id_kasmas' => '',
+            'asal_kasmas' => 'Infaq',
+            'id_asal' => $id_infaq,
+            'jumlah_kasmas' => $this->input->post('jumlah_infaq')
+        );
+
+        $this->db->insert('tb_kasmas', $kasmas);
+
+        // Kasbas
+        $jumlah_infaq = $this->input->post('jumlah_infaq');
+        $r_kasbas = $this->db->query("SELECT * FROM tb_kasbas ORDER BY id_kasbas DESC LIMIT 0, 1")->result_array();
+        $old_total = (count($r_kasbas) > 0 ? $r_kasbas[0]['total_kasbas'] : 0);
+        $new_total = $old_total + $jumlah_infaq;
+
+        $kasbas = array(
+            'id_kasbas' => '',
+            'total_kasbas' => $new_total
+        );
+
+        $this->db->insert('tb_kasbas', $kasbas);
         
-        $status_infaq = $this->input->post('status_infaq');
+        // $status_infaq = $this->input->post('status_infaq');
 
-        if($status_infaq == 'Valid') {
-            // Kasmas
-            $kasmas = array(
-                'id_kasmas' => '',
-                'asal_kasmas' => 'Infaq',
-                'id_asal' => $id_infaq,
-                'jumlah_kasmas' => $this->input->post('jumlah_infaq')
-            );
-
-            $this->db->insert('tb_kasmas', $kasmas);
-
-            // Kasbas
-            $jumlah_infaq = $this->input->post('jumlah_infaq');
-            $r_kasbas = $this->db->query("SELECT * FROM tb_kasbas ORDER BY id_kasbas DESC LIMIT 0, 1")->result_array();
-            $old_total = (count($r_kasbas) > 0 ? $r_kasbas[0]['total_kasbas'] : 0);
-            $new_total = $old_total + $jumlah_infaq;
-
-            $kasbas = array(
-                'id_kasbas' => '',
-                'total_kasbas' => $new_total
-            );
-
-            $this->db->insert('tb_kasbas', $kasbas);
-        }
+        // if($status_infaq == 'Valid') {
+            
+        // }
 
 		//print_r($this->db->last_query());
 		echo json_encode(array('status' => TRUE));
@@ -220,8 +276,8 @@ class Infaq extends CI_Controller {
                 'norek_pengirim' => $this->input->post('norek_pengirim'),
                 'jumlah_infaq' => $this->input->post('jumlah_infaq'),
                 'tanggal_infaq' => $this->input->post('tanggal_infaq'),
-                'status_infaq' => $this->input->post('status_infaq'),
-                'status_uang' => $this->input->post('status_uang'),
+                // 'status_infaq' => $this->input->post('status_infaq'),
+                // 'status_uang' => $this->input->post('status_uang'),
                 'diperbarui_oleh' => $id,
                 'id_zis' => $this->input->post('id_zis')
             );
@@ -237,8 +293,8 @@ class Infaq extends CI_Controller {
                 'jumlah_infaq' => $this->input->post('jumlah_infaq'),
                 'tanggal_infaq' => $this->input->post('tanggal_infaq'),
                 'bukti_infaq' => $data_gambar['file_name'],
-                'status_infaq' => $this->input->post('status_infaq'),
-                'status_uang' => $this->input->post('status_uang'),
+                // 'status_infaq' => $this->input->post('status_infaq'),
+                // 'status_uang' => $this->input->post('status_uang'),
                 'diperbarui_oleh' => $id,
                 'id_zis' => $this->input->post('id_zis')
             ); 			
@@ -246,34 +302,34 @@ class Infaq extends CI_Controller {
 
         $this->Mdl_infaq->update(array('id_infaq' => $this->input->post('id_infaq')), $data);
 
-        $id_infaq = $this->input->post('id_infaq');
-        $status_infaq = $this->input->post('status_infaq');
-        $ostatus_infaq = $this->input->post('ostatus_infaq');
+        // $id_infaq = $this->input->post('id_infaq');
+        // $status_infaq = $this->input->post('status_infaq');
+        // $ostatus_infaq = $this->input->post('ostatus_infaq');
 
-        if($ostatus_infaq != 'Valid' && $status_infaq == 'Valid') {
-            // Kasmas
-            $kasmas = array(
-                'id_kasmas' => '',
-                'asal_kasmas' => 'Infaq',
-                'id_asal' => $id_infaq,
-                'jumlah_kasmas' => $this->input->post('jumlah_infaq')
-            );
+        // if($ostatus_infaq != 'Valid' && $status_infaq == 'Valid') {
+        //     // Kasmas
+        //     $kasmas = array(
+        //         'id_kasmas' => '',
+        //         'asal_kasmas' => 'Infaq',
+        //         'id_asal' => $id_infaq,
+        //         'jumlah_kasmas' => $this->input->post('jumlah_infaq')
+        //     );
 
-            $this->db->insert('tb_kasmas', $kasmas);
+        //     $this->db->insert('tb_kasmas', $kasmas);
 
-            // Kasbas
-            $jumlah_infaq = $this->input->post('jumlah_infaq');
-            $r_kasbas = $this->db->query("SELECT * FROM tb_kasbas ORDER BY id_kasbas DESC LIMIT 0, 1")->result_array();
-            $old_total = (count($r_kasbas) > 0 ? $r_kasbas[0]['total_kasbas'] : 0);
-            $new_total = $old_total + $jumlah_infaq;
+        //     // Kasbas
+        //     $jumlah_infaq = $this->input->post('jumlah_infaq');
+        //     $r_kasbas = $this->db->query("SELECT * FROM tb_kasbas ORDER BY id_kasbas DESC LIMIT 0, 1")->result_array();
+        //     $old_total = (count($r_kasbas) > 0 ? $r_kasbas[0]['total_kasbas'] : 0);
+        //     $new_total = $old_total + $jumlah_infaq;
 
-            $kasbas = array(
-                'id_kasbas' => '',
-                'total_kasbas' => $new_total
-            );
+        //     $kasbas = array(
+        //         'id_kasbas' => '',
+        //         'total_kasbas' => $new_total
+        //     );
 
-            $this->db->insert('tb_kasbas', $kasbas);
-        }
+        //     $this->db->insert('tb_kasbas', $kasbas);
+        // }
 
 		echo json_encode(array("status" => TRUE));
     }

@@ -96,13 +96,13 @@
  
             <th>Pengirim</th>
 
-             <th>Telp Pengirim</th>
+             <th>Rekening Pengirim</th>
              <th>Transfer</th>
              <th>Tanggal</th>
              <th>Status</th>
              <th>Uang</th>
 			 <th>Bukti Transfer</th>
-
+			<th>Terakhir Diperbarui</th>
             <th>Aksi</th>
 
         </tr>
@@ -265,7 +265,7 @@
 	
 
 	function edit(id) {
-			$('#form_status').show();
+			// $('#form_status').show();
 			save_method = 'update';
 
 			$('#panel-data').fadeOut('slow');
@@ -305,19 +305,19 @@
 
                     $('[name="tanggal_zakat"]').val(result.tanggal_zakat);
 
-                    if(result.status_zakat == 'Menunggu Konfirmasi') {
-                        $('#status_zakat .c1').attr('selected', 'selected');
-                    } else if(result.status_zakat == 'Valid') {
-                        $('#status_zakat .c2').attr('selected', 'selected');
-                    } else if(result.status_zakat == 'Tidak Valid') {
-                        $('#status_zakat .c3').attr('selected', 'selected');
-                    }
+                    // if(result.status_zakat == 'Menunggu Konfirmasi') {
+                    //     $('#status_zakat .c1').attr('selected', 'selected');
+                    // } else if(result.status_zakat == 'Valid') {
+                    //     $('#status_zakat .c2').attr('selected', 'selected');
+                    // } else if(result.status_zakat == 'Tidak Valid') {
+                    //     $('#status_zakat .c3').attr('selected', 'selected');
+                    // }
 
-                    if(result.status_uang_zakat == 'Belum Dikirim') {
-                        $('#status_uang_zakat .c1').attr('selected', 'selected');
-                    } else if(result.status_uang_zakat == 'Sudah Dikirim') {
-                        $('#status_uang_zakat .c2').attr('selected', 'selected');
-                    }
+                    // if(result.status_uang_zakat == 'Belum Dikirim') {
+                    //     $('#status_uang_zakat .c1').attr('selected', 'selected');
+                    // } else if(result.status_uang_zakat == 'Sudah Dikirim') {
+                    //     $('#status_uang_zakat .c2').attr('selected', 'selected');
+                    // }
 
                     var _classess = ".c" + result.id_zis;
 					$('#id_zis ' + _classess).attr('selected', 'selected');
@@ -526,7 +526,7 @@
 
 	</div>
 
-    <div class="form-group">
+    <!-- <div class="form-group">
 	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Status Zakat </label>
 		<div class="col-sm-4">
 			<select name="status_zakat" id="status_zakat" class="form-control" required="required" autocomplete="off">
@@ -545,7 +545,7 @@
                 <option class="c2" value="Sudah Terdistribusi">Sudah Terdistribusi</option>
             </select>
 		</div>
-	</div>
+	</div> -->
 
     <div class="form-group">
 	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Bukti Transfer </label>
@@ -678,6 +678,34 @@
 				$('#konfirmasiTotalZakat').val(total_zakat);
 				$('#modalKonfirmasi').modal('show');
 			}
+		}
+
+		konfirmasiUang = function(_this) {
+			var id_zakat_fitrah = _this.data('id'),
+				zis = _this.data('zis'),
+				jumlah = _this.data('jumlah'),
+				url = _this.data('url');
+
+			$.ajax({
+				type: 'POST',
+				url: url,
+				data: 'id_zakat_fitrah=' + id_zakat_fitrah + '&id_zis=' + zis + '&jumlah_zakat_fitrah=' + jumlah,
+				dataType: 'json',
+				processData:false,
+				success: function(result) {
+					if (result.status) {
+						swal({ title:"SUCCESS", text:"Berhasil dikonfirmasi.", type: "success", closeOnConfirm: true});
+
+						setTimeout(function(){
+							// reload_table();
+							document.location.href = '';
+						}, 1000);
+					}
+				}, error: function(jqXHR, textStatus, errorThrown) {
+					// alert('Error adding/update data');
+					swal({ title:"ERROR", text:"Gagal dikonfirmasi.", type: "warning", closeOnConfirm: true});  
+				}
+			});
 		}
 
 		$('#KonfirmasiStatus').on('submit', (function(e) {

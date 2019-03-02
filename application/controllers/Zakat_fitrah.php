@@ -18,6 +18,41 @@ class Zakat_fitrah extends CI_Controller {
 		$this->load->view('admin_view',$data);
     }
 
+    function konfirmasi_uang() {
+        $id = $this->session->userdata('id');
+
+        $data = array(
+            'status_uang_zakat' => 'Sudah Terdistribusi'
+        );
+
+        $this->db->update('tb_zakat_fitrah', $data, array('id_zakat_fitrah' => $this->input->post('id_zakat_fitrah')));
+
+		$data = array(
+            'tanggal_kaskel'			=> date('Y-m-d h:i:s', time()),
+            'keperluan_kaskel'         	=> "Mutasi sebesar Rp. " . number_format($this->input->post('jumlah_zakat_fitrah'), 0, '', '.'),
+            'id_zis'      			   	=> $this->input->post('id_zis'),
+            'jumlah_kaskel'         	=> $this->input->post('jumlah_zakat_fitrah'),
+            'dibuat_oleh' 				=> $id,				
+            
+        );
+		$insert = $this->db->insert('tb_kaskel', $data);
+
+        // Kasbas
+        $jumlah_kaskel = $this->input->post('jumlah_zakat_fitrah');
+        $r_kasbas = $this->db->query("SELECT * FROM tb_kasbas ORDER BY id_kasbas DESC LIMIT 0, 1")->result_array();
+        $old_total = (count($r_kasbas) > 0 ? $r_kasbas[0]['total_kasbas'] : 0);
+        $new_total = $old_total - $jumlah_kaskel;
+
+        $kasbas = array(
+            'id_kasbas' => '',
+            'total_kasbas' => $new_total
+        );
+
+        $this->db->insert('tb_kasbas', $kasbas);
+
+        echo json_encode(array('status' => TRUE));
+    }
+
     function konfirmasi() {
         $data = array(
             'total_zakat' => $this->input->post('total_zakat'),
@@ -75,23 +110,36 @@ class Zakat_fitrah extends CI_Controller {
             
             $no++;            
             $print_status = "";
+            $print_uang = "";
+
             if($zakat->status_zakat == 'Menunggu Konfirmasi') {
-                $print_status = '<span>' . $zakat->status_zakat . '</span><br /><a onclick="konfirmasiStatus($(this))" data-url="'. base_url('Zakat_fitrah/konfirmasi') . '" data-id="' . $zakat->id_zakat_fitrah . '" data-konfirmasi="ya" data-total="' . $zakat->total_zakat . '" data-pengirim="' . $zakat->nama_pengirim . '<br>A.n ' . $zakat->pemilik_rekening. '<br>' . $zakat->norek_pengirim . '<br>' . $zakat->bank_pengirim .'" href="#">Valid</a>&nbsp;&mdash;&nbsp;<a onclick="konfirmasiStatus($(this))" data-url="'. base_url('Zakat_fitrah/konfirmasi') . '" data-id="' . $zakat->id_zakat_fitrah . '" data-konfirmasi="tidak" data-total="' . $zakat->total_zakat . '" data-pengirim="' . $zakat->nama_pengirim . '<br>A.n ' . $zakat->pemilik_rekening. '<br>' . $zakat->norek_pengirim . '<br>' . $zakat->bank_pengirim .'" href="#">Tidak Valid</a>';
+                $print_status = '<span>' . $zakat->status_zakat . '</span><br /><a onclick="konfirmasiStatus($(this))" data-url="'. base_url('Zakat_fitrah/konfirmasi') . '" data-id="' . $zakat->id_zakat_fitrah . '" data-konfirmasi="ya" data-total="' . $zakat->total_zakat . '" data-pengirim="' . $zakat->nama_pengirim . '<br>A.n ' . $zakat->pemilik_rekening. '<br>' . $zakat->norek_pengirim . '<br>' . $zakat->bank_pengirim .'" href="javascript:void(0)">Valid</a>&nbsp;&mdash;&nbsp;<a onclick="konfirmasiStatus($(this))" data-url="'. base_url('Zakat_fitrah/konfirmasi') . '" data-id="' . $zakat->id_zakat_fitrah . '" data-konfirmasi="tidak" data-total="' . $zakat->total_zakat . '" data-pengirim="' . $zakat->nama_pengirim . '<br>A.n ' . $zakat->pemilik_rekening. '<br>' . $zakat->norek_pengirim . '<br>' . $zakat->bank_pengirim .'" href="javascript:void(0)">Tidak Valid</a>';
             } else {
                 $print_status = $zakat->status_zakat;
+            }
+
+            if($zakat->status_zakat == 'Valid' && $zakat->status_uang_zakat == 'Kas Baznas' && $zakat->id_zis != '0') {
+                $print_uang = '<span>' . $zakat->status_uang_zakat . '</span><br /><a onclick="konfirmasiUang($(this))" data-url="'. base_url('Zakat_fitrah/konfirmasi_uang') . '" data-id="' . $zakat->id_zakat_fitrah . '" data-zis="' . $zakat->id_zis . '" data-jumlah="' . $zakat->total_zakat . '" href="javascript:void(0)">Sudah Terdistribusi</a>';
+            } else {
+                $print_uang = $zakat->status_uang_zakat;
+            }
+
+            foreach($this->db->get_where('tm_user', array('id' => $zakat->diperbarui_oleh))->result_array() as $row) {
+				$nama_orang = $row['nama'];
             }
 
 			$row = array();
 			// $row[] = '';
 			$row[] = $no;
-			$row[] = $zakat->nama_pengirim . "<br>" . $zakat->norek_pengirim . "<br>" . $zakat->bank_pengirim;
-            $row[] = $zakat->telp_pengirim;
+            $row[] = $zakat->nama_pengirim . "<br>" . $zakat->telp_pengirim;
+            $row[] = $zakat->pemilik_rekening . "<br>" . $zakat->norek_pengirim . "<br>" . $zakat->bank_pengirim;
             $row[] = $zakat->total_zakat. "<br>" .$dataZis_1 . "<br>" . $dataZis_2;
             $row[] = $zakat->tanggal_zakat;
             $row[] = $print_status;
-            $row[] = $zakat->status_uang_zakat;
+            $row[] = $print_uang;
             $row[] = '<img src="'.base_url('uploads/zakat_fitrah/'.$zakat->bukti_zakat).'" alt="" width="100" height="100">';
-            
+            $row[] = $nama_orang . "<br>" . $zakat->terakhir_diperbarui;
+
 			$row[] = '
 			<div class="btn-group">
                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Aksi <span class="caret"></span></button>
@@ -142,8 +190,8 @@ class Zakat_fitrah extends CI_Controller {
                 'harga_zakat' => $cek_harga[0]['meta_value'],
                 'total_zakat' => $this->input->post('total_zakat'),
                 'tanggal_zakat' => $this->input->post('tanggal_zakat'),
-                'status_zakat' => $this->input->post('status_zakat'),
-                'status_uang_zakat' => $this->input->post('status_uang_zakat'),
+                'status_zakat' => 'Valid',
+                'status_uang_zakat' => 'Kas Baznas',
                 'diperbarui_oleh' => $diperbarui_oleh,
                 'id_zis' => $this->input->post('id_zis')
             );
@@ -161,8 +209,8 @@ class Zakat_fitrah extends CI_Controller {
                 'total_zakat' => $this->input->post('total_zakat'),
                 'tanggal_zakat' => $this->input->post('tanggal_zakat'),
                 'bukti_zakat' => $data_gambar['file_name'],
-                'status_zakat' => $this->input->post('status_zakat'),
-                'status_uang_zakat' => $this->input->post('status_uang_zakat'),
+                'status_zakat' => 'Valid',
+                'status_uang_zakat' => 'Kas Baznas',
                 'diperbarui_oleh' => $diperbarui_oleh,
                 'id_zis' => $this->input->post('id_zis')
             ); 			
@@ -172,30 +220,28 @@ class Zakat_fitrah extends CI_Controller {
         
         $status_zakat = $this->input->post('status_zakat');
 
-        if($status_zakat == 'Valid') {
-            // Kasmas
-            $kasmas = array(
-                'id_kasmas' => '',
-                'asal_kasmas' => 'Zakat Fitrah',
-                'id_asal' => $id_zakat_fitrah,
-                'jumlah_kasmas' => $this->input->post('total_zakat')
-            );
+        // Kasmas
+        $kasmas = array(
+            'id_kasmas' => '',
+            'asal_kasmas' => 'Zakat Fitrah',
+            'id_asal' => $id_zakat_fitrah,
+            'jumlah_kasmas' => $this->input->post('total_zakat')
+        );
 
-            $this->db->insert('tb_kasmas', $kasmas);
+        $this->db->insert('tb_kasmas', $kasmas);
 
-            // Kasbas
-            $total_zakat = $this->input->post('total_zakat');
-            $r_kasbas = $this->db->query("SELECT * FROM tb_kasbas ORDER BY id_kasbas DESC LIMIT 0, 1")->result_array();
-            $old_total = (count($r_kasbas) > 0 ? $r_kasbas[0]['total_kasbas'] : 0);
-            $new_total = $old_total + $total_zakat;
+        // Kasbas
+        $total_zakat = $this->input->post('total_zakat');
+        $r_kasbas = $this->db->query("SELECT * FROM tb_kasbas ORDER BY id_kasbas DESC LIMIT 0, 1")->result_array();
+        $old_total = (count($r_kasbas) > 0 ? $r_kasbas[0]['total_kasbas'] : 0);
+        $new_total = $old_total + $total_zakat;
 
-            $kasbas = array(
-                'id_kasbas' => '',
-                'total_kasbas' => $new_total
-            );
+        $kasbas = array(
+            'id_kasbas' => '',
+            'total_kasbas' => $new_total
+        );
 
-            $this->db->insert('tb_kasbas', $kasbas);
-        }
+        $this->db->insert('tb_kasbas', $kasbas);
 
 		//print_r($this->db->last_query());
 		echo json_encode(array('status' => TRUE));
@@ -232,8 +278,8 @@ class Zakat_fitrah extends CI_Controller {
                 'harga_zakat' => $cek_harga[0]['meta_value'],
                 'total_zakat' => $this->input->post('total_zakat'),
                 'tanggal_zakat' => $this->input->post('tanggal_zakat'),
-                'status_zakat' => $this->input->post('status_zakat'),
-                'status_uang_zakat' => $this->input->post('status_uang_zakat'),
+                // 'status_zakat' => $this->input->post('status_zakat'),
+                // 'status_uang_zakat' => $this->input->post('status_uang_zakat'),
                 'diperbarui_oleh' => $diperbarui_oleh,
                 'id_zis' => $this->input->post('id_zis')
             );
@@ -250,8 +296,8 @@ class Zakat_fitrah extends CI_Controller {
                 'total_zakat' => $this->input->post('total_zakat'),
                 'tanggal_zakat' => $this->input->post('tanggal_zakat'),
                 'bukti_zakat' => $data_gambar['file_name'],
-                'status_zakat' => $this->input->post('status_zakat'),
-                'status_uang_zakat' => $this->input->post('status_uang_zakat'),
+                // 'status_zakat' => $this->input->post('status_zakat'),
+                // 'status_uang_zakat' => $this->input->post('status_uang_zakat'),
                 'diperbarui_oleh' => $diperbarui_oleh,
                 'id_zis' => $this->input->post('id_zis')
             ); 			
@@ -259,34 +305,34 @@ class Zakat_fitrah extends CI_Controller {
 
         $this->Mdl_zakatfitrah->update(array('id_zakat_fitrah' => $this->input->post('id_zakat_fitrah')), $data);
 
-        $id_zakat_fitrah = $this->input->post('id_zakat_fitrah');
-        $status_zakat = $this->input->post('status_zakat');
-        $ostatus_zakat = $this->input->post('ostatus_zakat');
+        // $id_zakat_fitrah = $this->input->post('id_zakat_fitrah');
+        // $status_zakat = $this->input->post('status_zakat');
+        // $ostatus_zakat = $this->input->post('ostatus_zakat');
 
-        if($ostatus_zakat != 'Valid' && $status_zakat == 'Valid') {
-            // Kasmas
-            $kasmas = array(
-                'id_kasmas' => '',
-                'asal_kasmas' => 'Zakat Fitrah',
-                'id_asal' => $id_zakat_fitrah,
-                'jumlah_kasmas' => $this->input->post('total_zakat')
-            );
+        // if($ostatus_zakat != 'Valid' && $status_zakat == 'Valid') {
+        //     // Kasmas
+        //     $kasmas = array(
+        //         'id_kasmas' => '',
+        //         'asal_kasmas' => 'Zakat Fitrah',
+        //         'id_asal' => $id_zakat_fitrah,
+        //         'jumlah_kasmas' => $this->input->post('total_zakat')
+        //     );
 
-            $this->db->insert('tb_kasmas', $kasmas);
+        //     $this->db->insert('tb_kasmas', $kasmas);
 
-            // Kasbas
-            $total_zakat = $this->input->post('total_zakat');
-            $r_kasbas = $this->db->query("SELECT * FROM tb_kasbas ORDER BY id_kasbas DESC LIMIT 0, 1")->result_array();
-            $old_total = (count($r_kasbas) > 0 ? $r_kasbas[0]['total_kasbas'] : 0);
-            $new_total = $old_total + $total_zakat;
+        //     // Kasbas
+        //     $total_zakat = $this->input->post('total_zakat');
+        //     $r_kasbas = $this->db->query("SELECT * FROM tb_kasbas ORDER BY id_kasbas DESC LIMIT 0, 1")->result_array();
+        //     $old_total = (count($r_kasbas) > 0 ? $r_kasbas[0]['total_kasbas'] : 0);
+        //     $new_total = $old_total + $total_zakat;
 
-            $kasbas = array(
-                'id_kasbas' => '',
-                'total_kasbas' => $new_total
-            );
+        //     $kasbas = array(
+        //         'id_kasbas' => '',
+        //         'total_kasbas' => $new_total
+        //     );
 
-            $this->db->insert('tb_kasbas', $kasbas);
-        }
+        //     $this->db->insert('tb_kasbas', $kasbas);
+        // }
 
 		echo json_encode(array("status" => TRUE));
     }

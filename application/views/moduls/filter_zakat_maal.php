@@ -103,14 +103,15 @@
     <thead>
 
         <tr>
-            <th>No.</th>
+		<th>No.</th>
 
-            <th>Pengirim</th>
+		<th>Pengirim</th>
 
-             <th>Jumlah</th>
-             <th>Tanggal</th>
-             <th>Status</th>
-             <th>Uang</th>
+		<th>Rekening Pengirim</th>
+		<th>Transfer</th>
+		<th>Tanggal</th>
+		<th>Status</th>
+		<th>Uang</th>
 
         </tr>
 
@@ -119,10 +120,24 @@
     <tbody>
     <?php $i = 0; ?>
     <?php foreach($semua_data as $data) { ?>
+
+		<?php 
+			$id1=$data['id_zis'];
+			$zis=$this->db->query('SELECT * FROM tb_zis');
+			foreach($zis->result() as $row_zis){
+				$id2=$row_zis->id_zis;
+				if($id1==$id2){
+					$convert_zis_1=$row_zis->nama_zis;
+					$convert_zis_2=$row_zis->alamat_zis;					
+				}
+			}
+		?>
+
         <tr>
             <td><?php echo ++$i; ?></td>
-            <td><?php echo $data['pemilik_rekening'] . "<br>" . $data['norek_pengirim'] . "<br>" . $data['bank_pengirim']; ?></td>
-            <td><?php echo $data['jumlah_maal']; ?></td>
+            <td><?php echo $data['nama_pengirim'] . "<br>" . $data['telp_pengirim']; ?></td>
+            <td><?php echo $data['pemilik_rekening']. "<br>" . $data['norek_pengirim']. "<br>" . $data['bank_pengirim']; ?></td>
+            <td><?php echo $data['jumlah_maal']. "<br>" . $convert_zis_1. "<br>" . $convert_zis_2; ?></td>
             <td><?php echo $data['tanggal_maal']; ?></td>
             <td><?php echo $data['status_maal']; ?></td>
             <td><?php echo $data['status_uang']; ?></td>

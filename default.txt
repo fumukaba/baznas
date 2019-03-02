@@ -1,0 +1,15 @@
+Data Default
+
+* user_type
+Super
+Administrator
+Pengurus ZIS
+
+* tm_user
+akun tipe Super
+
+* tb_zis
+tempat zis baznas id_zis 0
+
+* tb_about
+Data about

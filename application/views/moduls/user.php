@@ -54,14 +54,14 @@
 <table id="example" class="display responsive nowrap" cellspacing="0" width="100%">
     <thead>
         <tr>
-        	<th></th>
+        	<!-- <th></th> -->
             <th>No.</th>
             <th>Username</th>
             <th>Nama</th>
-			<th>Email</th>
-			<th>Nama Rekening</th>
-			<th>Nama Bank</th>
+			<th>Kontak</th>
+			<th>Rekening</th>
 			<th>Level</th>
+			<th>Foto</th>
             <th>Aksi</th>
         </tr>
     </thead>
@@ -107,11 +107,11 @@
         },
 
         //Set column definition initialisation properties.
-        responsive: {
-            details: {
-                type: 'column'
-            }
-        },
+        // responsive: {
+        //     details: {
+        //         type: 'column'
+        //     }
+        // },
         columnDefs: [ {
             className: 'control',
             orderable: false,
@@ -213,6 +213,7 @@
 					$('[name="admin_username"]').val(result.id_user);
 					$('[name="admin_password"]').val(result.view_password);
 					$('[name="admin_nama"]').val(result.nama);
+					$('[name="nomor_hp"]').val(result.nomor_hp);
 					$('[name="admin_email"]').val(result.email);
 					$('[name="admin_nm_rek"]').val(result.nama_rek_user);
 					$('[name="admin_no_rek"]').val(result.no_rek_user);
@@ -297,19 +298,25 @@
 		</div>
 	</div>
 	<div class="form-group">
+	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> No. HP </label>
+		<div class="col-sm-10">
+			<input type="text" id="nomor_hp" name="nomor_hp" placeholder="No. HP" class="col-xs-10 col-sm-5" />
+		</div>
+	</div>
+	<div class="form-group">
 	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Email </label>
 		<div class="col-sm-10">
 			<input type="text" id="admin_email" name="admin_email" placeholder="Email" class="col-xs-10 col-sm-5" />
 		</div>
 	</div>
 	<div class="form-group">
-	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Nama Rekening </label>
+	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Pemilik Rekening </label>
 		<div class="col-sm-10">
-			<input type="text" id="admin_nm_rek" name="admin_nm_rek" placeholder="Nama Rekening" class="col-xs-10 col-sm-5" />
+			<input type="text" id="admin_nm_rek" name="admin_nm_rek" placeholder="Pemilik Rekening" class="col-xs-10 col-sm-5" />
 		</div>
 	</div>
 	<div class="form-group">
-	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> No Rekening </label>
+	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> No. Rekening </label>
 		<div class="col-sm-10">
 			<input type="text" id="admin_no_rek" name="admin_no_rek" placeholder="No Rekening" class="col-xs-10 col-sm-5" />
 		</div>
@@ -326,8 +333,8 @@
 			<select name="admin_level" id="admin_level" class="form-control">
 			<option>--Pilih Level--</option>
 			<?php 
-			$level = $this->db->query('select * from user_type');
-			foreach($level->result() as $row_kat)	{	?>
+			$level = $this->db->query("select * from user_type WHERE user_type_name != 'Super'");
+			foreach($level->result() as $row_kat)	{ ?>
 				<option value="<?php echo $row_kat->user_type_id?>"><?php echo $row_kat->user_type_name?></option>
 			<?php } ?>
 			</select>

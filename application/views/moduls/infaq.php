@@ -94,13 +94,13 @@
             <th>No.</th>
 
             <th>Pengirim</th>
-             <th>Telp Pengirim</th>
+             <th>Rekening Pengirim</th>
 			 <th>Transfer</th>
              <th>Tanggal</th>
              <th>Status</th>
              <th>Uang</th>
 			 <th>Bukti Transfer</th>
-
+			<th>Terakhir Diperbarui</th>
             <th>Aksi</th>
 
         </tr>
@@ -238,6 +238,7 @@
 
 
 	function Tambah() {
+		$('#form_status1').hide();
 		$('#form_status').hide();
 		$('#status_uang .c1').attr('selected', 'selected');
 		save_method = 'add'; 
@@ -353,7 +354,8 @@
 	
 
 	function edit(id) {
-			$('#form_status').show();
+			// $('#form_status1').show();
+			// $('#form_status').show();
 			save_method = 'update';
 
 			$('#panel-data').fadeOut('slow');
@@ -391,19 +393,19 @@
 
                     $('[name="tanggal_infaq"]').val(result.tanggal_infaq);
 
-                    if(result.status_infaq == 'Menunggu Konfirmasi') {
-                        $('#status_infaq .c1').attr('selected', 'selected');
-                    } else if(result.status_infaq == 'Valid') {
-                        $('#status_infaq .c2').attr('selected', 'selected');
-                    } else if(result.status_infaq == 'Tidak Valid') {
-                        $('#status_infaq .c3').attr('selected', 'selected');
-                    }
+                    // if(result.status_infaq == 'Menunggu Konfirmasi') {
+                    //     $('#status_infaq .c1').attr('selected', 'selected');
+                    // } else if(result.status_infaq == 'Valid') {
+                    //     $('#status_infaq .c2').attr('selected', 'selected');
+                    // } else if(result.status_infaq == 'Tidak Valid') {
+                    //     $('#status_infaq .c3').attr('selected', 'selected');
+                    // }
 
-                    if(result.status_uang == 'Belum Dikirim') {
-                        $('#status_uang .c1').attr('selected', 'selected');
-                    } else if(result.status_uang == 'Sudah Dikirim') {
-                        $('#status_uang .c2').attr('selected', 'selected');
-                    }
+                    // if(result.status_uang == 'Belum Dikirim') {
+                    //     $('#status_uang .c1').attr('selected', 'selected');
+                    // } else if(result.status_uang == 'Sudah Dikirim') {
+                    //     $('#status_uang .c2').attr('selected', 'selected');
+                    // }
 
                     var _classess = ".c" + result.id_zis;
 					$('#id_zis ' + _classess).attr('selected', 'selected');
@@ -597,7 +599,7 @@
 
 	</div>
 
-    <div class="form-group">
+    <!-- <div class="form-group" id="form_status1">
 	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Status Infaq </label>
 		<div class="col-sm-4">
 			<select name="status_infaq" id="status_infaq" class="form-control" required="required">
@@ -616,7 +618,7 @@
                 <option class="c2" value="Sudah Terdistribusi">Sudah Terdistribusi</option>
             </select>
 		</div>
-	</div>
+	</div> -->
 
     <div class="form-group">
 	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Bukti Transfer </label>
@@ -749,6 +751,35 @@
 				$('#konfirmasiJumlahInfaq').val(jumlah);
 				$('#modalKonfirmasi').modal('show');
 			}
+		}
+
+
+		konfirmasiUang = function(_this) {
+			var id_infaq = _this.data('id'),
+				zis = _this.data('zis'),
+				jumlah = _this.data('jumlah'),
+				url = _this.data('url');
+
+			$.ajax({
+				type: 'POST',
+				url: url,
+				data: 'id_infaq=' + id_infaq + '&id_zis=' + zis + '&jumlah_infaq=' + jumlah,
+				dataType: 'json',
+				processData:false,
+				success: function(result) {
+					if (result.status) {
+						swal({ title:"SUCCESS", text:"Berhasil dikonfirmasi.", type: "success", closeOnConfirm: true});
+
+						setTimeout(function(){
+							// reload_table();
+							document.location.href = '';
+						}, 1000);
+					}
+				}, error: function(jqXHR, textStatus, errorThrown) {
+					// alert('Error adding/update data');
+					swal({ title:"ERROR", text:"Gagal dikonfirmasi.", type: "warning", closeOnConfirm: true});  
+				}
+			});
 		}
 
 		$('#KonfirmasiStatus').on('submit', (function(e) {

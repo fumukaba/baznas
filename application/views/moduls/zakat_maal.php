@@ -93,15 +93,15 @@
         <tr>
             <th>No.</th>
 
-            <th>Nama Muzaki</th>
+            <th>Pengirim</th>
 
-             <th>Telp Pengirim</th>
+             <th>Rekening Pengirim</th>
 			 <th>Transfer</th>
              <th>Tanggal</th>
              <th>Status</th>
              <th>Uang</th>
-			 <!-- <th>Jenis Zakat Maal</th> -->
 			 <th>Bukti Transfer</th>
+			<th>Terakhir Diperbarui</th>
 
             <th>Aksi</th>
 
@@ -351,7 +351,7 @@
 	
 
 	function edit(id) {
-			$('#form_status').show();
+			// $('#form_status').show();
 
 			save_method = 'update';
 
@@ -390,31 +390,31 @@
 
                     $('[name="tanggal_maal"]').val(result.tanggal_maal);
 
-                    if(result.status_maal == 'Menunggu Konfirmasi') {
-                        $('#status_maal .c1').attr('selected', 'selected');
-                    } else if(result.status_maal == 'Valid') {
-                        $('#status_maal .c2').attr('selected', 'selected');
-                    } else if(result.status_maal == 'Tidak Valid') {
-                        $('#status_maal .c3').attr('selected', 'selected');
-                    }
+                    // if(result.status_maal == 'Menunggu Konfirmasi') {
+                    //     $('#status_maal .c1').attr('selected', 'selected');
+                    // } else if(result.status_maal == 'Valid') {
+                    //     $('#status_maal .c2').attr('selected', 'selected');
+                    // } else if(result.status_maal == 'Tidak Valid') {
+                    //     $('#status_maal .c3').attr('selected', 'selected');
+                    // }
 
-                    if(result.status_uang == 'Belum Dikirim') {
-                        $('#status_uang .c1').attr('selected', 'selected');
-                    } else if(result.status_uang == 'Sudah Dikirim') {
-                        $('#status_uang .c2').attr('selected', 'selected');
-                    }
+                    // if(result.status_uang == 'Belum Dikirim') {
+                    //     $('#status_uang .c1').attr('selected', 'selected');
+                    // } else if(result.status_uang == 'Sudah Dikirim') {
+                    //     $('#status_uang .c2').attr('selected', 'selected');
+                    // }
 
-					if(result.jenis_maal == 'Uang') {
-                        $('#jenis_maal .c1').attr('selected', 'selected');
-                    } else if(result.jenis_maal == 'Emas') {
-                        $('#jenis_maal .c2').attr('selected', 'selected');
-                    } else if(result.jenis_maal == 'Perdagangan') {
-                        $('#jenis_maal .c3').attr('selected', 'selected');
-					} else if(result.jenis_maal == 'Pertanian') {
-                        $('#jenis_maal .c4').attr('selected', 'selected');
-					} else if(result.jenis_maal == 'Pertambangan') {
-                        $('#jenis_maal .c5').attr('selected', 'selected');
-					}
+					// if(result.jenis_maal == 'Uang') {
+                    //     $('#jenis_maal .c1').attr('selected', 'selected');
+                    // } else if(result.jenis_maal == 'Emas') {
+                    //     $('#jenis_maal .c2').attr('selected', 'selected');
+                    // } else if(result.jenis_maal == 'Perdagangan') {
+                    //     $('#jenis_maal .c3').attr('selected', 'selected');
+					// } else if(result.jenis_maal == 'Pertanian') {
+                    //     $('#jenis_maal .c4').attr('selected', 'selected');
+					// } else if(result.jenis_maal == 'Pertambangan') {
+                    //     $('#jenis_maal .c5').attr('selected', 'selected');
+					// }
 
                     var _classess = ".c" + result.id_zis;
 					$('#id_zis ' + _classess).attr('selected', 'selected');
@@ -608,7 +608,7 @@
 
 	</div>
 
-    <div class="form-group">
+    <!-- <div class="form-group">
 	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Status maal </label>
 		<div class="col-sm-4">
 			<select name="status_maal" id="status_maal" class="form-control" required="required" autocomplete="off">
@@ -627,7 +627,7 @@
                 <option class="c2" value="Sudah Terdistribusi">Sudah Terdistribusi</option>
             </select>
 		</div>
-	</div>
+	</div> -->
 
     <div class="form-group">
 	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Bukti Transfer </label>
@@ -773,6 +773,34 @@
 				$('#konfirmasiJumlahMaal').val(jumlah_maal);
 				$('#modalKonfirmasi').modal('show');
 			}
+		}
+
+		konfirmasiUang = function(_this) {
+			var id_maal = _this.data('id'),
+				zis = _this.data('zis'),
+				jumlah = _this.data('jumlah'),
+				url = _this.data('url');
+
+			$.ajax({
+				type: 'POST',
+				url: url,
+				data: 'id_maal=' + id_maal + '&id_zis=' + zis + '&jumlah_maal=' + jumlah,
+				dataType: 'json',
+				processData:false,
+				success: function(result) {
+					if (result.status) {
+						swal({ title:"SUCCESS", text:"Berhasil dikonfirmasi.", type: "success", closeOnConfirm: true});
+
+						setTimeout(function(){
+							// reload_table();
+							document.location.href = '';
+						}, 1000);
+					}
+				}, error: function(jqXHR, textStatus, errorThrown) {
+					// alert('Error adding/update data');
+					swal({ title:"ERROR", text:"Gagal dikonfirmasi.", type: "warning", closeOnConfirm: true});  
+				}
+			});
 		}
 
 		$('#KonfirmasiStatus').on('submit', (function(e) {

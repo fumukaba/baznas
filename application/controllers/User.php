@@ -23,26 +23,27 @@ class User extends CI_Controller {
 		$data = array();
 		$no = $_REQUEST['start'];
 		foreach ($list as $user) {
-
-			$no++;
-			$row = array();
-			$row[] = '';
-			$row[] = $no;
-			$row[] = $user->id_user;
-			$row[] = $user->nama;
-			$row[] = $user->email;
-			$row[] = $user->nama_rek_user;
-			$row[] = $user->bank_rek_user;
-			$row[] = $user->user_type_name;
-			$row[] = '
-			<div class="btn-group">
-                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Aksi <span class="caret"></span></button>
-                        <ul class="dropdown-menu" role="menu">
-                           <li><a href="javascript:void(0)" onclick="edit('."'".$user->id."'".')">Edit</a></li>
-                            <li><a href="javascript:void(0)" onclick="hapus('."'".$user->id."'".')">Delete</a></li>
-                        </ul>
-            </div>';
-			$data[] = $row;
+			if($user->user_type_name != 'Super') {
+				$no++;
+				$row = array();
+				// $row[] = '';
+				$row[] = $no;
+				$row[] = $user->id_user;
+				$row[] = $user->nama;
+				$row[] = $user->nomor_hp . "<br />" . $user->email;
+				$row[] = $user->nama_rek_user . "<br />" . $user->no_rek_user . "<br />" . $user->bank_rek_user;
+				$row[] = $user->user_type_name;
+				$row[] = '<img src="' . base_url('uploads/user/' . $user->foto) . '" alt="" width="100" />';
+				$row[] = '
+				<div class="btn-group">
+							<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Aksi <span class="caret"></span></button>
+							<ul class="dropdown-menu" role="menu">
+							<li><a href="javascript:void(0)" onclick="edit('."'".$user->id."'".')">Edit</a></li>
+								<li><a href="javascript:void(0)" onclick="hapus('."'".$user->id."'".')">Delete</a></li>
+							</ul>
+				</div>';
+				$data[] = $row;
+			}
 		}
 
 		$output = array(
@@ -69,6 +70,7 @@ class User extends CI_Controller {
 				'id_user'         => $this->input->post('admin_username'),
 				'password' 	     => md5($this->input->post('admin_password')),
 				'nama'       		 => $this->input->post('admin_nama'),
+				'nomor_hp' => $this->input->post('nomor_hp'),
 				'email'       		 => $this->input->post('admin_email'),
 				'nama_rek_user'		=> $this->input->post('admin_nm_rek'),
 				'no_rek_user'	=> $this->input->post('admin_no_rek'),
@@ -81,6 +83,7 @@ class User extends CI_Controller {
 				'id_user'         => $this->input->post('admin_username'),
 				'password' 	     => md5($this->input->post('admin_password')),
 				'nama'       		 => $this->input->post('admin_nama'),
+				'nomor_hp' => $this->input->post('nomor_hp'),
 				'email'       		 => $this->input->post('admin_email'),
 				'nama_rek_user'		=> $this->input->post('admin_nm_rek'),
 				'no_rek_user'	=> $this->input->post('admin_no_rek'),
@@ -116,6 +119,7 @@ class User extends CI_Controller {
 				'id_user'         => $this->input->post('admin_username'),
 				'password' 	     => md5($this->input->post('admin_password')),
 				'nama'       		 => $this->input->post('admin_nama'),
+				'nomor_hp' => $this->input->post('nomor_hp'),
 				'email'       		 => $this->input->post('admin_email'),
 				'nama_rek_user'		=> $this->input->post('admin_nm_rek'),
 				'no_rek_user'	=> $this->input->post('admin_no_rek'),
@@ -128,6 +132,7 @@ class User extends CI_Controller {
 				'id_user'         => $this->input->post('admin_username'),
 				'password' 	     => md5($this->input->post('admin_password')),
 				'nama'       		 => $this->input->post('admin_nama'),
+				'nomor_hp' => $this->input->post('nomor_hp'),
 				'email'       		 => $this->input->post('admin_email'),
 				'nama_rek_user'		=> $this->input->post('admin_nm_rek'),
 				'no_rek_user'	=> $this->input->post('admin_no_rek'),

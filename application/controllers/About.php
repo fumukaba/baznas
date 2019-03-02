@@ -71,7 +71,7 @@ class About extends CI_Controller {
 		if(empty($gambar)){
  			$data = array(
 			'about_deskripsi' => $this->input->post('about_deskripsi'),
-			'id_admin' => $this->session->userdata('id_admin'),
+			'id_admin' => $this->session->userdata('id'),
 			'nama_bank' => $this->input->post('about_namaBank'),			
 			'nomor_rekening' => $this->input->post('about_nomorRekening'),			
 			'atas_nama' => $this->input->post('about_atasNama')			
@@ -82,7 +82,7 @@ class About extends CI_Controller {
 			$data = array(
 			'about_deskripsi' => $this->input->post('about_deskripsi'),
 			'about_logo' => $gambar,
-			'id_admin' => $this->session->userdata('id_admin'),
+			'id_admin' => $this->session->userdata('id'),
 			'nama_bank' => $this->input->post('about_namaBank'),			
 			'nomor_rekening' => $this->input->post('about_nomorRekening'),			
 			'atas_nama' => $this->input->post('about_atasNama')			
@@ -103,7 +103,7 @@ class About extends CI_Controller {
 	public function update() {
 		$data = array(
 				'about_deskripsi' => $this->input->post('about_deskripsi'),
-				'id_admin' => $this->session->userdata('id_admin'),
+				'id_admin' => $this->session->userdata('id'),
 				'nama_bank' => $this->input->post('about_namaBank'),
 				'nomor_rekening' => $this->input->post('about_nomorRekening'),
 				'atas_nama' => $this->input->post('about_atasNama')
@@ -118,36 +118,27 @@ class About extends CI_Controller {
 		$gambar = $_FILES['file-upload']['name'];
 		//$nama_file = $this->input->post('slider_judul').'.'.$olah[1];
 
-		$nama = $this->input->post('slider_judul');
-		$deskripsi = $this->input->post('slider_deskripsi');
 		//$gambar = str_replace(' ', '_', $nama_file);
 
-		$config['upload_path'] = realpath('assets/images');
-		$config['allowed_types']        = 'gif|jpg|png';
+		$config['upload_path'] = realpath('uploads/about/');
+		$config['allowed_types'] = 'gif|jpg|png';
 		$config['max_size'] = '2000000';
-        $config['max_width'] = '2024';
-        $config['max_height']= '1468';
-		$config['file_name'] = $gambar;	
+        // $config['max_width'] = '2024';
+        // $config['max_height']= '1468';
+		// $config['file_name'] = $gambar;	
 		
 		$this->load->library('upload', $config);
  		$this->upload->initialize($config);
 		$this->upload->do_upload('file-upload');
  			
-			$data = array(
+		$data = array(
 			'about_logo' => $gambar,
-			'id_admin' => $this->session->userdata('id_admin')
-			); 			
- 		
- 		
-
+			'id_admin' => $this->session->userdata('id')
+		); 			
+		
 		$where = array('id_about' => $this->input->post('id_about'));			 
 		$this->Mdl_about->update_data($where,$data,'tb_about');	
 		
 		echo json_encode(array('status' => TRUE));
-    }
-	
-	public function ajax_delete($id) {
-      $this->Mdl_about->delete_by_id($id);
-      echo json_encode(array("status" => TRUE));
     }
 }	
